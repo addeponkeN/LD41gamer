@@ -76,7 +76,7 @@ namespace ld41gamer.Gamer
             }
             foreach(var t in map.Turrets)
             {
-                if(Rectangle.Intersects(t.Rectangle))
+                if(Rectangle.Intersects(t.CollisionBox))
                 {
                     attackTimer += dt;
                     if(attackTimer >= 2)

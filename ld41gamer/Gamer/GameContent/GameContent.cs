@@ -24,6 +24,7 @@ namespace ld41gamer.Gamer
             acorn,
             enemysheet,
             antSheet,
+            hammer,
 
             turretsheet,
 
@@ -44,13 +45,12 @@ namespace ld41gamer.Gamer
             AnimationManager.Load();
             tree = Texture("tree");
             treeInside = Texture("treeInside");
-            player = Texture("ekorr");
             playerSheet = Texture("playerSheet");
             compassbox = Texture("compassbox");
             ground = Texture("ground");
             acorn = Texture("acorn");
-            enemysheet = Texture("ekorr");
             antSheet = Texture("antSheet");
+            hammer = Texture("hammer");
 
             turretsheet = Texture("turretsheet");
 

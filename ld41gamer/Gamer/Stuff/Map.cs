@@ -35,7 +35,7 @@ namespace ld41gamer.Gamer
 
         public Compass comp;
 
-        float enemySpawnTimer;
+        float enemySpawnTimer = 4.5f;
 
         public Vector2 MouseWorldPos()
         {
@@ -89,7 +89,6 @@ namespace ld41gamer.Gamer
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
-
             }
 
             comp.Update(gt, Game.cam2d, player);
@@ -151,13 +150,13 @@ namespace ld41gamer.Gamer
                 b.Draw(sb);
             }
 
-            //comp.Draw(sb);
+            comp.Draw(sb);
 
         }
 
         public void DrawScreen(SpriteBatch sb)
         {
-            comp.Draw(sb);
+            //comp.Draw(sb);
         }
 
     }

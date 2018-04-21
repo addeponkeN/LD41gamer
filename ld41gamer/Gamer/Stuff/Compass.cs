@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Obo.GameUtility;
+using Obo.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,24 +41,24 @@ namespace ld41gamer.Gamer
 
             Vector2 center = new Vector2(cam.BoundingRectangle.Center.X, cam.BoundingRectangle.Center.Y);
 
-            var ori = player.Rectangle.BotMiddle() - cam.Position;
-            var pos = cam.Position + ori;
+            //var ori = player.Rectangle.BotMiddle() - cam.Position;
+            //var pos = cam.Position + ori;
 
-            var dir = Vector2.Normalize(enemy.Center - pos);
+            var dir = Vector2.Normalize(enemy.Center - player.Center);
 
-            //Position = enemy.Position;
+            var rec = new Rectangle((int)cam.Position.X, (int)cam.Position.Y, 1280, 720);
 
-            //int x = (int)MathHelper.Clamp(enemy.Position.X, cam.BoundingRectangle.X + 32, cam.BoundingRectangle.Width - Size.X - 32);
-            //int y = (int)MathHelper.Clamp(enemy.Position.Y, cam.BoundingRectangle.Y + 32, cam.BoundingRectangle.Height - Size.Y - 32);
+            Position = enemy.Center;
 
-            //Position = new Vector2(x, y);
-
-
-            int x = (int)MathHelper.Clamp((dir.X * (Globals.ScreenWidth * 2)), 0, Globals.ScreenWidth - Size.X);
-            int y = (int)MathHelper.Clamp((dir.Y * (Globals.ScreenHeight * 2)), 0, Globals.ScreenHeight - Size.Y);
-
+            int x = (int)Helper.Clamp(Position.X, cam.Position.X + 32, rec.Width - (Size.X * 2));
+            int y = (int)Helper.Clamp(Position.Y, cam.Position.Y + 32, rec.Height - (Size.Y * 2));
 
             Position = new Vector2(x, y);
+
+            //int x = (int)MathHelper.Clamp((dir.X * (Globals.ScreenWidth * 2)), 0, Globals.ScreenWidth - Size.X);
+            //int y = (int)MathHelper.Clamp((dir.Y * (Globals.ScreenHeight * 2)), 0, Globals.ScreenHeight - Size.Y);
+
+            //Position = new Vector2(x, y);
 
             //var dir = Vector2.Normalize(enemy.Center - Position);
 

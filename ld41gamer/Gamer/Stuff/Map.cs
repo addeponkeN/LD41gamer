@@ -50,6 +50,8 @@ namespace ld41gamer.Gamer
 
         public Compass comp;
 
+        public Builder builder;
+
         float enemySpawnTimer = 4.5f;
 
         public List<Recc> CollisionBoxes;
@@ -76,6 +78,8 @@ namespace ld41gamer.Gamer
             CollisionBoxes = new List<Recc>();
 
             comp = new Compass();
+
+            builder = new Builder();
 
             for(int i = 0; i < 30; i++)
             {
@@ -174,6 +178,8 @@ namespace ld41gamer.Gamer
 
             CheckCollision();
 
+            builder.Update(gt, this);
+
             if(player.Rectangle.Intersects(tree.HitBoxes[1]))
                 isInsideTree = true;
             else
@@ -236,6 +242,8 @@ namespace ld41gamer.Gamer
             {
                 b.Draw(sb);
             }
+
+            builder.Draw(sb);
 
             comp.Draw(sb);
 

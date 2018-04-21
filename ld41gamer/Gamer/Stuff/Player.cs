@@ -23,6 +23,9 @@ namespace ld41gamer.Gamer
         public float ShootCooldownTimer;
 
         public bool IsMoving { get; set; }
+        public bool IsBuilding { get; set; }
+
+        public int LatestDirection;
 
         public int Money;
 
@@ -92,6 +95,9 @@ namespace ld41gamer.Gamer
             {
                 ShootCooldownTimer -= dt;
             }
+
+            if(Direction.X != 0)
+                LatestDirection = (int)Direction.X;
         }
 
 
@@ -258,7 +264,7 @@ namespace ld41gamer.Gamer
             //sb.Draw(Texture, , Color.White);
 
             if(Globals.IsDebugging)
-            sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);
+                sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);
         }
 
     }

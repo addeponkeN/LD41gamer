@@ -40,7 +40,6 @@ namespace ld41gamer.Gamer
 
         public Map(GameStatePlaying game)
         {
-            
             Game = game;
             Size = new Point(10000, 100);
             Position = new Point(0, Globals.ScreenHeight - Size.Y);
@@ -94,7 +93,8 @@ namespace ld41gamer.Gamer
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.ForestGreen);
+            for(int i = 0; i < Rectangle.Width; i+= GameContent.ground.Width)
+                sb.Draw(GameContent.ground, new Vector2(i, Position.Y) , Color.White);
 
             foreach(var p in Props)
             {

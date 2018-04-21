@@ -15,7 +15,7 @@ namespace ld41gamer.Gamer
     public class Compass
     {
 
-        puib l
+        
 
 
     }

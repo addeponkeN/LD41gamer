@@ -68,7 +68,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.Draw(sb);
 
-            sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(2, 2)), Color.Red);
+            //sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(2, 2)), Color.Red);
 
             sb.End();
 

@@ -71,6 +71,7 @@ namespace ld41gamer.Gamer
                         map.tree.HealthPoints -= Damage;
                         attackTimer = 0;
                     }
+                    return;
                 }
                 else
                 {

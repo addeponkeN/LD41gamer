@@ -14,7 +14,7 @@ namespace ld41gamer.Gamer
     public class Player : GameObject
     {
 
-        public float JumpPower = 300;
+        public float JumpPower = 750;
         public float JumpVelo;
         public bool IsJumping = true;
 
@@ -42,7 +42,7 @@ namespace ld41gamer.Gamer
 
 
             if(Input.KeyHold(Keys.LeftShift))
-                Speed = 800;
+                Speed = 1200;
             else
                 Speed = 200;
 

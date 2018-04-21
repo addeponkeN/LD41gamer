@@ -53,7 +53,7 @@ namespace ld41gamer.Gamer
 
             Position += new Vector2(Direction.X * Speed * dt, 0);
 
-            if(Position.X > map.Rectangle.Center.X)
+            if(Position.X > map.GroundRectangle.Center.X)
             {
                 Direction.X = -1;
             }

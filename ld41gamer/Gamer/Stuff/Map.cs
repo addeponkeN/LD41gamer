@@ -17,10 +17,11 @@ namespace ld41gamer.Gamer
     {
         public static float Gravity = 800f;
 
-        public Point Size;
-        public Point Position;
+        public Point GroundSize;
+        public Point GroundPosition;
 
-        public Rectangle Rectangle => new Rectangle(Position, Size);
+        public Rectangle GroundRectangle => new Rectangle(GroundPosition, GroundSize);
+        public Rectangle BoxRectangle;
 
         public List<Bullet> Bullets;
         public List<Enemy> Enemies;
@@ -45,8 +46,9 @@ namespace ld41gamer.Gamer
         public Map(GameStatePlaying game)
         {
             Game = game;
-            Size = new Point(10000, 100);
-            Position = new Point(0, Globals.ScreenHeight - Size.Y);
+            GroundSize = new Point(10000, 100);
+            //GroundPosition = new Point(0, Globals.ScreenHeight - GroundSize.Y);
+            GroundPosition = new Point(0, 2500);
 
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
@@ -58,15 +60,17 @@ namespace ld41gamer.Gamer
                 var p = new Sprite();
                 p.SetSize(32);
                 p.Color = Color.DarkSeaGreen;
-                p.Position = new Vector2(5 * (i * 36), Rectangle.Top - Rng.Noxt(16, 32));
+                p.Position = new Vector2(5 * (i * 36), GroundRectangle.Top - Rng.Noxt(16, 32));
                 Props.Add(p);
             }
 
             tree = new Tree();
-            tree.Position = new Vector2(GHelper.Center(Rectangle, tree.Size).X, Position.Y - tree.Size.Y);
+            tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y);
+
+            BoxRectangle = new Rectangle(0, 0, GroundRectangle.Right, GroundRectangle.Bottom);
 
             player = new Player();
-            player.Position = new Vector2(GHelper.Center(Rectangle, player.Size).X, Position.Y - player.Size.Y);
+            player.Position = new Vector2(GHelper.Center(GroundRectangle, player.Size).X, GroundPosition.Y - player.Size.Y);
 
         }
 
@@ -113,9 +117,9 @@ namespace ld41gamer.Gamer
 
             var side = Rng.Noxt(0, 1);
             if(side == 0)
-                e.Position = Position.ToVector2();
+                e.Position = GroundPosition.ToVector2();
             else
-                e.Position = new Vector2(Rectangle.Width, Position.Y);
+                e.Position = new Vector2(GroundRectangle.Width, GroundPosition.Y);
 
             Enemies.Add(e);
             comp.Add(e);
@@ -123,13 +127,18 @@ namespace ld41gamer.Gamer
 
         public void CheckCollision(Player p)
         {
-            p.Collision(Rectangle);
+            p.Collision(GroundRectangle);
         }
 
         public void DrawWorld(SpriteBatch sb)
         {
-            for(int i = 0; i < Rectangle.Width; i += GameContent.ground.Width)
-                sb.Draw(GameContent.ground, new Vector2(i, Position.Y), Color.White);
+            sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer0, BoxRectangle, Color.White);
+
+            for(int i = 0; i < GroundRectangle.Width; i += GameContent.ground.Width)
+                sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White);
 
             foreach(var p in Props)
             {

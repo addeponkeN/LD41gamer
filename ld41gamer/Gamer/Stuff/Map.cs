@@ -15,7 +15,6 @@ namespace ld41gamer.Gamer
 {
     public class Map
     {
-
         public static float Gravity = 800f;
 
         public Point Size;
@@ -41,6 +40,7 @@ namespace ld41gamer.Gamer
 
         public Map(GameStatePlaying game)
         {
+            
             Game = game;
             Size = new Point(10000, 100);
             Position = new Point(0, Globals.ScreenHeight - Size.Y);

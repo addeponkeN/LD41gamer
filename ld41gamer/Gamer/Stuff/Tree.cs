@@ -42,7 +42,6 @@ namespace ld41gamer.Gamer
             PlatformCollision.Add(new Rectangle(4935, 1844, 92, 10));
             PlatformCollision.Add(new Rectangle(5024, 1686, 92, 10));
             PlatformCollision.Add(new Rectangle(4924, 1532, 92, 10));
-            //walls
 
             int xStart = 4916;
             int yStart = 1860;

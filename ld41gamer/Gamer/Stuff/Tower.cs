@@ -19,7 +19,7 @@ namespace ld41gamer.Gamer
 
     public class Tower : LivingObject
     {
-        TowerType Type;
+        public TowerType Type;
 
         public Tower(TowerType t)
         {

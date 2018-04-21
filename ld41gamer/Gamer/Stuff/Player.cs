@@ -79,13 +79,15 @@ namespace ld41gamer.Gamer
             if(Direction.X == 0)
             {
                 IsMoving = false;
-                PlayAnimation(AnimationType.Idle);
+                //PlayAnimation(AnimationType.Idle);
             }
 
             if(!IsGrounded && !IsFalling)
                 PlayAnimation(AnimationType.PlayerJumping);
-            else if(JumpVelo > 0)
+            else if(JumpVelo > 25)
                 PlayAnimation(AnimationType.PlayerFalling);
+            else if(Direction.X == 0)
+                PlayAnimation(AnimationType.Idle);
 
 
             if(ShootCooldownTimer < 0)

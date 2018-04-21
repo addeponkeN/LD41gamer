@@ -48,7 +48,30 @@ namespace ld41gamer.Gamer
 
             if(b != null)
             {
-                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox)) && !map.Turrets.Any(x=> x.CollisionBox.Intersects(b.CollisionBox));
+                if(p.IsGrounded)
+                {
+                    if(map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox)))
+                    {
+                        canPlace = false;
+                    }
+                    else if(map.Turrets.Any(x => x.CollisionBox.Intersects(b.CollisionBox)))
+                    {
+                        canPlace = false;
+                    }
+                    else if(b.Rectangle.Bottom < 2100)
+                    {
+                        if(map.CollisionBoxes.Any(x => x.Rec.Intersects(b.CollisionBox)))
+                        {
+                            canPlace = true;
+                        }
+                        else
+                            canPlace = false;
+                    }
+                    else if(b.Rectangle.Bottom > 2450)
+                        canPlace = true;
+                }
+
+                //canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox)) && !map.Turrets.Any(x=> x.CollisionBox.Intersects(b.CollisionBox));
             }
 
             map.player.IsBuilding = false;
@@ -85,7 +108,7 @@ namespace ld41gamer.Gamer
                             Con.RemoveAt(i);
                         }
                         break;
-                    }                    
+                    }
                 }
             }
 

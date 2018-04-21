@@ -23,7 +23,7 @@ namespace ld41gamer.Gamer
 
         public List<TreeBranch> Branches = new List<TreeBranch>();
 
-        public List<Vector2> poss = new List<Vector2>();
+        public TreeBranch CurrentBranch;
 
         public Tree()
         {
@@ -35,6 +35,7 @@ namespace ld41gamer.Gamer
             HitBoxes.Add(new Rectangle(4916, 1380, 200, 1200));
 
             PlatformCollision = new List<Rectangle>();
+
             //platforms
             PlatformCollision.Add(new Rectangle(5039, 2320, 92, 10));
             PlatformCollision.Add(new Rectangle(4926, 2167, 92, 10));
@@ -46,38 +47,6 @@ namespace ld41gamer.Gamer
             //walls
 
 
-            //branch
-
-
-
-
-            int xStart = 4916;
-            int yStart = 1860;
-            int xOff = 200;
-            int yOff = 300;
-
-            //  bot left
-
-            for(int y = 0; y < 3; y++)
-            {
-                for(int x = 0; x < 2; x++)
-                {
-                    poss.Add(new Vector2(xStart + (xOff*x), yStart+(yOff)*y));
-                }
-            }
-
-            //poss.Add(new Vector2(xStart, yStart));
-
-            //poss.Add(new Vector2(xStart + xOff, yStart));
-
-            //poss.Add(new Vector2(xStart, yStart));
-
-            //poss.Add(new Vector2(xStart, yStart));
-
-            //poss.Add(new Vector2(xStart, yStart));
-
-            //poss.Add(new Vector2(xStart, yStart));
-
         }
 
         public void Add(TreeBranchType type, Map map)
@@ -86,6 +55,15 @@ namespace ld41gamer.Gamer
             b.Position = Position;
 
             Branches.Add(b);
+
+            Rectangle rec = GetRec(type);
+
+            map.CollisionBoxes.Add(new Recc(rec, true));
+
+        }
+
+        Rectangle GetRec(TreeBranchType type)
+        {
             Rectangle rec = new Rectangle();
 
             switch(type)
@@ -103,9 +81,7 @@ namespace ld41gamer.Gamer
                     rec = new Rectangle(4454, 1854, 454, 15);
                     break;
             }
-
-            map.CollisionBoxes.Add(new Recc(rec, true));
-
+            return rec;
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

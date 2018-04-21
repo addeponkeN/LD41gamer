@@ -80,10 +80,9 @@ namespace ld41gamer.Gamer
             {
                 var b = Bullets[i];
                 b.Update(gt, this, gs);
-
-
             }
 
+            Bullets.RemoveAll(x => x.LifeTime < 0);
 
             CheckCollision(player);
         }
@@ -105,6 +104,11 @@ namespace ld41gamer.Gamer
             tree.Draw(sb);
 
             player.Draw(sb);
+
+            foreach(var b in Bullets)
+            {
+                b.Draw(sb);
+            }
 
         }
 

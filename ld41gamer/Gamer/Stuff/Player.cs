@@ -18,6 +18,8 @@ namespace ld41gamer.Gamer
         public float JumpVelo;
         public bool IsJumping = true;
 
+        public float ShootCooldownTimer;
+
         public Player()
         {
             Texture = GameContent.player;
@@ -69,12 +71,18 @@ namespace ld41gamer.Gamer
                     Jump();
             }
 
-            if(Input.LeftClick)
+            if(ShootCooldownTimer < 0)
             {
-                Shoot(map);
+                if(Input.LeftHold)
+                {
+                    Shoot(map);
+                    ShootCooldownTimer = 0.75f;
+                }
             }
-
-
+            else
+            {
+                ShootCooldownTimer -= dt;
+            }
         }
 
 

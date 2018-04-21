@@ -33,6 +33,8 @@ namespace ld41gamer.Gamer
 
         public GameStatePlaying Game;
 
+        float enemySpawnTimer;
+
         public Vector2 MouseWorldPos()
         {
             return Vector2.Transform(Input.MousePos, Matrix.Invert(Game.cam2d.GetViewMatrix()));
@@ -71,9 +73,7 @@ namespace ld41gamer.Gamer
 
         public void Update(GameTime gt, GameScreen gs)
         {
-
             player.Update(gt, this, gs);
-
 
             for(int i = 0; i < Bullets.Count; i++)
             {
@@ -81,9 +81,36 @@ namespace ld41gamer.Gamer
                 b.Update(gt, this, gs);
             }
 
+            for(int i = 0; i < Enemies.Count; i++)
+            {
+                var e = Enemies[i];
+                e.Update(gt, this, gs);
+            }
+
             Bullets.RemoveAll(x => x.LifeTime < 0);
 
             CheckCollision(player);
+
+            enemySpawnTimer += gt.Delta();
+
+            if(enemySpawnTimer >= 5)
+            {
+                SpawnEnemy();
+                enemySpawnTimer = 0;
+            }
+        }
+
+        public void SpawnEnemy()
+        {
+            var e = new Enemy(EnemyType.Ant);
+
+            var side = Rng.Noxt(0, 1);
+            if(side == 0)
+                e.Position = Position.ToVector2();
+            else
+                e.Position = new Vector2(Rectangle.Width, Position.Y);
+
+            Enemies.Add(e);
         }
 
         public void CheckCollision(Player p)
@@ -99,6 +126,11 @@ namespace ld41gamer.Gamer
             foreach(var p in Props)
             {
                 p.Draw(sb);
+            }
+
+            foreach(var e in Enemies)
+            {
+                e.Draw(sb);
             }
 
             tree.Draw(sb);

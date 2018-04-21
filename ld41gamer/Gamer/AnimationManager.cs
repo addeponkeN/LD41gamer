@@ -25,7 +25,7 @@ namespace ld41gamer.Gamer
             Dic = new Dictionary<AnimationType, Rectangle[]>();
 
             AddAnimation(new int[] { 0 }, 0, 165, 100, AnimationType.PlayerIdle);
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 0, 165, 100, AnimationType.PlayerWalking);
+            AddAnimation(new int[] { 1, 2, 3, 1 }, 0, 165, 100, AnimationType.PlayerWalking);
         }
 
         /// <summary>

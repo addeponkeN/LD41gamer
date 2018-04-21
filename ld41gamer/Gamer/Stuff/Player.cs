@@ -73,7 +73,7 @@ namespace ld41gamer.Gamer
 
             if(Input.KeyClick(Keys.Space))
             {
-                if(!IsJumping)
+                //if(!IsJumping)
                     Jump();
             }
 

@@ -50,7 +50,7 @@ namespace ld41gamer.Gamer
             int x = (int)Helper.Clamp(Position.X, cam.Position.X + 32, rec.Right - (Size.X * 2));
             int y = (int)Helper.Clamp(Position.Y, cam.Position.Y + 32, rec.Bottom - (Size.Y * 2));
 
-            Position = new Vector2(x, y);
+            Position = new Vector2(x, y) + Origin;
 
             Rotation = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
         }

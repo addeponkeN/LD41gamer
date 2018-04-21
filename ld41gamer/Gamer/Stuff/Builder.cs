@@ -48,7 +48,9 @@ namespace ld41gamer.Gamer
 
             if(b != null)
             {
-                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox)) && !map.Turrets.Any(x=> x.CollisionBox.Intersects(b.CollisionBox));
+                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox))
+                    && !map.Turrets.Any(x => x.CollisionBox.Intersects(b.CollisionBox))
+                    && (map.CollisionBoxes.Any(x => b.Rectangle.Bottom < 2100 && x.Rec.Intersects(b.CollisionBox)));
             }
 
             map.player.IsBuilding = false;

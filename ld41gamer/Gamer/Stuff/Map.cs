@@ -111,7 +111,8 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Ant);
 
-            var side = Rng.Noxt(0, 1);
+            //var side = Rng.Noxt(0, 1);
+            var side = 1;
             if(side == 0)
                 e.Position = Position.ToVector2();
             else
@@ -150,13 +151,13 @@ namespace ld41gamer.Gamer
                 b.Draw(sb);
             }
 
-            comp.Draw(sb);
+            //comp.Draw(sb);
 
         }
 
         public void DrawScreen(SpriteBatch sb)
         {
-            //comp.Draw(sb);
+            comp.Draw(sb);
         }
 
     }

@@ -39,7 +39,7 @@ namespace ld41gamer.Gamer
             AddAnimation(new int[] { 0 }, 0, 32, 32, AnimationType.Idle);
 
             AddAnimation(new int[] { 0 }, 0, 165, 100, AnimationType.PlayerIdle);
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 0, 165, 100, AnimationType.PlayerWalking);
+            AddAnimation(new int[] { 1, 2, 3, 1 }, 0, 165, 100, AnimationType.PlayerWalking);
         }
 
         /// <summary>

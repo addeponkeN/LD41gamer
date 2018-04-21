@@ -14,14 +14,21 @@ namespace ld41gamer.Gamer
     public class GameObject : AnimatedSprite
     {
 
+        public Vector2 Center => Position + (Size * .5f);
+
         public Vector2 Direction;
         public float Speed;
 
         public virtual void Update(GameTime gt, GameScreen gs)
         {
+
+
+        }
+
+        public virtual void UpdatePosition(GameTime gt)
+        {
             var dt = gt.Delta();
             Position += Speed * Direction * dt;
-
         }
 
         public override void Draw(SpriteBatch sb)

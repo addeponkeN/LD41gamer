@@ -14,7 +14,9 @@ namespace ld41gamer.Gamer
     public class Player : GameObject
     {
 
-
+        public float JumpPower = 300;
+        public float JumpVelo;
+        public bool IsJumping;
 
         public Player()
         {
@@ -25,9 +27,13 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, GameScreen gs)
         {
             base.Update(gt, gs);
+            var dt = gt.Delta();
+            //UpdatePosition(gt);
 
-            //var dt = gt.Delta();
-            //Position += Speed * Direction * dt;
+            Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
+
+            if(IsJumping)
+            JumpVelo += Map.Gravity * dt;
 
             Direction = Vector2.Zero;
 
@@ -51,9 +57,56 @@ namespace ld41gamer.Gamer
                 Direction.X = 1;
             }
 
+            if(Input.KeyClick(Keys.Space))
+            {
+                if(!IsJumping)
+                    Jump();
+            }
 
         }
 
+        void Jump()
+        {
+            IsJumping = true;
+            JumpVelo = -JumpPower;
+        }
+
+        public void Collision(Rectangle rec)
+        {
+
+            //if(rec.TouchTopOf(rec))
+            //{
+            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
+            //    JumpVelo = 0;
+            //}
+
+            //if(rec.TouchBottomOf(rec))
+            //{
+            //    Position = new Vector2(Position.X, rec.Y);
+            //    JumpVelo = 0;
+            //}
+
+            //if(rec.TouchLeftOf(rec))
+            //{
+            //    Position = new Vector2(rec.X - Size.X, Position.Y);
+            //    JumpVelo = 0;
+            //}
+
+            //if(rec.TouchRightOf(rec))
+            //{
+            //    Position = new Vector2(rec.X, Position.Y);
+            //    JumpVelo = 0;
+            //}
+
+
+            if(Rectangle.Bottom > rec.Top)
+            {
+                IsJumping = false;
+                JumpVelo = 0;
+                Position = new Vector2(Position.X, rec.Y - Size.Y);
+            }
+
+        }
 
         public override void Draw(SpriteBatch sb)
         {

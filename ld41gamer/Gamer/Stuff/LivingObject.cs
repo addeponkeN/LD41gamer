@@ -13,5 +13,11 @@ namespace ld41gamer.Gamer
         public int Damage { get; set; }
 
         public bool IsAlive { get; set; }
+
+        public LivingObject()
+        {
+            IsAlive = true;
+        }
+
     }
 }

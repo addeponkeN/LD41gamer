@@ -32,6 +32,7 @@ namespace ld41gamer.Gamer
             compassbox = Texture("compassbox");
             ground = Texture("ground");
             acorn = Texture("acorn");
+            enemysheet = Texture("ekorr");
         }
 
         public static void Unload()

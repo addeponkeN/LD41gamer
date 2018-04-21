@@ -89,9 +89,13 @@ namespace ld41gamer.Gamer
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
+
             }
 
+            comp.Update(gt, Game.cam2d, player);
+
             Bullets.RemoveAll(x => x.LifeTime < 0);
+            Enemies.RemoveAll(x => !x.IsAlive);
 
             CheckCollision(player);
 
@@ -115,6 +119,7 @@ namespace ld41gamer.Gamer
                 e.Position = new Vector2(Rectangle.Width, Position.Y);
 
             Enemies.Add(e);
+            comp.Add(e);
         }
 
         public void CheckCollision(Player p)
@@ -122,10 +127,10 @@ namespace ld41gamer.Gamer
             p.Collision(Rectangle);
         }
 
-        public void Draw(SpriteBatch sb)
+        public void DrawWorld(SpriteBatch sb)
         {
-            for(int i = 0; i < Rectangle.Width; i+= GameContent.ground.Width)
-                sb.Draw(GameContent.ground, new Vector2(i, Position.Y) , Color.White);
+            for(int i = 0; i < Rectangle.Width; i += GameContent.ground.Width)
+                sb.Draw(GameContent.ground, new Vector2(i, Position.Y), Color.White);
 
             foreach(var p in Props)
             {
@@ -146,6 +151,13 @@ namespace ld41gamer.Gamer
                 b.Draw(sb);
             }
 
+            //comp.Draw(sb);
+
+        }
+
+        public void DrawScreen(SpriteBatch sb)
+        {
+            comp.Draw(sb);
         }
 
     }

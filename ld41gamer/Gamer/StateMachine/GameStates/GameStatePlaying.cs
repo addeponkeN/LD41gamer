@@ -66,12 +66,16 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
-            map.Draw(sb);
+            map.DrawWorld(sb);
 
             //sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(2, 2)), Color.Red);
 
             sb.End();
 
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null,null);
+            map.DrawScreen(sb);
+
+            sb.End();
         }
 
         public override void ExitState()

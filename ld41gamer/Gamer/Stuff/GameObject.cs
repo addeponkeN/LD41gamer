@@ -21,7 +21,7 @@ namespace ld41gamer.Gamer
 
         public virtual void Update(GameTime gt, Map map, GameScreen gs)
         {
-
+            UpdateAnimation(gt);
 
         }
 

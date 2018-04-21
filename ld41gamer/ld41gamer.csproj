@@ -165,9 +165,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Textures\acorn.png" />
     <Content Include="Content\Textures\box.png" />
     <Content Include="Content\Textures\boxbox.png" />
     <Content Include="Content\Textures\boxhalf.png" />
+    <Content Include="Content\Textures\compassbox.png" />
     <Content Include="Content\Textures\ekorr.png" />
     <Content Include="Content\Textures\ground.png" />
     <Content Include="Content\Textures\tree.png" />

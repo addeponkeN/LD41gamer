@@ -25,7 +25,7 @@ namespace ld41gamer.Gamer
         public Enemy(EnemyType t)
         {
             Type = t;
-            Speed = 200f;
+            Speed = 50f;
 
             switch(t)
             {
@@ -48,12 +48,25 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
+
+            var dt = gt.Delta();
+
+            Position += new Vector2(Direction.X * Speed * dt, 0);
+
+            if(Position.X > map.Rectangle.Center.X)
+            {
+                Direction.X = -1;
+            }
+            else
+            {
+                Direction.X = 1;
+            }
         }
 
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.White);
+            sb.Draw(UtilityContent.box, Rectangle, Color.Red);
 
         }
     }

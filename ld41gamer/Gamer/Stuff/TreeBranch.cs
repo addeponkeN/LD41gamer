@@ -1,6 +1,7 @@
 ﻿using ld41gamer.Gamer.Screener;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Obo.GameUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,12 @@ namespace ld41gamer.Gamer
 
         public TreeBranch(TreeBranchType t)
         {
+            Texture = UtilityContent.box;
             Type = t;
+            
+            IsAnimating = false;
+
+            SetFrame(0, 0);
 
             switch(t)
             {
@@ -41,7 +47,7 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rectangle, Color.White);
+            base.Draw(sb);
         }
     }
 }

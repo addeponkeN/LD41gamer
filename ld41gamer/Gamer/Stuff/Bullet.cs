@@ -26,10 +26,11 @@ namespace ld41gamer.Gamer
         public BulletType Type;
 
         public float LifeTime;
+        public float BulletDrop;
 
         Vector2 oldPos;
 
-        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination)
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, float speed = 0f)
         {
             Type = t;
             Position = spawnPos;
@@ -46,26 +47,32 @@ namespace ld41gamer.Gamer
 
             Texture = GameContent.acorn;
 
-            //Speed = Vector2.Distance(spawnPos, destination) * 2;
+            //if(speed == 0f)
+            //    Speed = Vector2.Distance(spawnPos, destination) * 2;
+
+            BulletDrop = 200f;
 
             switch(Type)
             {
 
                 case BulletType.Acorn:
-                    //Texture = GameContent.acorn;
-                    Speed = 800f;
-                    AirVelo = -100f;
+                    if(Speed == 0)
+                        Speed = 600f;
+                    AirVelo = -45;
                     break;
 
                 case BulletType.Cone:
+                    Speed = 200f;
+                    AirVelo = -100f;
                     break;
 
             }
+
         }
 
         void Gravity(float dt)
         {
-            AirVelo += Map.Gravity * dt;
+            AirVelo += BulletDrop * dt;
             Position += new Vector2(0, AirVelo * dt);
         }
 

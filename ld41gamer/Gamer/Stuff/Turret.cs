@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Obo.GameUtility;
+using Obo.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,9 @@ namespace ld41gamer.Gamer
                     break;
 
             }
-            
+
+            BuildTime = 0.5f;
+
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
@@ -101,7 +104,9 @@ namespace ld41gamer.Gamer
 
         private void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
-            map.AddBullet(new Bullet(BulletType.Acorn, spawn, target));
+            var dis = Vector2.Distance(spawn, target);
+            var off = dis / 25;
+            map.AddBullet(new Bullet(BulletType.Acorn, spawn, target - new Vector2(0, off)));
             //  shoot nice acorn
         }
 

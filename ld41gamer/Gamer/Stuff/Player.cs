@@ -25,9 +25,6 @@ namespace ld41gamer.Gamer
         {
             base.Update(gt, gs);
 
-            //var dt = gt.Delta();
-            //Position += Speed * Direction * dt;
-
             Direction = Vector2.Zero;
 
             if(Input.KeyHold(Keys.W))

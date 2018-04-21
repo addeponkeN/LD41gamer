@@ -14,7 +14,7 @@ namespace ld41gamer.Gamer
     public class Player : GameObject
     {
 
-        public float JumpPower = 1000;
+        public float JumpPower = 775;
         public bool IsGrounded;
         public float JumpVelo;
 
@@ -29,9 +29,9 @@ namespace ld41gamer.Gamer
         public Player()
         {
             Texture = GameContent.playerSheet;
-            Speed = 200;
+            Speed = 290;
             Size = new Vector2(165, 100);
-            SetCollisionBot(48, 80);
+            SetCollisionBot(40, 80);
 
             PlayAnimation(AnimationType.Idle);
         }
@@ -50,7 +50,7 @@ namespace ld41gamer.Gamer
             if(Input.KeyHold(Keys.LeftShift))
                 Speed = 1200;
             else
-                Speed = 200;
+                Speed = 290;
 
             Direction.X = 0;
             //Direction.Y = 0;
@@ -134,10 +134,16 @@ namespace ld41gamer.Gamer
             {
                 var rec = recc.Rec;
 
+
+
                 if(recc.IsPlatform)
                 {
+                    if(Input.KeyHold(Keys.S))
+                        continue;
+
                     if(rec.Bottom < Rectangle.Bottom)
                         continue;
+
                     if(IsFalling)
                     {
                         if(rec.Intersects(CollisionBox))
@@ -149,6 +155,7 @@ namespace ld41gamer.Gamer
                             }
                         }
                     }
+
                 }
                 else
                 {

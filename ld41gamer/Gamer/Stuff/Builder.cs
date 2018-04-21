@@ -14,6 +14,7 @@ namespace ld41gamer.Gamer
     {
         public List<Turret> Con;
 
+        public static bool IsPlacing;
 
         public Turret b;
 
@@ -27,13 +28,33 @@ namespace ld41gamer.Gamer
 
         }
 
+
+
         public void Update(GameTime gt, Map map)
         {
             var dt = gt.Delta();
+            var p = map.player;
+
+            bool canPlace = false;
+
+            if(b != null)
+            {
+                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.Rectangle));
+            }
 
             map.player.IsBuilding = false;
-            foreach(var t in Con)
+
+            for(int i = 0; i < Con.Count; i++)
             {
+                var t = Con[i];
+
+                if(canPlace)
+                    if(b != null)
+                    {
+                        canPlace = !t.Rectangle.Intersects(b.Rectangle);
+                    }
+
+
                 if(map.player.CollisionBox.Intersects(t.Rectangle))
                 {
                     if(Input.KeyHold(Keys.F))
@@ -46,12 +67,20 @@ namespace ld41gamer.Gamer
                             //  build compelte,
 
                             var turrent = new Turret(t.Type);
+                            turrent.Position = t.Position;
+                            turrent.SpriteEffects = t.SpriteEffects;
                             map.Turrets.Add(turrent);
+                            Con.RemoveAt(i);
                         }
+                        break;
                     }
                 }
+
+
+
+
             }
-            
+
 
             if(Input.KeyClick(Keys.D1))
             {
@@ -71,9 +100,10 @@ namespace ld41gamer.Gamer
             }
 
 
-            if(b!= null)
+            if(b != null)
             {
-                var p = map.player;
+                IsPlacing = true;
+
                 Vector2 pos;
                 if(map.player.LatestDirection == 1)
                 {
@@ -87,14 +117,40 @@ namespace ld41gamer.Gamer
                 b.Position = pos;
                 b.SpriteEffects = p.SpriteEffects;
 
-            }
+                if(canPlace)
+                {
+                    b.Color = Color.Lerp(Color.White, Color.ForestGreen, 0.5f);
 
+                    if(Input.LeftClick)
+                    {
+                        var t = new Turret(b.Type) { Position = b.Position, };
+                        t.Color = Color.CornflowerBlue;
+                        Con.Add(t);
+                        b = null;
+                    }
+
+                }
+                else
+                {
+                    b.Color = Color.Lerp(Color.White, Color.IndianRed, 0.5f);
+                }
+
+
+                if(Input.RightClick)
+                    b = null;
+            }
+            else
+            {
+                IsPlacing = false;
+            }
 
         }
 
         Turret Create(TowerType type)
         {
             var t = new Turret(type);
+            t.Color = new Color(127, 127, 127);
+            t.Alpha = 127;
 
             return t;
         }
@@ -104,12 +160,11 @@ namespace ld41gamer.Gamer
 
             foreach(var t in Con)
             {
-                //t.Draw(sb);
+                t.Draw(sb);
             }
 
             b?.Draw(sb);
 
         }
-
     }
 }

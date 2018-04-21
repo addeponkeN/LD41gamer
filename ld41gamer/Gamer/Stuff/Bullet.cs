@@ -24,25 +24,37 @@ namespace ld41gamer.Gamer
 
         public BulletType Type;
 
-
-
-        public Bullet(BulletType t)
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination)
         {
             Type = t;
 
             switch(Type)
             {
+
                 case BulletType.Acorn:
                     break;
+
                 case BulletType.Cone:
                     break;
+
             }
 
         }
 
-        public override void Update(GameTime gt, GameScreen gs)
+        public override void Update(GameTime gt, Map map, GameScreen gs)
         {
-            base.Update(gt, gs);
+            base.Update(gt, map, gs);
+
+            switch(Type)
+            {
+
+                case BulletType.Acorn:
+                    break;
+
+                case BulletType.Cone:
+                    break;
+
+            }
 
         }
 

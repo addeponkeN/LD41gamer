@@ -70,8 +70,6 @@ namespace ld41gamer.Gamer
                     else if(b.Rectangle.Bottom > 2450)
                         canPlace = true;
                 }
-
-                //canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox)) && !map.Turrets.Any(x=> x.CollisionBox.Intersects(b.CollisionBox));
             }
 
             map.player.IsBuilding = false;
@@ -88,7 +86,6 @@ namespace ld41gamer.Gamer
                         canPlace = !t.CollisionBox.Intersects(b.CollisionBox);
                     }
 
-
                 if(map.player.CollisionBox.Intersects(t.CollisionBox))
                 {
                     if(Input.KeyHold(Keys.F))
@@ -99,8 +96,7 @@ namespace ld41gamer.Gamer
                         t.isBeingBuilt = true;
                         if(t.BuildTime <= 0)
                         {
-                            //  build compelte,
-
+                            //  build compelte
                             var turr = new Turret(t.Type);
                             turr.Position = t.Position;
                             turr.SpriteEffects = t.SpriteEffects;

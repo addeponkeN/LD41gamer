@@ -169,7 +169,7 @@ namespace ld41gamer.Gamer
             }
 
 
-            comp.Update(gt, Game.cam2d, player);
+            comp.Update(gt, this, player);
 
             Bullets.RemoveAll(x => x.LifeTime < 0);
             Enemies.RemoveAll(x => !x.IsAlive);
@@ -184,7 +184,9 @@ namespace ld41gamer.Gamer
 
             CheckCollision();
 
+            tree.Update(gt, this, gs);
             builder.Update(gt, this);
+
 
             if(player.Rectangle.Intersects(tree.HitBoxes[1]))
                 isInsideTree = true;

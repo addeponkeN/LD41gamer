@@ -22,6 +22,13 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         public Camera2D cam2d;
 
+        float camLerp;
+        float lerpTimer = 1f;
+
+        bool lerp;
+
+        Vector2 outpos;
+
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
             FadeInTime = 2f;
@@ -36,7 +43,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
             cam2d = new Camera2D(port);
-
+            cam2d.MinimumZoom = 0.1f;
+            cam2d.MaximumZoom = 3.1f;
         }
 
         //  update always
@@ -44,10 +52,40 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Update(gt, gs);
 
-            LockCam(map);
 
             map.Update(gt, game);
 
+            var dt = gt.Delta();
+
+
+            float zout = 0.33f;
+            float zin = 1f;
+
+            Vector2 pos;
+
+            float x;
+            float y;
+
+            if(map.player.IsBuying)
+            {
+                lerpTimer -= dt * 1.25f;
+                if(lerpTimer <= 0f)
+                    lerpTimer = 0f;
+            }
+            else
+            {
+                lerpTimer += dt * 1.25f;
+                if(lerpTimer >= 1f)
+                    lerpTimer = 1f;
+            }
+
+            cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
+
+            x = MathHelper.Lerp(map.tree.Center.X, map.player.Center.X, lerpTimer);
+            y = MathHelper.Lerp(map.tree.Center.Y, map.player.Center.Y, lerpTimer);
+
+            pos = new Vector2(x, y);
+            cam2d.LookAt(pos);
 
             if(Input.WheelDown)
             {
@@ -60,15 +98,18 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             Input.ScrollValueOld = Input.ScrollValue;
 
+            //if(lerpTimer > zin-0.1f)
+            LockCamToMap(map);
+
         }
 
-        void LockCam(Map map)
+        void LockCamToMap(Map map)
         {
-            cam2d.LookAt(map.player.Center);
 
             if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom)
             {
-                cam2d.Position = new Vector2(cam2d.Position.X, map.GroundRectangle.Bottom - cam2d.BoundingRectangle.Height);
+                int y = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
+                cam2d.Position = new Vector2(cam2d.Position.X, cam2d.Position.Y - y);
             }
 
         }

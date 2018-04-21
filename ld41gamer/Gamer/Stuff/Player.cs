@@ -24,6 +24,7 @@ namespace ld41gamer.Gamer
 
         public bool IsMoving { get; set; }
         public bool IsBuilding { get; set; }
+        public bool IsBuying;
 
         public int LatestDirection;
 

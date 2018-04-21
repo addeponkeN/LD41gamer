@@ -1,6 +1,7 @@
 ﻿using ld41gamer.Gamer.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using Obo.GameUtility;
 using Obo.Utility;
@@ -24,33 +25,37 @@ namespace ld41gamer.Gamer
         public CompassItem(Enemy en) : base(GameContent.compassbox)
         {
             enemy = en;
-            SetSize(32);
+            SetSize(42);
             enemyBox = new Sprite(GameContent.antSheet);
             enemyBox.SetSize(26);
             enemyBox.SetSourceSize(165, 100);
             enemyBox.SetFrame(0, 0);
-            Origin = Size * .5f;
+            Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }
 
-        public void Update(GameTime gt, Camera2D cam, Player player)
+        public void Update(GameTime gt, Map map, Player player)
         {
+            var cam = map.Game.cam2d;
+
             if(cam.BoundingRectangle.Contains(enemy.Center))
                 IsDrawing = false;
             else
                 IsDrawing = true;
 
+            var target = enemy.Center;
+
             Vector2 center = new Vector2(cam.BoundingRectangle.Center.X, cam.BoundingRectangle.Center.Y);
 
-            var dir = Vector2.Normalize(enemy.Center - player.Center);
+            var dir = Vector2.Normalize(target - player.Center);
 
             var rec = cam.BoundingRectangle;
 
-            Position = enemy.Center;
+            Position = target;
 
             int x = (int)Helper.Clamp(Position.X, cam.Position.X + 32, rec.Right - (Size.X * 2));
             int y = (int)Helper.Clamp(Position.Y, cam.Position.Y + 32, rec.Bottom - (Size.Y * 2));
 
-            Position = new Vector2(x, y) + Origin;
+            Position = new Vector2(x, y);
 
             Rotation = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
         }
@@ -58,11 +63,9 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            var p = GHelper.Center(Rectangle, enemyBox.Size);
-            //var m = Matrix.CreateRotationY(Rotation);
-            //var pos = Vector2.Transform(p, m);
-            //enemyBox.Position = pos;
-            enemyBox.Position = p - Origin;
+            var rec = new Rectangle(Rectangle.X - ((int)Size.X / 2), Rectangle.Y - ((int)Size.Y / 2), (int)Size.X, (int)Size.Y);
+            var p = GHelper.Center(rec, enemyBox.Size);
+            enemyBox.Position = p;
             enemyBox.Draw(sb);
         }
 
@@ -84,11 +87,11 @@ namespace ld41gamer.Gamer
             Items.Add(c);
         }
 
-        public void Update(GameTime gt, Camera2D cam, Player p)
+        public void Update(GameTime gt, Map map, Player p)
         {
             foreach(var c in Items)
             {
-                c.Update(gt, cam, p);
+                c.Update(gt, map, p);
             }
             Items.RemoveAll(x => !x.enemy.IsAlive);
         }

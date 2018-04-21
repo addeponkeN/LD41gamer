@@ -1,6 +1,7 @@
 ﻿using ld41gamer.Gamer.Screener;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
 using Obo.Gui;
 using System;
@@ -25,10 +26,16 @@ namespace ld41gamer.Gamer
 
         public TreeBranch CurrentBranch;
 
+        public Rectangle BenchRec;
+
         public Tree()
         {
             Texture = GameContent.tree;
+
             SetSize(Texture.Width, Texture.Height);
+            SetSourceSize(Texture.Width, Texture.Height);
+            SetFrame(0, 0);
+            IsAnimating = false;
 
             HitBoxes = new List<Rectangle>();
             HitBoxes.Add(new Rectangle(4820, 2480, 420, 150));
@@ -46,6 +53,7 @@ namespace ld41gamer.Gamer
 
             //walls
 
+            BenchRec = new Rectangle(4952, 2470, 100, 100);
 
         }
 
@@ -88,16 +96,30 @@ namespace ld41gamer.Gamer
         {
             base.Update(gt, map, gs);
 
+            var p = map.player;
+
+            if(BenchRec.Intersects(p.CollisionBox))
+            {
+                if(Input.KeyClick(Keys.F) && p.IsGrounded)
+                {
+                    p.IsBuying = !p.IsBuying;
+                }
+            }
+            else
+                p.IsBuying = false;
+
         }
 
         public override void Draw(SpriteBatch sb)
         {
+            base.Draw(sb);
+
             foreach(var b in Branches)
             {
                 b.Draw(sb);
             }
 
-            sb.Draw(Texture, Rectangle, Color.White);
+            //sb.Draw(Texture, Rectangle, Color.White);
 
         }
     }

@@ -22,9 +22,11 @@ namespace ld41gamer.Gamer
 
         public Player()
         {
-            Texture = GameContent.player;
+            Texture = GameContent.playerSheet;
             Speed = 200;
-            Size = new Vector2(100);
+            Size = new Vector2(165, 100);
+
+            PlayAnimation(AnimationType.PlayerIdle);
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
@@ -48,21 +50,25 @@ namespace ld41gamer.Gamer
             if(Input.KeyHold(Keys.W))
             {
                 Direction.Y = -1;
+                PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyHold(Keys.S))
             {
                 Direction.Y = 1;
+                PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyHold(Keys.A))
             {
                 Direction.X = -1;
+                PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyHold(Keys.D))
             {
                 Direction.X = 1;
+                PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyClick(Keys.Space))
@@ -142,7 +148,8 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rectangle, Color.White);
+            base.Draw(sb);
+            //sb.Draw(Texture, , Color.White);
 
         }
 

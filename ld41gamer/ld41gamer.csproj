@@ -172,6 +172,7 @@
     <Content Include="Content\Textures\compassbox.png" />
     <Content Include="Content\Textures\ekorr.png" />
     <Content Include="Content\Textures\ground.png" />
+    <Content Include="Content\Textures\playerSheet.png" />
     <Content Include="Content\Textures\tree.png" />
     <Content Include="Obo.GameUtility.dll" />
     <Content Include="Obo.Gui.dll" />

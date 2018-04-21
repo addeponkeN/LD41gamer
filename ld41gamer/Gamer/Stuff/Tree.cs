@@ -50,6 +50,7 @@ namespace ld41gamer.Gamer
 
 
 
+
             int xStart = 4916;
             int yStart = 1860;
             int xOff = 200;
@@ -85,22 +86,25 @@ namespace ld41gamer.Gamer
             b.Position = Position;
 
             Branches.Add(b);
-            //Rectangle rec;
+            Rectangle rec = new Rectangle();
 
-            //switch(type)
-            //{
-            //    case TreeBranchType.TopLeft:
-            //        rec = new Rectangle();
-            //        break;
-            //    case TreeBranchType.TopRight:
-            //        break;
-            //    case TreeBranchType.BotRight:
-            //        break;
-            //    case TreeBranchType.BotLeft:
-            //        break;
-            //}
+            switch(type)
+            {
+                case TreeBranchType.TopLeft:
+                    rec = new Rectangle(4466, 1550, 454, 15);
+                    break;
+                case TreeBranchType.TopRight:
+                    rec = new Rectangle(5110, 1690, 454, 15);
+                    break;
+                case TreeBranchType.BotRight:
+                    rec = new Rectangle(5125, 1995, 454, 15);
+                    break;
+                case TreeBranchType.BotLeft:
+                    rec = new Rectangle(4454, 1854, 454, 15);
+                    break;
+            }
 
-            //map.CollisionBoxes.Add(new Recc(rec, true));
+            map.CollisionBoxes.Add(new Recc(rec, true));
 
         }
 

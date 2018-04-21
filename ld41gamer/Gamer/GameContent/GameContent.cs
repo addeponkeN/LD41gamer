@@ -27,6 +27,12 @@ namespace ld41gamer.Gamer
 
             turret1,
             turret2,
+            turretCon,
+
+            botleftBranch,
+            botrightBranch,
+            topleftBranch,
+            toprightBranch,
             
             layer0,
             layer1,
@@ -49,6 +55,13 @@ namespace ld41gamer.Gamer
             antSheet = Texture("antSheet");
 
             turret1 = Texture("turret1");
+            turret2 = Texture("turret2");
+            turretCon = Texture("turretCon");
+
+            botleftBranch = Texture("botleftBranch");
+            botrightBranch = Texture("botrightBranch");
+            topleftBranch = Texture("topleftBranch");
+            toprightBranch = Texture("toprightBranch");
 
             layer0 = Texture("layer0");
             layer1 = Texture("layer1");

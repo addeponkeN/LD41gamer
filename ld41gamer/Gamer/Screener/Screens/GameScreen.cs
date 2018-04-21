@@ -23,6 +23,8 @@ namespace ld41gamer.Gamer.Screener
             if(Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
+            GameContent.Load(Content);
+
             AddState(new GameStatePlaying(this));
         }
 

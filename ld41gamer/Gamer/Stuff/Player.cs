@@ -16,10 +16,11 @@ namespace ld41gamer.Gamer
 
         public float JumpPower = 300;
         public float JumpVelo;
-        public bool IsJumping;
+        public bool IsJumping = true;
 
         public Player()
         {
+            Texture = GameContent.player;
             Speed = 200;
             Size = new Vector2(100);
         }
@@ -33,10 +34,15 @@ namespace ld41gamer.Gamer
             Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
 
             if(IsJumping)
-            JumpVelo += Map.Gravity * dt;
+                JumpVelo += Map.Gravity * dt;
+
+
+            if(Input.KeyHold(Keys.LeftShift))
+                Speed = 800;
+            else
+                Speed = 200;
 
             Direction = Vector2.Zero;
-
             if(Input.KeyHold(Keys.W))
             {
                 Direction.Y = -1;

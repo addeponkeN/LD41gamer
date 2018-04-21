@@ -9,8 +9,36 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ld41gamer.Gamer
 {
+
+    public enum BulletType
+    {
+
+        Acorn,
+
+        Cone,
+
+    }
+
     public class Bullet : GameObject
     {
+
+        public BulletType Type;
+
+
+
+        public Bullet(BulletType t)
+        {
+            Type = t;
+
+            switch(Type)
+            {
+                case BulletType.Acorn:
+                    break;
+                case BulletType.Cone:
+                    break;
+            }
+
+        }
 
         public override void Update(GameTime gt, GameScreen gs)
         {
@@ -25,4 +53,6 @@ namespace ld41gamer.Gamer
         }
 
     }
+
+
 }

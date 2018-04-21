@@ -16,7 +16,8 @@ namespace ld41gamer.Gamer
 
         public Tree()
         {
-            Texture = GameContent.tree; 
+            Texture = GameContent.tree;
+            SetSize(Texture.Width, Texture.Height);
         }
 
         public override void Update(GameTime gt, GameScreen gs)

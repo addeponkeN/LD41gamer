@@ -17,8 +17,6 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 {
     public class GameStatePlaying : GameState
     {
-        
-        Player player;
 
         Map map;
 
@@ -34,11 +32,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
-            player = new Player();
             map = new Map();
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
-
             cam2d = new Camera2D(port);
 
         }
@@ -48,21 +44,20 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Update(gt, gs);
 
-            player.Update(gt, game);
-
             map.Update(gt, game);
-            map.CheckCollision(player);
 
-            cam2d.LookAt(player.Center);
+            LockCam(map);
 
         }
 
-        void LockCam()
+        void LockCam(Map map)
         {
-            cam2d.LookAt(player.Center);
+            cam2d.LookAt(map.player.Center);
 
-            //if()
-            //if(cam2d.Position.Y + )
+            if(cam2d.BoundingRectangle.Bottom > map.Rectangle.Bottom)
+            {
+                cam2d.Position = new Vector2(cam2d.Position.X, map.Rectangle.Bottom - cam2d.BoundingRectangle.Height);
+            }
         }
 
         public override void Draw(SpriteBatch sb, Camera cam)
@@ -72,7 +67,6 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             sb.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.Draw(sb);
-            player.Draw(sb);
 
             sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(2, 2)), Color.Red);
 

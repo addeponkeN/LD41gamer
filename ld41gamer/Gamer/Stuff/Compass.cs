@@ -25,10 +25,10 @@ namespace ld41gamer.Gamer
         {
             enemy = en;
             SetSize(32);
-            enemyBox = new Sprite(GameContent.enemysheet);
+            enemyBox = new Sprite(GameContent.antSheet);
             enemyBox.SetSize(26);
-            enemyBox.SetSourceSize(100);
-            enemyBox.SetFrame(enemy.Row, enemy.Column);
+            enemyBox.SetSourceSize(165, 100);
+            enemyBox.SetFrame(0, 0);
             Origin = Size * .5f;
         }
 

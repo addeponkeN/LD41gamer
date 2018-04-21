@@ -22,13 +22,15 @@ namespace ld41gamer.Gamer
 
         public bool IsMoving { get; set; }
 
+        public int Money;
+
         public Player()
         {
             Texture = GameContent.playerSheet;
             Speed = 200;
             Size = new Vector2(165, 100);
 
-            PlayAnimation(AnimationType.PlayerIdle);
+            PlayAnimation(AnimationType.Idle);
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
@@ -83,7 +85,7 @@ namespace ld41gamer.Gamer
             if(Direction.X == 0)
             {
                 IsMoving = false;
-                PlayAnimation(AnimationType.PlayerIdle);
+                PlayAnimation(AnimationType.Idle);
             }
 
 

@@ -22,6 +22,7 @@ namespace ld41gamer.Gamer
             ground,
             acorn,
             enemysheet,
+            antSheet,
             
             layer0,
             layer1,
@@ -40,6 +41,7 @@ namespace ld41gamer.Gamer
             ground = Texture("ground");
             acorn = Texture("acorn");
             enemysheet = Texture("ekorr");
+            antSheet = Texture("antSheet");
 
             layer0 = Texture("layer0");
             layer1 = Texture("layer1");

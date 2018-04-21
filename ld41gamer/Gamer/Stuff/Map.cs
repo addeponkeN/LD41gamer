@@ -93,6 +93,22 @@ namespace ld41gamer.Gamer
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
+
+                for(int v = 0; v < Bullets.Count; v++)
+                {
+                    var b = Bullets[v];
+                    if(e.Rectangle.Intersects(b.Rectangle))
+                    {
+                        e.HealthPoints--;
+                        Bullets.Remove(b);
+                    }
+                }
+
+                if(e.HealthPoints <= 0)
+                {
+                    player.Money += e.Reward;
+                    Enemies.Remove(e);
+                }
             }
 
             comp.Update(gt, Game.cam2d, player);
@@ -117,9 +133,9 @@ namespace ld41gamer.Gamer
 
             var side = Rng.Noxt(0, 1);            
             if(side == 0)
-                e.Position = GroundPosition.ToVector2();
+                e.Position = GroundPosition.ToVector2() - e.Size / 2;
             else
-                e.Position = new Vector2(GroundRectangle.Width, GroundPosition.Y);
+                e.Position = new Vector2(GroundRectangle.Width, GroundPosition.Y) - e.Size / 2;
 
             Enemies.Add(e);
             comp.Add(e);

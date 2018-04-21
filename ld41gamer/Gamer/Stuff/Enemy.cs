@@ -21,26 +21,36 @@ namespace ld41gamer.Gamer
     {
         public EnemyType Type;
         public bool IsFlying;
+        public int Reward;
+
+        float attackTimer;
 
         public Enemy(EnemyType t)
         {
             Type = t;
             Speed = 50f;
+            SetSize(165 / 2, 100 / 2);
+
+            PlayAnimation(AnimationType.EnemyWalk);
 
             switch(t)
             {
                 case EnemyType.Ant:
+                    Texture = GameContent.antSheet;
                     HealthPoints = 3;
                     Damage = 1;
+                    Reward = 1;
                     break;
                 case EnemyType.Beetle:
                     HealthPoints = 7;
                     Damage = 2;
+                    Reward = 2;
                     break;
                 case EnemyType.FlyingAnt:
                     HealthPoints = 3;
                     Damage = 1;
                     IsFlying = true;
+                    Reward = 3;
                     break;
             }
         }
@@ -51,22 +61,36 @@ namespace ld41gamer.Gamer
 
             var dt = gt.Delta();
 
-            Position += new Vector2(Direction.X * Speed * dt, 0);
-
-            if(Position.X > map.GroundRectangle.Center.X)
+            if(Rectangle.Intersects(map.tree.Rectangle))
             {
-                Direction.X = -1;
+                attackTimer += dt;
+                if(attackTimer >= 2)
+                {
+                    map.tree.HealthPoints -= Damage;
+                    attackTimer = 0;
+                }
             }
             else
             {
-                Direction.X = 1;
+                Position += new Vector2(Direction.X * Speed * dt, 0);
+
+                if(Position.X > map.GroundRectangle.Center.X)
+                {
+                    Direction.X = -1;
+                    SpriteEffects = SpriteEffects.FlipHorizontally;
+                }
+                else
+                {
+                    Direction.X = 1;
+                }
             }
         }
 
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.Red);
+            base.Draw(sb);
+            //sb.Draw(Texture, Rectangle, Color.White);
 
         }
     }

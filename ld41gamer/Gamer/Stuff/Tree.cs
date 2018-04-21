@@ -15,6 +15,7 @@ namespace ld41gamer.Gamer
     {
 
         public int Level { get; set; }
+        public int HealthPoints { get; set; }
 
         public List<TreeBranch> BranchSlots = new List<TreeBranch>();
 

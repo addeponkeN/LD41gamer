@@ -58,7 +58,7 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            enemyBox.Position = GHelper.Center(Rectangle, enemyBox.Size);
+            enemyBox.Position = GHelper.Center(Rectangle, enemyBox.Size) - Origin;
             enemyBox.Draw(sb);
         }
 

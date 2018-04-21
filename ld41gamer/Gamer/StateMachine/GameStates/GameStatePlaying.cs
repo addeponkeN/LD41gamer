@@ -82,8 +82,6 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.DrawWorld(sb);
 
-            //sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(2, 2)), Color.Red);
-
             sb.End();
 
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);

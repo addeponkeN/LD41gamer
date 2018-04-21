@@ -14,8 +14,11 @@ namespace ld41gamer.Gamer
     {
         static ContentManager content;
 
-        public static Texture2D tree;
-        public static Texture2D player;
+        public static Texture2D
+            tree,
+            player,
+            compassbox
+            ;
 
         public static void Load(ContentManager c)
         {
@@ -23,6 +26,7 @@ namespace ld41gamer.Gamer
             AnimationManager.Load();
             tree = Texture("tree");
             player = Texture("ekorr");
+            compassbox = Texture("compassbox");
         }
 
         public static void Unload()

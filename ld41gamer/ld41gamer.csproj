@@ -168,6 +168,8 @@
   <ItemGroup>
     <Content Include="Content\Textures\acorn.png" />
     <Content Include="Content\Textures\antSheet.png" />
+    <Content Include="Content\Textures\botleftBranch.png" />
+    <Content Include="Content\Textures\botrightBranch.png" />
     <Content Include="Content\Textures\box.png" />
     <Content Include="Content\Textures\boxbox.png" />
     <Content Include="Content\Textures\boxhalf.png" />
@@ -179,6 +181,8 @@
     <Content Include="Content\Textures\layer2.png" />
     <Content Include="Content\Textures\layer3.png" />
     <Content Include="Content\Textures\playerSheet.png" />
+    <Content Include="Content\Textures\topleftBranch.png" />
+    <Content Include="Content\Textures\toprightBranch.png" />
     <Content Include="Content\Textures\tree.png" />
     <Content Include="Content\Textures\treeInside.png" />
     <Content Include="Content\Textures\turret1.png" />

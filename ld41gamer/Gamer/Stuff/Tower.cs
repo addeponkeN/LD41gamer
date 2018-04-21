@@ -21,10 +21,18 @@ namespace ld41gamer.Gamer
     {
         public TowerType Type;
 
+        float attackTimer;
+        float attackSpeed;
+
+        //  range in pixels
+        int Range;
+
         public Tower(TowerType t)
         {
             Type = t;
             Texture = UtilityContent.box;
+
+            Range = 700;
 
             switch(t)
             {
@@ -34,6 +42,8 @@ namespace ld41gamer.Gamer
                     Damage = 1;
                     break;
                 case TowerType.AcornTurret:
+                    Texture = GameContent.turret1;
+                    SetSize(130, 74);
                     Name = "Acorn Turret";
                     HealthPoints = 10;
                     Damage = 2;
@@ -50,12 +60,31 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
+
+            attackTimer += gt.Delta();
+
+            for(int i = 0; i < map.Enemies.Count; i++)
+            {
+                var e = map.Enemies[i];
+                var distance = Vector2.Distance(Position, e.Position);
+
+                if(distance <= Range)
+                    if(attackTimer >= attackSpeed)
+                    {
+                        Shoot();
+                        attackTimer = 0;
+                    }
+            }
         }
 
+        private void Shoot()
+        {
+            //  shoot nice acorn
+        }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rectangle, Color.White);
+            base.Draw(sb);
         }
     }
 }

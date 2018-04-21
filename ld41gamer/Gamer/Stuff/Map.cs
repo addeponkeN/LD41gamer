@@ -25,6 +25,7 @@ namespace ld41gamer.Gamer
 
         public List<Bullet> Bullets;
         public List<Enemy> Enemies;
+        public List<Tower> Turrets;
 
         public Tree tree;
 
@@ -54,6 +55,7 @@ namespace ld41gamer.Gamer
 
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
+            Turrets = new List<Tower>();
 
             comp = new Compass();
 
@@ -91,6 +93,12 @@ namespace ld41gamer.Gamer
                 b.Update(gt, this, gs);
             }
 
+            for(int i = 0; i < Turrets.Count; i++)
+            {
+                var t = Turrets[i];
+                t.Update(gt, this, gs);
+            }
+
             for(int i = 0; i < Enemies.Count; i++)
             {
                 var e = Enemies[i];
@@ -109,11 +117,9 @@ namespace ld41gamer.Gamer
                 if(e.HealthPoints <= 0)
                 {
                     player.Money += e.Reward;
-                    Enemies.Remove(e);
+                    e.IsAlive = false;
                 }
             }
-
-
 
             comp.Update(gt, Game.cam2d, player);
 
@@ -170,14 +176,19 @@ namespace ld41gamer.Gamer
                 p.Draw(sb);
             }
 
+            tree.Draw(sb);
+            if(isInsideTree)
+                sb.Draw(GameContent.treeInside, tree.Position, Color.White);
+
+            foreach(var t in Turrets)
+            {
+                t.Draw(sb);
+            }
+
             foreach(var e in Enemies)
             {
                 e.Draw(sb);
             }
-
-            tree.Draw(sb);
-            if(isInsideTree)
-                sb.Draw(GameContent.treeInside, tree.Position, Color.White);
 
             player.Draw(sb);
 

@@ -15,7 +15,6 @@ namespace ld41gamer.Gamer
 {
     public class Map
     {
-
         public static float Gravity = 800f;
 
         public Point Size;
@@ -94,7 +93,8 @@ namespace ld41gamer.Gamer
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.ForestGreen);
+            for(int i = 0; i < Rectangle.Width; i+= GameContent.ground.Width)
+                sb.Draw(GameContent.ground, new Vector2(i, Position.Y) , Color.White);
 
             foreach(var p in Props)
             {

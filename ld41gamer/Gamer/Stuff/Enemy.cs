@@ -53,7 +53,7 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.Red);
+            sb.Draw(UtilityContent.box, Rectangle, Color.White);
 
         }
     }

@@ -113,6 +113,8 @@ namespace ld41gamer.Gamer
                 }
             }
 
+
+
             comp.Update(gt, Game.cam2d, player);
 
             Bullets.RemoveAll(x => x.LifeTime < 0);

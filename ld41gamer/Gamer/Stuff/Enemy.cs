@@ -61,27 +61,30 @@ namespace ld41gamer.Gamer
 
             var dt = gt.Delta();
 
-            if(Rectangle.Intersects(map.tree.Rectangle))
+            foreach(var t in map.tree.HitBoxes)
             {
-                attackTimer += dt;
-                if(attackTimer >= 2)
+                if(Rectangle.Intersects(t))
                 {
-                    map.tree.HealthPoints -= Damage;
-                    attackTimer = 0;
-                }
-            }
-            else
-            {
-                Position += new Vector2(Direction.X * Speed * dt, 0);
-
-                if(Position.X > map.GroundRectangle.Center.X)
-                {
-                    Direction.X = -1;
-                    SpriteEffects = SpriteEffects.FlipHorizontally;
+                    attackTimer += dt;
+                    if(attackTimer >= 2)
+                    {
+                        map.tree.HealthPoints -= Damage;
+                        attackTimer = 0;
+                    }
                 }
                 else
                 {
-                    Direction.X = 1;
+                    Position += new Vector2(Direction.X * Speed * dt, 0);
+
+                    if(Position.X > map.GroundRectangle.Center.X)
+                    {
+                        Direction.X = -1;
+                        SpriteEffects = SpriteEffects.FlipHorizontally;
+                    }
+                    else
+                    {
+                        Direction.X = 1;
+                    }
                 }
             }
         }

@@ -47,9 +47,9 @@ namespace ld41gamer.Gamer
             }
         }
 
-        public override void Update(GameTime gt, GameScreen gs)
+        public override void Update(GameTime gt, Map map, GameScreen gs)
         {
-            base.Update(gt, gs);
+            base.Update(gt, map, gs);
         }
 
 

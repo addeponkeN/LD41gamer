@@ -73,20 +73,31 @@ namespace ld41gamer.Gamer
                     }
                     return;
                 }
-                else
+            }
+            foreach(var t in map.Turrets)
+            {
+                if(Rectangle.Intersects(t.Rectangle))
                 {
-                    Position += new Vector2(Direction.X * Speed * dt, 0);
-
-                    if(Position.X > map.GroundRectangle.Center.X)
+                    attackTimer += dt;
+                    if(attackTimer >= 2)
                     {
-                        Direction.X = -1;
-                        SpriteEffects = SpriteEffects.FlipHorizontally;
+                        t.HealthPoints -= Damage;
+                        attackTimer = 0;
                     }
-                    else
-                    {
-                        Direction.X = 1;
-                    }
+                    return;
                 }
+            }
+
+            Position += new Vector2(Direction.X * Speed * dt, 0);
+
+            if(Position.X > map.GroundRectangle.Center.X)
+            {
+                Direction.X = -1;
+                SpriteEffects = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                Direction.X = 1;
             }
         }
 

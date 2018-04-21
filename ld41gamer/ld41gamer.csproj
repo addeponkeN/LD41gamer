@@ -180,6 +180,7 @@
     <Content Include="Content\Textures\layer3.png" />
     <Content Include="Content\Textures\playerSheet.png" />
     <Content Include="Content\Textures\tree.png" />
+    <Content Include="Content\Textures\treeInside.png" />
     <Content Include="Obo.GameUtility.dll" />
     <Content Include="Obo.Gui.dll" />
     <Content Include="Obo.Utility.dll" />

@@ -17,6 +17,8 @@ namespace ld41gamer.Gamer
         public int Level { get; set; }
         public int HealthPoints { get; set; }
 
+        public List<Rectangle> HitBoxes;
+
         public List<TreeBranch> BranchSlots = new List<TreeBranch>();
 
         public List<Vector2> poss = new List<Vector2>();
@@ -25,6 +27,10 @@ namespace ld41gamer.Gamer
         {
             Texture = GameContent.tree;
             SetSize(Texture.Width, Texture.Height);
+
+            HitBoxes = new List<Rectangle>();
+            HitBoxes.Add(new Rectangle(4820, 2480, 420, 150));
+            HitBoxes.Add(new Rectangle(4916, 1380, 200, 1200));
 
             int xStart = 4916;
             int yStart = 1860;

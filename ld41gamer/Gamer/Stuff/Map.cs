@@ -38,6 +38,8 @@ namespace ld41gamer.Gamer
 
         float enemySpawnTimer = 4.5f;
 
+        bool isInsideTree;
+
         public Vector2 MouseWorldPos()
         {
             return Vector2.Transform(Input.MousePos, Matrix.Invert(Game.cam2d.GetViewMatrix()));
@@ -125,6 +127,11 @@ namespace ld41gamer.Gamer
                 SpawnEnemy();
                 enemySpawnTimer = 0;
             }
+
+            if(player.Rectangle.Intersects(tree.HitBoxes[1]))
+                isInsideTree = true;
+            else
+                isInsideTree = false;
         }
 
         public void SpawnEnemy()
@@ -167,6 +174,8 @@ namespace ld41gamer.Gamer
             }
 
             tree.Draw(sb);
+            if(isInsideTree)
+                sb.Draw(GameContent.treeInside, tree.Position, Color.White);
 
             player.Draw(sb);
 

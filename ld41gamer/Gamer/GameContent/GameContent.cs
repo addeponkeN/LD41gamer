@@ -26,6 +26,7 @@ namespace ld41gamer.Gamer
             antSheet,
 
             turret1,
+            turret2,
             
             layer0,
             layer1,

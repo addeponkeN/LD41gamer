@@ -14,6 +14,7 @@ namespace ld41gamer.Gamer
     {
         PeaShooter,
         AcornTurret,
+        AcornSniper,
         ConeCatapult
     }
 
@@ -33,6 +34,7 @@ namespace ld41gamer.Gamer
             Texture = UtilityContent.box;
 
             Range = 700;
+            attackSpeed = 2;
 
             switch(t)
             {
@@ -48,12 +50,21 @@ namespace ld41gamer.Gamer
                     HealthPoints = 10;
                     Damage = 2;
                     break;
+                case TowerType.AcornSniper:
+                    Texture = GameContent.turret2;
+                    SetSize(130, 93);
+                    Name = "Acorn Sniper";
+                    HealthPoints = 10;
+                    Damage = 3;
+                    Range = 1200;
+                    break;
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
                     HealthPoints = 15;
                     Damage = 3;
                     //SplashDamage = true;
                     break;
+
             }
         }
 

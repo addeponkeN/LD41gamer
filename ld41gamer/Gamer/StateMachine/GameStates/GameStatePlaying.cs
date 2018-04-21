@@ -17,6 +17,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
     {
 
 
+        Player player;
+
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -28,19 +30,15 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
+            player = new Player();
+
         }
 
         //  update always
         public override void Update(GameTime gt, GameScreen gs)
         {
             base.Update(gt, gs);
-
-        }
-
-        //  update only when not paused
-        public override void ActiveUpdate(GameTime gt)
-        {
-            base.ActiveUpdate(gt);
+            player.Update(gt, game);
 
         }
 
@@ -49,7 +47,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             base.Draw(sb, cam);
             sb.Begin();
 
-
+            player.Draw(sb);
 
             sb.End();
         }

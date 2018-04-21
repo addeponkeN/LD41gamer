@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ld41gamer.Gamer.Screener;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Obo.GameUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,30 +11,52 @@ using System.Threading.Tasks;
 
 namespace ld41gamer.Gamer
 {
-    public class Player
+    public class Player : GameObject
     {
-        public Vector2 Position;
-        public Vector2 Size;
-        public Vector2 Rectangle => new Rectangle(Position.X)
-        public float Speed;
+
+
 
         public Player()
         {
+            Speed = 200;
+        }
+
+        public override void Update(GameTime gt, GameScreen gs)
+        {
+            base.Update(gt, gs);
+
+            //var dt = gt.Delta();
+            //Position += Speed * Direction * dt;
+
+            Direction = Vector2.Zero;
+
+            if(Input.KeyHold(Keys.W))
+            {
+                Direction.Y = -1;
+            }
+
+            if(Input.KeyHold(Keys.S))
+            {
+                Direction.Y = 1;
+            }
+
+            if(Input.KeyHold(Keys.A))
+            {
+                Direction.X = -1;
+            }
+
+            if(Input.KeyHold(Keys.D))
+            {
+                Direction.X = 1;
+            }
+
 
         }
 
-        public void Update(GameTime gt)
+
+        public override void Draw(SpriteBatch sb)
         {
-
-
-            
-
-
-        }
-
-
-        public void Draw(SpriteBatch sb)
-        {
+            sb.Draw(UtilityContent.box, Rectangle, Color.MonoGameOrange);
 
         }
 

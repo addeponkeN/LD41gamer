@@ -132,6 +132,8 @@ namespace ld41gamer.Gamer
             {
                 var t = Turrets[i];
                 t.Update(gt, this, gs);
+                if(t.HealthPoints <= 0)
+                    Turrets.Remove(t);
             }
 
             for(int i = 0; i < Enemies.Count; i++)
@@ -231,6 +233,8 @@ namespace ld41gamer.Gamer
                 t.Draw(sb);
             }
 
+            builder.Draw(sb);
+
             foreach(var e in Enemies)
             {
                 e.Draw(sb);
@@ -242,8 +246,6 @@ namespace ld41gamer.Gamer
             {
                 b.Draw(sb);
             }
-
-            builder.Draw(sb);
 
             comp.Draw(sb);
 

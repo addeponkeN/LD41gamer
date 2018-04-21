@@ -27,6 +27,8 @@ namespace ld41gamer.Gamer
 
         public float BuildTime;
 
+        Vector2 bulletStartPosLeft, bulletStartPosRight;
+
         //  range in pixels
         int Range;
 
@@ -45,6 +47,9 @@ namespace ld41gamer.Gamer
             SetCollisionBot(115, 72);
 
             Texture = GameContent.turretsheet;
+
+            bulletStartPosRight = new Vector2(156, 135);
+            bulletStartPosLeft = new Vector2(27, 135);
 
             switch(t)
             {

@@ -19,6 +19,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         Player player;
 
+        Map map;
+
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -31,6 +33,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             base.Load(content);
 
             player = new Player();
+            map = new Map();
 
         }
 
@@ -39,14 +42,14 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Update(gt, gs);
             player.Update(gt, game);
-
+            map.Update(gt, game);
         }
 
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
             sb.Begin();
-
+            map.Draw(sb);
             player.Draw(sb);
 
             sb.End();

@@ -18,9 +18,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
     public class GameStatePlaying : GameState
     {
 
-        Map map;
+        public Map map;
 
-        Camera2D cam2d;
+        public Camera2D cam2d;
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -32,7 +32,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
-            map = new Map();
+            map = new Map(this);
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
             cam2d = new Camera2D(port);

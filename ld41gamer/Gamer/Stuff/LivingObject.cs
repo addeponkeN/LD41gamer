@@ -11,5 +11,7 @@ namespace ld41gamer.Gamer
         public string Name { get; set; }
         public int HealthPoints { get; set; }
         public int Damage { get; set; }
+
+        public bool IsAlive { get; set; }
     }
 }

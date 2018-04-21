@@ -1,5 +1,6 @@
 ﻿using ld41gamer.Gamer.Screener;
 using ld41gamer.Gamer.Sprites;
+using ld41gamer.Gamer.StateMachine.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Obo.GameUtility;
@@ -31,8 +32,16 @@ namespace ld41gamer.Gamer
 
         public Player player;
 
-        public Map()
+        public GameStatePlaying Game;
+
+        public Vector2 MouseWorldPos()
         {
+            return Vector2.Transform(Input.MousePos, Matrix.Invert(Game.cam2d.GetViewMatrix()));
+        }
+
+        public Map(GameStatePlaying game)
+        {
+            Game = game;
             Size = new Point(10000, 100);
             Position = new Point(0, Globals.ScreenHeight - Size.Y);
 
@@ -49,17 +58,32 @@ namespace ld41gamer.Gamer
             }
 
             tree = new Tree();
-            tree.Position = new Vector2(GHelper.Center(Rectangle, tree.Size).X,Position.Y - tree.Size.Y);
+            tree.Position = new Vector2(GHelper.Center(Rectangle, tree.Size).X, Position.Y - tree.Size.Y);
 
             player = new Player();
             player.Position = new Vector2(GHelper.Center(Rectangle, player.Size).X, Position.Y - player.Size.Y);
 
         }
 
+        public void AddBullet(Bullet bullet)
+        {
+            Bullets.Add(bullet);
+        }
+
         public void Update(GameTime gt, GameScreen gs)
         {
 
             player.Update(gt, this, gs);
+
+
+            for(int i = 0; i < Bullets.Count; i++)
+            {
+                var b = Bullets[i];
+                b.Update(gt, this, gs);
+
+
+            }
+
 
             CheckCollision(player);
         }

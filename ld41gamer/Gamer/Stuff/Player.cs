@@ -71,7 +71,7 @@ namespace ld41gamer.Gamer
 
             if(Input.LeftClick)
             {
-                Shoot();
+                Shoot(map);
             }
 
 
@@ -85,11 +85,13 @@ namespace ld41gamer.Gamer
         }
 
 
-        void Shoot()
+        void Shoot(Map map)
         {
+            var des = map.MouseWorldPos();
 
+            var b = new Bullet(BulletType.Acorn, Center, des);
 
-
+            map.AddBullet(b);
         }
 
 

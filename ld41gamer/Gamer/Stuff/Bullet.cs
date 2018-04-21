@@ -27,17 +27,23 @@ namespace ld41gamer.Gamer
         public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination)
         {
             Type = t;
+            Position = spawnPos;
+            Direction = Vector2.Normalize(destination - spawnPos);
 
             switch(Type)
             {
 
                 case BulletType.Acorn:
+                    Speed = 500f;
+
                     break;
 
                 case BulletType.Cone:
+
                     break;
 
             }
+
 
         }
 

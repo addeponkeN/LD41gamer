@@ -26,7 +26,6 @@ namespace ld41gamer.Gamer
 
         }
 
-
         public override void Draw(SpriteBatch sb)
         {
             sb.Draw(Texture, Rectangle, Color.White);

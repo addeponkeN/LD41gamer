@@ -25,9 +25,9 @@ namespace ld41gamer.Gamer
             Size = new Vector2(100);
         }
 
-        public override void Update(GameTime gt, GameScreen gs)
+        public override void Update(GameTime gt, Map map, GameScreen gs)
         {
-            base.Update(gt, gs);
+            base.Update(gt, map, gs);
             var dt = gt.Delta();
             //UpdatePosition(gt);
 
@@ -69,13 +69,29 @@ namespace ld41gamer.Gamer
                     Jump();
             }
 
+            if(Input.LeftClick)
+            {
+                Shoot();
+            }
+
+
         }
+
 
         void Jump()
         {
             IsJumping = true;
             JumpVelo = -JumpPower;
         }
+
+
+        void Shoot()
+        {
+
+
+
+        }
+
 
         public void Collision(Rectangle rec)
         {
@@ -116,7 +132,7 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.MonoGameOrange);
+            sb.Draw(Texture, Rectangle, Color.White);
 
         }
 

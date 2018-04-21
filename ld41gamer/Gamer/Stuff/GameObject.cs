@@ -19,7 +19,7 @@ namespace ld41gamer.Gamer
         public Vector2 Direction;
         public float Speed;
 
-        public virtual void Update(GameTime gt, GameScreen gs)
+        public virtual void Update(GameTime gt, Map map, GameScreen gs)
         {
 
 

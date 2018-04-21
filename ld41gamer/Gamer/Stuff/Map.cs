@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ld41gamer.Gamer
 {
-    class Map
+    public class Map
     {
 
         public static float Gravity = 800f;
@@ -23,7 +23,7 @@ namespace ld41gamer.Gamer
         public Rectangle Rectangle => new Rectangle(Position, Size);
 
         public List<Bullet> Bullets;
-        //public List<Enemy> Enemies;
+        public List<Enemy> Enemies;
 
         public Tree tree;
 
@@ -35,6 +35,9 @@ namespace ld41gamer.Gamer
         {
             Size = new Point(10000, 100);
             Position = new Point(0, Globals.ScreenHeight - Size.Y);
+
+            Bullets = new List<Bullet>();
+            Enemies = new List<Enemy>();
 
             for(int i = 0; i < 30; i++)
             {
@@ -56,7 +59,7 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt, GameScreen gs)
         {
 
-            player.Update(gt, gs);
+            player.Update(gt, this, gs);
 
             CheckCollision(player);
         }

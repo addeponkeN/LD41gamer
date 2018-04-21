@@ -19,6 +19,7 @@ namespace ld41gamer.Gamer
         public Player()
         {
             Speed = 200;
+            Size = new Vector2(100);
         }
 
         public override void Update(GameTime gt, GameScreen gs)

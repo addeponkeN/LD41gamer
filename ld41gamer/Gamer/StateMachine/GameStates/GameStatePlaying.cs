@@ -16,6 +16,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
     public class GameStatePlaying : GameState
     {
 
+
+
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
             FadeInTime = 2f;
@@ -28,12 +30,14 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         }
 
+        //  update always
         public override void Update(GameTime gt, GameScreen gs)
         {
             base.Update(gt, gs);
 
         }
 
+        //  update only when not paused
         public override void ActiveUpdate(GameTime gt)
         {
             base.ActiveUpdate(gt);
@@ -43,7 +47,11 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
+            sb.Begin();
 
+
+
+            sb.End();
         }
 
         public override void ExitState()

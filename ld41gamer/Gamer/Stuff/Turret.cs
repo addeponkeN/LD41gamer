@@ -103,7 +103,11 @@ namespace ld41gamer.Gamer
                 if(distance <= Range)
                     if(attackTimer >= attackSpeed)
                     {
-                        Shoot(map, Center, e.Center);
+                        if(SpriteEffects == SpriteEffects.None)
+                            Shoot(map, Position + bulletStartPosRight, e.Center);
+                        else
+                            Shoot(map, Position + bulletStartPosLeft, e.Center);
+
                         attackTimer = 0;
                     }
             }
@@ -112,9 +116,16 @@ namespace ld41gamer.Gamer
         private void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
             var dis = Vector2.Distance(spawn, target);
-            var off = dis / 25;
+            var off = dis / 10;
+
+            if(dis > dis / 2)
+            {
+                off += off;
+                Console.WriteLine("LONGER RANGER");
+            }
+
+            off = Rng.Noxt((int)off - 20, (int)off + 20);
             map.AddBullet(new Bullet(BulletType.Acorn, spawn, target - new Vector2(0, off)));
-            //  shoot nice acorn
         }
 
         public override void Draw(SpriteBatch sb)

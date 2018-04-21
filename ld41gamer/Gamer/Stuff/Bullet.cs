@@ -30,7 +30,7 @@ namespace ld41gamer.Gamer
 
         Vector2 oldPos;
 
-        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, float speed = 0f)
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, bool isPlayer = false)
         {
             Type = t;
             Position = spawnPos;
@@ -47,11 +47,6 @@ namespace ld41gamer.Gamer
 
             Texture = GameContent.acorn;
 
-            //if(speed == 0f)
-            //    Speed = Vector2.Distance(spawnPos, destination) * 2;
-
-            BulletDrop = 200f;
-
             switch(Type)
             {
 
@@ -66,6 +61,14 @@ namespace ld41gamer.Gamer
                     AirVelo = -100f;
                     break;
 
+            }
+
+            if(!isPlayer)
+                BulletDrop = 200f;
+            else
+            {
+                BulletDrop = 650f;
+                Speed += 120;
             }
 
         }

@@ -33,6 +33,8 @@ namespace ld41gamer.Gamer
 
         public GameStatePlaying Game;
 
+        public Compass comp;
+
         public Vector2 MouseWorldPos()
         {
             return Vector2.Transform(Input.MousePos, Matrix.Invert(Game.cam2d.GetViewMatrix()));
@@ -46,6 +48,8 @@ namespace ld41gamer.Gamer
 
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
+
+            comp = new Compass();
 
             for(int i = 0; i < 30; i++)
             {

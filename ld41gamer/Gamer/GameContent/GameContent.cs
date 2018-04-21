@@ -19,7 +19,8 @@ namespace ld41gamer.Gamer
             player,
             compassbox,
             ground,
-            acorn
+            acorn,
+            enemysheet
             ;
 
         public static void Load(ContentManager c)

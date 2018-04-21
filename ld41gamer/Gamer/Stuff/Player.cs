@@ -20,6 +20,8 @@ namespace ld41gamer.Gamer
 
         public float ShootCooldownTimer;
 
+        public bool IsMoving { get; set; }
+
         public Player()
         {
             Texture = GameContent.playerSheet;
@@ -46,36 +48,44 @@ namespace ld41gamer.Gamer
             else
                 Speed = 200;
 
-            Direction = Vector2.Zero;
-            if(Input.KeyHold(Keys.W))
-            {
-                Direction.Y = -1;
-                PlayAnimation(AnimationType.PlayerWalking);
-            }
+            Direction.X = 0;
+            //Direction.Y = 0;
+            //if(Input.KeyHold(Keys.W))
+            //{
+            //    Direction.Y = -1;
+            //    PlayAnimation(AnimationType.PlayerWalking);
+            //}
 
-            if(Input.KeyHold(Keys.S))
-            {
-                Direction.Y = 1;
-                PlayAnimation(AnimationType.PlayerWalking);
-            }
+            //if(Input.KeyHold(Keys.S))
+            //{
+            //    Direction.Y = 1;
+            //    PlayAnimation(AnimationType.PlayerWalking);
+            //}
 
             if(Input.KeyHold(Keys.A))
             {
-                Direction.X = -1;
+                Run(-1);
                 PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyHold(Keys.D))
             {
-                Direction.X = 1;
+                Run(1);
                 PlayAnimation(AnimationType.PlayerWalking);
             }
 
             if(Input.KeyClick(Keys.Space))
             {
-                //if(!IsJumping)
+                if(!IsJumping)
                     Jump();
             }
+
+            if(Direction.X == 0)
+            {
+                IsMoving = false;
+                PlayAnimation(AnimationType.PlayerIdle);
+            }
+
 
             if(ShootCooldownTimer < 0)
             {
@@ -96,6 +106,19 @@ namespace ld41gamer.Gamer
         {
             IsJumping = true;
             JumpVelo = -JumpPower;
+        }
+
+        void Run(int dir)
+        {
+            IsMoving = true;
+            Direction.X = dir;
+
+            if(dir == -1)
+            {
+                SpriteEffects = SpriteEffects.FlipHorizontally;
+            }
+            else
+                SpriteEffects = SpriteEffects.None;
         }
 
 

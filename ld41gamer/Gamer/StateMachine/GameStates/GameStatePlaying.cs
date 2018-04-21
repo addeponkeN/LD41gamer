@@ -48,6 +48,18 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.Update(gt, game);
 
+
+            if(Input.WheelDown)
+            {
+                cam2d.ZoomOut(0.01f);
+            }
+            else if(Input.WheelUp)
+            {
+                cam2d.ZoomIn(0.01f);
+            }
+
+            Input.ScrollValueOld = Input.ScrollValue;
+
         }
 
         void LockCam(Map map)
@@ -60,6 +72,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             }
 
         }
+
         int i = 0;
         public override void Draw(SpriteBatch sb, Camera cam)
         {

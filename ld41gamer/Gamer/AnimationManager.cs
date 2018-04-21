@@ -14,13 +14,6 @@ namespace ld41gamer.Gamer
 
         PlayerWalking,
         PlayerIdle,
-
-        Idle,
-
-        Down,
-        Up,
-        Left,
-        Right,
     }
 
     public class AnimationManager
@@ -30,13 +23,6 @@ namespace ld41gamer.Gamer
         public static void Load()
         {
             Dic = new Dictionary<AnimationType, Rectangle[]>();
-
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 0, 32, 32, AnimationType.Down);
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 1, 32, 32, AnimationType.Up);
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 2, 32, 32, AnimationType.Right);
-            AddAnimation(new int[] { 0, 1, 2, 3 }, 3, 32, 32, AnimationType.Left);
-
-            AddAnimation(new int[] { 0 }, 0, 32, 32, AnimationType.Idle);
 
             AddAnimation(new int[] { 0 }, 0, 165, 100, AnimationType.PlayerIdle);
             AddAnimation(new int[] { 0, 1, 2, 3 }, 0, 165, 100, AnimationType.PlayerWalking);

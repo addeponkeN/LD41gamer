@@ -132,10 +132,10 @@ namespace ld41gamer.Gamer
 
         public void DrawWorld(SpriteBatch sb)
         {
-            sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
-            sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
-            sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
             sb.Draw(GameContent.layer0, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
+            sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
 
             for(int i = 0; i < GroundRectangle.Width; i += GameContent.ground.Width)
                 sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White);

@@ -14,9 +14,11 @@ namespace ld41gamer.Gamer
     public class Player : GameObject
     {
 
-        public float JumpPower = 750;
+        public float JumpPower = 1000;
+        public bool IsGrounded;
         public float JumpVelo;
-        public bool IsJumping = true;
+
+        public bool IsFalling => JumpVelo > -0.1f;
 
         public float ShootCooldownTimer;
 
@@ -29,6 +31,7 @@ namespace ld41gamer.Gamer
             Texture = GameContent.playerSheet;
             Speed = 200;
             Size = new Vector2(165, 100);
+            SetCollisionBot(48, 80);
 
             PlayAnimation(AnimationType.Idle);
         }
@@ -41,9 +44,8 @@ namespace ld41gamer.Gamer
 
             Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
 
-            if(IsJumping)
+            if(!IsGrounded)
                 JumpVelo += Map.Gravity * dt;
-
 
             if(Input.KeyHold(Keys.LeftShift))
                 Speed = 1200;
@@ -52,17 +54,6 @@ namespace ld41gamer.Gamer
 
             Direction.X = 0;
             //Direction.Y = 0;
-            //if(Input.KeyHold(Keys.W))
-            //{
-            //    Direction.Y = -1;
-            //    PlayAnimation(AnimationType.PlayerWalking);
-            //}
-
-            //if(Input.KeyHold(Keys.S))
-            //{
-            //    Direction.Y = 1;
-            //    PlayAnimation(AnimationType.PlayerWalking);
-            //}
 
             if(Input.KeyHold(Keys.A))
             {
@@ -78,7 +69,7 @@ namespace ld41gamer.Gamer
 
             if(Input.KeyClick(Keys.Space))
             {
-                if(!IsJumping)
+                if(IsGrounded)
                     Jump();
             }
 
@@ -106,7 +97,7 @@ namespace ld41gamer.Gamer
 
         void Jump()
         {
-            IsJumping = true;
+            IsGrounded = false;
             JumpVelo = -JumpPower;
         }
 
@@ -134,39 +125,60 @@ namespace ld41gamer.Gamer
         }
 
 
-        public void Collision(Rectangle rec)
+        public void Collision(List<Recc> recs)
         {
 
-            //if(rec.TouchTopOf(rec))
-            //{
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-            //    JumpVelo = 0;
-            //}
 
-            //if(rec.TouchBottomOf(rec))
-            //{
-            //    Position = new Vector2(Position.X, rec.Y);
-            //    JumpVelo = 0;
-            //}
-
-            //if(rec.TouchLeftOf(rec))
-            //{
-            //    Position = new Vector2(rec.X - Size.X, Position.Y);
-            //    JumpVelo = 0;
-            //}
-
-            //if(rec.TouchRightOf(rec))
-            //{
-            //    Position = new Vector2(rec.X, Position.Y);
-            //    JumpVelo = 0;
-            //}
-
-
-            if(Rectangle.Bottom > rec.Top)
+            IsGrounded = false;
+            foreach(var recc in recs)
             {
-                IsJumping = false;
-                JumpVelo = 0;
-                Position = new Vector2(Position.X, rec.Y - Size.Y);
+                var rec = recc.Rec;
+
+                if(recc.IsPlatform)
+                {
+                    if(rec.Bottom < Rectangle.Bottom)
+                        continue;
+                    if(IsFalling)
+                    {
+                        if(rec.Intersects(CollisionBox))
+                        {
+                            if(CollisionBox.Bottom >= rec.Y + 1)
+                            {
+                                Position = new Vector2(Position.X, rec.Y - Size.Y + 1);
+                                IsGrounded = true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if(JumpVelo > -1f)
+                        if(CollisionBox.Bottom >= rec.Top)
+                        {
+                            Position = new Vector2(Position.X, rec.Y - Size.Y);
+                            IsGrounded = true;
+                        }
+
+                    if(rec.TouchLeftOf(rec))
+                    {
+                        Position = new Vector2(rec.X - Size.X, Position.Y);
+                        IsGrounded = true;
+                    }
+
+                    if(rec.TouchRightOf(rec))
+                    {
+                        Position = new Vector2(rec.X, Position.Y);
+                        IsGrounded = true;
+                    }
+
+                }
+
+
+            }
+
+            if(IsGrounded)
+            {
+                JumpVelo = 0f;
             }
 
         }
@@ -174,14 +186,12 @@ namespace ld41gamer.Gamer
         public void PlatformCollision(Rectangle rec)
         {
 
-            if(!Input.KeyHold(Keys.S) && rec.Bottom < rec.Top + 4)
-                if(Rectangle.Bottom > rec.Top)
-                {
-                    IsJumping = false;
-                    JumpVelo = 0;
-                    Position = new Vector2(Position.X, rec.Y - Size.Y);
-
-                }
+            //if(!Input.KeyHold(Keys.S) && Rectangle.Bottom < rec.Top + 4)
+            //{
+            //    IsGrounded = false;
+            //    JumpVelo = 0;
+            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
+            //}
 
             //if(Rectangle.Bottom > rec.Top)
             //{
@@ -240,6 +250,8 @@ namespace ld41gamer.Gamer
             base.Draw(sb);
             //sb.Draw(Texture, , Color.White);
 
+            if(Globals.IsDebugging)
+            sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);
         }
 
     }

@@ -19,7 +19,7 @@ namespace ld41gamer.Gamer
 
         public List<Rectangle> HitBoxes;
 
-        public List<Rectangle> CollisionBoxes;
+        public List<Rectangle> PlatformCollision;
 
         public List<TreeBranch> BranchSlots = new List<TreeBranch>();
 
@@ -34,14 +34,14 @@ namespace ld41gamer.Gamer
             HitBoxes.Add(new Rectangle(4820, 2480, 420, 150));
             HitBoxes.Add(new Rectangle(4916, 1380, 200, 1200));
 
-            CollisionBoxes = new List<Rectangle>();
+            PlatformCollision = new List<Rectangle>();
             //platforms
-            CollisionBoxes.Add(new Rectangle(5039, 2320, 92, 10));
-            CollisionBoxes.Add(new Rectangle(4926, 2482, 92, 10));
-            CollisionBoxes.Add(new Rectangle(5036, 1982, 92, 10));
-            CollisionBoxes.Add(new Rectangle(4935, 1844, 92, 10));
-            CollisionBoxes.Add(new Rectangle(5024, 1686, 92, 10));
-            CollisionBoxes.Add(new Rectangle(4924, 1532, 92, 10));
+            PlatformCollision.Add(new Rectangle(5039, 2320, 92, 10));
+            PlatformCollision.Add(new Rectangle(4926, 2482, 92, 10));
+            PlatformCollision.Add(new Rectangle(5036, 1982, 92, 10));
+            PlatformCollision.Add(new Rectangle(4935, 1844, 92, 10));
+            PlatformCollision.Add(new Rectangle(5024, 1686, 92, 10));
+            PlatformCollision.Add(new Rectangle(4924, 1532, 92, 10));
             //walls
 
             int xStart = 4916;

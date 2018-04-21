@@ -13,14 +13,27 @@ using System.Threading.Tasks;
 
 namespace ld41gamer.Gamer
 {
+
+    public class Recc
+    {
+        public Rectangle Rec;
+        public bool IsPlatform;
+        public Recc(Rectangle rec, bool isPlatform)
+        {
+            Rec = rec;
+            IsPlatform = isPlatform;
+        }
+    }
+
     public class Map
     {
-        public static float Gravity = 800f;
+        public static float Gravity = 1500f;
 
         public Point GroundSize;
         public Point GroundPosition;
 
         public Rectangle GroundRectangle => new Rectangle(GroundPosition, GroundSize);
+        public Rectangle GroundCollisionBox;
         public Rectangle BoxRectangle;
 
         public List<Bullet> Bullets;
@@ -38,6 +51,8 @@ namespace ld41gamer.Gamer
 
         float enemySpawnTimer = 4.5f;
 
+        public List<Recc> CollisionBoxes;
+
         bool isInsideTree;
 
         public Vector2 MouseWorldPos()
@@ -52,8 +67,11 @@ namespace ld41gamer.Gamer
             //GroundPosition = new Point(0, Globals.ScreenHeight - GroundSize.Y);
             GroundPosition = new Point(0, 2500);
 
+            GroundCollisionBox = new Rectangle(GroundRectangle.X, GroundRectangle.Y + 32, GroundRectangle.Width, GroundRectangle.Height);
+
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
+            CollisionBoxes = new List<Recc>();
 
             comp = new Compass();
 
@@ -68,6 +86,19 @@ namespace ld41gamer.Gamer
 
             tree = new Tree();
             tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y + 53);
+
+            // -------------------------------
+            //  create collision boxes
+            //CollisionBoxes.Add(new Recc(tree.PlatformCollision[1], true));
+
+            for(int i = 0; i < tree.PlatformCollision.Count; i++)
+            {
+                CollisionBoxes.Add(new Recc(tree.PlatformCollision[i], true));
+            }
+
+            CollisionBoxes.Add(new Recc(GroundCollisionBox, false));
+
+            // -------------------------------
 
             BoxRectangle = new Rectangle(0, 0, GroundRectangle.Right, GroundRectangle.Bottom);
 
@@ -113,14 +144,17 @@ namespace ld41gamer.Gamer
                 }
             }
 
+            for(int i = 0; i < tree.PlatformCollision.Count; i++)
+            {
+                var r = tree.PlatformCollision[i];
+                player.PlatformCollision(r);
+            }
 
 
             comp.Update(gt, Game.cam2d, player);
 
             Bullets.RemoveAll(x => x.LifeTime < 0);
             Enemies.RemoveAll(x => !x.IsAlive);
-
-            CheckCollision(player);
 
             enemySpawnTimer += gt.Delta();
 
@@ -129,6 +163,8 @@ namespace ld41gamer.Gamer
                 SpawnEnemy();
                 enemySpawnTimer = 0;
             }
+
+            CheckCollision();
 
             if(player.Rectangle.Intersects(tree.HitBoxes[1]))
                 isInsideTree = true;
@@ -140,7 +176,7 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Ant);
 
-            var side = Rng.Noxt(0, 1);            
+            var side = Rng.Noxt(0, 1);
             if(side == 0)
                 e.Position = GroundPosition.ToVector2() - e.Size / 2;
             else
@@ -150,9 +186,11 @@ namespace ld41gamer.Gamer
             comp.Add(e);
         }
 
-        public void CheckCollision(Player p)
+        public void CheckCollision()
         {
-            p.Collision(new Rectangle(GroundRectangle.X, GroundRectangle.Y + 32, GroundRectangle.Width, GroundRectangle.Height));
+
+            player.Collision(CollisionBoxes);
+
         }
 
         public void DrawWorld(SpriteBatch sb)
@@ -187,6 +225,12 @@ namespace ld41gamer.Gamer
             }
 
             comp.Draw(sb);
+
+            if(Globals.IsDebugging)
+                foreach(var recc in CollisionBoxes)
+                {
+                    sb.Draw(UtilityContent.box, recc.Rec, Color.Red);
+                }
 
         }
 

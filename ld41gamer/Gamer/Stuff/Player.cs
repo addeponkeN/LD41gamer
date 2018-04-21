@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace ld41gamer.Gamer
 {
-    class Player
+    public class Player
     {
         public Vector2 Position;
-
+        public Vector2 Size;
+        public Vector2 Rectangle => new Rectangle(Position.X)
+        public float Speed;
 
         public Player()
         {
@@ -21,7 +23,12 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt)
         {
 
+
+            
+
+
         }
+
 
         public void Draw(SpriteBatch sb)
         {

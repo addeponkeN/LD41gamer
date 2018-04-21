@@ -93,6 +93,10 @@ namespace ld41gamer.Gamer
             tree = new Tree();
             tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y + 53);
 
+            foreach(TreeBranchType t in Enum.GetValues(typeof(TreeBranchType)))
+            {
+                tree.Add(t, this);
+            }
             // -------------------------------
             //  create collision boxes
             //CollisionBoxes.Add(new Recc(tree.PlatformCollision[1], true));

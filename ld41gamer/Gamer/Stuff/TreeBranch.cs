@@ -12,8 +12,10 @@ namespace ld41gamer.Gamer
 {
     public enum TreeBranchType
     {
-        Left,
-        Right
+        TopLeft,
+        TopRight,
+        BotRight,
+        BotLeft,
     }
 
     public class TreeBranch : GameObject
@@ -22,21 +24,34 @@ namespace ld41gamer.Gamer
 
         public TreeBranch(TreeBranchType t)
         {
-            Texture = UtilityContent.box;
             Type = t;
             
             IsAnimating = false;
-
-            SetFrame(0, 0);
-
+            SpriteEffects = SpriteEffects.FlipHorizontally;
             switch(t)
             {
-                case TreeBranchType.Left:
-                    //  Change texture/spriteeffect
+
+                case TreeBranchType.TopLeft:
+                    Texture = GameContent.topleftBranch;
                     break;
-                case TreeBranchType.Right:
+
+                case TreeBranchType.TopRight:
+                    Texture = GameContent.toprightBranch;
                     break;
+
+                case TreeBranchType.BotRight:
+                    Texture = GameContent.botrightBranch;
+                    break;
+
+                case TreeBranchType.BotLeft:
+                    Texture = GameContent.botleftBranch;
+                    break;
+
             }
+
+            SetSize(Texture.Width, Texture.Height);
+            SetSourceSize((int)Size.X, (int)Size.Y);
+            SetFrame(0, 0);
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

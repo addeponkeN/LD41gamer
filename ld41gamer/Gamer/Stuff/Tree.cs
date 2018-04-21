@@ -21,7 +21,7 @@ namespace ld41gamer.Gamer
 
         public List<Rectangle> PlatformCollision;
 
-        public List<TreeBranch> BranchSlots = new List<TreeBranch>();
+        public List<TreeBranch> Branches = new List<TreeBranch>();
 
         public List<Vector2> poss = new List<Vector2>();
 
@@ -42,7 +42,13 @@ namespace ld41gamer.Gamer
             PlatformCollision.Add(new Rectangle(4935, 1844, 92, 10));
             PlatformCollision.Add(new Rectangle(5024, 1686, 92, 10));
             PlatformCollision.Add(new Rectangle(4924, 1532, 92, 10));
+
             //walls
+
+
+            //branch
+
+
 
             int xStart = 4916;
             int yStart = 1860;
@@ -71,12 +77,30 @@ namespace ld41gamer.Gamer
 
             //poss.Add(new Vector2(xStart, yStart));
 
-
-
         }
 
-        public void AddBranch(int slot)
+        public void Add(TreeBranchType type, Map map)
         {
+            TreeBranch b = new TreeBranch(type);
+            b.Position = Position;
+
+            Branches.Add(b);
+            //Rectangle rec;
+
+            //switch(type)
+            //{
+            //    case TreeBranchType.TopLeft:
+            //        rec = new Rectangle();
+            //        break;
+            //    case TreeBranchType.TopRight:
+            //        break;
+            //    case TreeBranchType.BotRight:
+            //        break;
+            //    case TreeBranchType.BotLeft:
+            //        break;
+            //}
+
+            //map.CollisionBoxes.Add(new Recc(rec, true));
 
         }
 
@@ -88,6 +112,11 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
+            foreach(var b in Branches)
+            {
+                b.Draw(sb);
+            }
+
             sb.Draw(Texture, Rectangle, Color.White);
 
         }

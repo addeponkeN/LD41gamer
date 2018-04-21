@@ -65,7 +65,7 @@ namespace ld41gamer.Gamer
             }
 
             tree = new Tree();
-            tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y);
+            tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y + 53);
 
             BoxRectangle = new Rectangle(0, 0, GroundRectangle.Right, GroundRectangle.Bottom);
 
@@ -115,8 +115,7 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Ant);
 
-            //var side = Rng.Noxt(0, 1);
-            var side = 1;
+            var side = Rng.Noxt(0, 1);            
             if(side == 0)
                 e.Position = GroundPosition.ToVector2();
             else
@@ -128,7 +127,7 @@ namespace ld41gamer.Gamer
 
         public void CheckCollision(Player p)
         {
-            p.Collision(GroundRectangle);
+            p.Collision(new Rectangle(GroundRectangle.X, GroundRectangle.Y + 32, GroundRectangle.Width, GroundRectangle.Height));
         }
 
         public void DrawWorld(SpriteBatch sb)
@@ -160,13 +159,13 @@ namespace ld41gamer.Gamer
                 b.Draw(sb);
             }
 
-            //comp.Draw(sb);
+            comp.Draw(sb);
 
         }
 
         public void DrawScreen(SpriteBatch sb)
         {
-            comp.Draw(sb);
+            //comp.Draw(sb);
         }
 
     }

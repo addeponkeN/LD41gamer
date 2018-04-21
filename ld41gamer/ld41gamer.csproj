@@ -70,6 +70,7 @@
     <Compile Include="Gamer\StateMachine\GameStates\GameStatePlaying.cs" />
     <Compile Include="Gamer\StateMachine\State.cs" />
     <Compile Include="Gamer\StateMachine\StateManager.cs" />
+    <Compile Include="Gamer\Stuff\Tree.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

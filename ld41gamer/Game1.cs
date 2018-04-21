@@ -12,10 +12,6 @@ namespace ld41gamer
 
     public class Game1 : Game
     {
-
-        //pusher tester
-        //tester
-
         GraphicsDeviceManager graphics;
         static bool exitGame;
 

@@ -201,30 +201,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/treeInside.png
 
-#begin Textures/turret1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/turret1.png
-
-#begin Textures/turret2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/turret2.png
-
 #begin Textures/botleftBranch.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -273,7 +249,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/toprightBranch.png
 
-#begin Textures/turretCon.png
+#begin Textures/turretsheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -283,5 +259,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/turretCon.png
+/build:Textures/turretsheet.png
 

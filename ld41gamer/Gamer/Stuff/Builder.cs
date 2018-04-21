@@ -39,7 +39,7 @@ namespace ld41gamer.Gamer
 
             if(b != null)
             {
-                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.Rectangle));
+                canPlace = p.IsGrounded && !map.tree.HitBoxes.Any(x => x.Intersects(b.CollisionBox));
             }
 
             map.player.IsBuilding = false;
@@ -51,11 +51,11 @@ namespace ld41gamer.Gamer
                 if(canPlace)
                     if(b != null)
                     {
-                        canPlace = !t.Rectangle.Intersects(b.Rectangle);
+                        canPlace = !t.CollisionBox.Intersects(b.CollisionBox);
                     }
 
 
-                if(map.player.CollisionBox.Intersects(t.Rectangle))
+                if(map.player.CollisionBox.Intersects(t.CollisionBox))
                 {
                     if(Input.KeyHold(Keys.F))
                     {
@@ -66,19 +66,15 @@ namespace ld41gamer.Gamer
                         {
                             //  build compelte,
 
-                            var turrent = new Turret(t.Type);
-                            turrent.Position = t.Position;
-                            turrent.SpriteEffects = t.SpriteEffects;
-                            map.Turrets.Add(turrent);
+                            var turr = new Turret(t.Type);
+                            turr.Position = t.Position;
+                            turr.SpriteEffects = t.SpriteEffects;
+                            map.Turrets.Add(turr);
                             Con.RemoveAt(i);
                         }
                         break;
                     }
                 }
-
-
-
-
             }
 
 
@@ -124,7 +120,10 @@ namespace ld41gamer.Gamer
                     if(Input.LeftClick)
                     {
                         var t = new Turret(b.Type) { Position = b.Position, };
+                        t.Column++;
+                        t.SetFrame(t.Column, t.Row);
                         t.Color = Color.CornflowerBlue;
+                        t.SpriteEffects = b.SpriteEffects;
                         Con.Add(t);
                         b = null;
                     }

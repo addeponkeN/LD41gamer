@@ -25,9 +25,7 @@ namespace ld41gamer.Gamer
             enemysheet,
             antSheet,
 
-            turret1,
-            turret2,
-            turretCon,
+            turretsheet,
 
             botleftBranch,
             botrightBranch,
@@ -54,9 +52,7 @@ namespace ld41gamer.Gamer
             enemysheet = Texture("ekorr");
             antSheet = Texture("antSheet");
 
-            turret1 = Texture("turret1");
-            turret2 = Texture("turret2");
-            turretCon = Texture("turretCon");
+            turretsheet = Texture("turretsheet");
 
             botleftBranch = Texture("botleftBranch");
             botrightBranch = Texture("botrightBranch");

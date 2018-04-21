@@ -39,6 +39,13 @@ namespace ld41gamer.Gamer
             attackSpeed = 2;
             IsAnimating = false;
 
+            SetSize(192);
+            SetSourceSize(192);
+
+            SetCollisionBot(115, 72);
+
+            Texture = GameContent.turretsheet;
+
             switch(t)
             {
                 case TowerType.PeaShooter:
@@ -47,23 +54,19 @@ namespace ld41gamer.Gamer
                     Damage = 1;
                     break;
                 case TowerType.AcornTurret:
-                    Texture = GameContent.turret1;
-                    SetSize(130, 74);
-                    SetSourceSize(130, 74);
                     Name = "Acorn Turret";
                     HealthPoints = 10;
                     Damage = 2;
                     BuildTime = 3f;
+                    SetFrame(0, 0);
                     break;
                 case TowerType.AcornSniper:
-                    Texture = GameContent.turret2;
-                    SetSize(130, 93);
-                    SetSourceSize(130, 93);
                     Name = "Acorn Sniper";
                     HealthPoints = 10;
                     Damage = 3;
                     Range = 1200;
                     BuildTime = 7f;
+                    SetFrame(0, 1);
                     break;
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
@@ -73,9 +76,7 @@ namespace ld41gamer.Gamer
                     break;
 
             }
-
-            SetFrame(0, 0);
-
+            
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
@@ -92,14 +93,15 @@ namespace ld41gamer.Gamer
                 if(distance <= Range)
                     if(attackTimer >= attackSpeed)
                     {
-                        Shoot();
+                        Shoot(map, Center, e.Center);
                         attackTimer = 0;
                     }
             }
         }
 
-        private void Shoot()
+        private void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
+            map.AddBullet(new Bullet(BulletType.Acorn, spawn, target));
             //  shoot nice acorn
         }
 

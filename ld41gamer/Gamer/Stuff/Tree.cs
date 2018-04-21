@@ -13,11 +13,13 @@ namespace ld41gamer.Gamer
     public class Tree : GameObject
     {
         public int Level { get; set; }
+        public int HealthPoints { get; set; }
 
         public Tree()
         {
             Texture = GameContent.tree;
             SetSize(Texture.Width, Texture.Height);
+            HealthPoints = 100;
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

@@ -38,7 +38,7 @@ namespace ld41gamer.Gamer
 
         public List<Bullet> Bullets;
         public List<Enemy> Enemies;
-        public List<Tower> Turrets;
+        public List<Turret> Turrets;
 
         public Tree tree;
 
@@ -72,7 +72,7 @@ namespace ld41gamer.Gamer
 
             Bullets = new List<Bullet>();
             Enemies = new List<Enemy>();
-            Turrets = new List<Tower>();
+            Turrets = new List<Turret>();
             CollisionBoxes = new List<Recc>();
 
             comp = new Compass();

@@ -18,7 +18,7 @@ namespace ld41gamer.Gamer
         ConeCatapult
     }
 
-    public class Tower : LivingObject
+    public class Turret : LivingObject
     {
         public TowerType Type;
 
@@ -28,7 +28,7 @@ namespace ld41gamer.Gamer
         //  range in pixels
         int Range;
 
-        public Tower(TowerType t)
+        public Turret(TowerType t)
         {
             Type = t;
             Texture = UtilityContent.box;

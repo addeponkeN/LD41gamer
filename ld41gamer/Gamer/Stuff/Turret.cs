@@ -25,6 +25,8 @@ namespace ld41gamer.Gamer
         float attackTimer;
         float attackSpeed;
 
+        public float BuildTime;
+
         //  range in pixels
         int Range;
 
@@ -35,6 +37,7 @@ namespace ld41gamer.Gamer
 
             Range = 700;
             attackSpeed = 2;
+            IsAnimating = false;
 
             switch(t)
             {
@@ -46,17 +49,21 @@ namespace ld41gamer.Gamer
                 case TowerType.AcornTurret:
                     Texture = GameContent.turret1;
                     SetSize(130, 74);
+                    SetSourceSize(130, 74);
                     Name = "Acorn Turret";
                     HealthPoints = 10;
                     Damage = 2;
+                    BuildTime = 3f;
                     break;
                 case TowerType.AcornSniper:
                     Texture = GameContent.turret2;
                     SetSize(130, 93);
+                    SetSourceSize(130, 93);
                     Name = "Acorn Sniper";
                     HealthPoints = 10;
                     Damage = 3;
                     Range = 1200;
+                    BuildTime = 7f;
                     break;
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
@@ -66,6 +73,9 @@ namespace ld41gamer.Gamer
                     break;
 
             }
+
+            SetFrame(0, 0);
+
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

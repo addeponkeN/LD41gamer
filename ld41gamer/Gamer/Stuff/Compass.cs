@@ -39,6 +39,20 @@ namespace ld41gamer.Gamer
             else
                 IsDrawing = true;
 
+            Vector2 center = new Vector2(cam.BoundingRectangle.Center.X, cam.BoundingRectangle.Center.Y);
+
+            var dir = Vector2.Normalize(enemy.Center - player.Center);
+
+            var rec = cam.BoundingRectangle;
+
+            Position = enemy.Center;
+
+            int x = (int)Helper.Clamp(Position.X, cam.Position.X + 32, rec.Right - (Size.X * 2));
+            int y = (int)Helper.Clamp(Position.Y, cam.Position.Y + 32, rec.Bottom - (Size.Y * 2));
+
+            Position = new Vector2(x, y);
+
+            Rotation = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
         }
 
         public override void Draw(SpriteBatch sb)

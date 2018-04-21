@@ -21,7 +21,12 @@ namespace ld41gamer.Gamer
             compassbox,
             ground,
             acorn,
-            enemysheet
+            enemysheet,
+            
+            layer0,
+            layer1,
+            layer2,
+            layer3
             ;
 
         public static void Load(ContentManager c)
@@ -35,6 +40,11 @@ namespace ld41gamer.Gamer
             ground = Texture("ground");
             acorn = Texture("acorn");
             enemysheet = Texture("ekorr");
+
+            layer0 = Texture("layer0");
+            layer1 = Texture("layer1");
+            layer2 = Texture("layer2");
+            layer3 = Texture("layer3");
         }
 
         public static void Unload()

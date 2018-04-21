@@ -44,9 +44,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Update(gt, gs);
 
-            map.Update(gt, game);
-
             LockCam(map);
+
+            map.Update(gt, game);
 
         }
 
@@ -54,12 +54,13 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             cam2d.LookAt(map.player.Center);
 
-            if(cam2d.BoundingRectangle.Bottom > map.Rectangle.Bottom)
+            if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom)
             {
-                cam2d.Position = new Vector2(cam2d.Position.X, map.Rectangle.Bottom - cam2d.BoundingRectangle.Height);
+                cam2d.Position = new Vector2(cam2d.Position.X, map.GroundRectangle.Bottom - cam2d.BoundingRectangle.Height);
             }
-        }
 
+        }
+        int i = 0;
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
@@ -73,9 +74,23 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             sb.End();
 
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
+
             map.DrawScreen(sb);
 
+            i = 0;
+            var mpos = map.MouseWorldPos();
+            DrawString(sb, $"Mouse: X:{(int)mpos.X}  Y:{(int)mpos.Y}");
+            DrawString(sb, $"PlayerCenter: X:{(int)map.player.Center.X}  Y:{(int)map.player.Center.Y}");
+            DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
+            DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
+
             sb.End();
+        }
+
+        void DrawString(SpriteBatch sb, string msg)
+        {
+            Extras.DrawString(sb, UtilityContent.debugFont, msg, new Vector2(4, 100 + (20 * i)));
+            i++;
         }
 
         public override void ExitState()

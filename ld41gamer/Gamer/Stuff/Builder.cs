@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ld41gamer.Gamer.Sprites;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
@@ -16,11 +17,19 @@ namespace ld41gamer.Gamer
 
         public static bool IsPlacing;
 
+        AnimatedSprite hammer;
+
         public Turret b;
 
         public Builder()
         {
             Con = new List<Turret>();
+
+            hammer = new AnimatedSprite();
+            hammer.SetSize(100);
+            hammer.SetSourceSize(100);
+            hammer.Texture = GameContent.hammer;
+            hammer.PlayAnimation(AnimationType.Hammer);
         }
 
         public void Add()
@@ -48,6 +57,8 @@ namespace ld41gamer.Gamer
             {
                 var t = Con[i];
 
+                t.isBeingBuilt = false;
+
                 if(canPlace)
                     if(b != null)
                     {
@@ -62,6 +73,7 @@ namespace ld41gamer.Gamer
                         //  is building
                         t.BuildTime -= dt;
                         map.player.IsBuilding = true;
+                        t.isBeingBuilt = true;
                         if(t.BuildTime <= 0)
                         {
                             //  build compelte,
@@ -73,7 +85,7 @@ namespace ld41gamer.Gamer
                             Con.RemoveAt(i);
                         }
                         break;
-                    }
+                    }                    
                 }
             }
 
@@ -143,6 +155,8 @@ namespace ld41gamer.Gamer
                 IsPlacing = false;
             }
 
+            hammer.UpdateAnimation(gt);
+
         }
 
         Turret Create(TowerType type)
@@ -160,6 +174,12 @@ namespace ld41gamer.Gamer
             foreach(var t in Con)
             {
                 t.Draw(sb);
+
+                if(t.isBeingBuilt)
+                {
+                    hammer.Position = new Vector2(t.Center.X - hammer.Size.X / 2, t.CollisionBox.Top - hammer.Size.Y);
+                    hammer.Draw(sb);
+                }
             }
 
             b?.Draw(sb);

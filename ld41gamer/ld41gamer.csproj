@@ -175,8 +175,8 @@
     <Content Include="Content\Textures\boxbox.png" />
     <Content Include="Content\Textures\boxhalf.png" />
     <Content Include="Content\Textures\compassbox.png" />
-    <Content Include="Content\Textures\ekorr.png" />
     <Content Include="Content\Textures\ground.png" />
+    <Content Include="Content\Textures\hammer.png" />
     <Content Include="Content\Textures\layer0.png" />
     <Content Include="Content\Textures\layer1.png" />
     <Content Include="Content\Textures\layer2.png" />
@@ -186,8 +186,7 @@
     <Content Include="Content\Textures\toprightBranch.png" />
     <Content Include="Content\Textures\tree.png" />
     <Content Include="Content\Textures\treeInside.png" />
-    <Content Include="Content\Textures\turret1.png" />
-    <Content Include="Content\Textures\turret2.png" />
+    <Content Include="Content\Textures\turretsheet.png" />
     <Content Include="Obo.GameUtility.dll" />
     <Content Include="Obo.Gui.dll" />
     <Content Include="Obo.Utility.dll" />

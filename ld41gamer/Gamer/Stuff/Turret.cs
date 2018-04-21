@@ -27,6 +27,8 @@ namespace ld41gamer.Gamer
 
         public float BuildTime;
 
+        public bool isBeingBuilt;
+
         Vector2 bulletStartPosLeft, bulletStartPosRight;
 
         //  range in pixels

@@ -13,5 +13,9 @@ namespace ld41gamer.Gamer
 
         public const float Default = 1f;
 
+        public const float Player = 0.5f;
+        //public const float 
+
+
     }
 }

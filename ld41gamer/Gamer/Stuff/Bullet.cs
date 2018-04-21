@@ -43,8 +43,9 @@ namespace ld41gamer.Gamer
 
             switch(Type)
             {
+
                 case BulletType.Acorn:
-                    Speed = 1000f;
+                    Speed = 800f;
                     AirVelo = -100f;
                     break;
 

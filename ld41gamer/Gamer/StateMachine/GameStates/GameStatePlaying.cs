@@ -64,7 +64,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Draw(sb, cam);
 
-            sb.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.Draw(sb);
 

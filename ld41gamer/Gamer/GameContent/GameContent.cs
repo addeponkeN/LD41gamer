@@ -16,6 +16,7 @@ namespace ld41gamer.Gamer
 
         public static Texture2D
             tree,
+            treeInside,
             player,
             playerSheet,
             compassbox,
@@ -35,6 +36,7 @@ namespace ld41gamer.Gamer
             content = c;
             AnimationManager.Load();
             tree = Texture("tree");
+            treeInside = Texture("treeInside");
             player = Texture("ekorr");
             playerSheet = Texture("playerSheet");
             compassbox = Texture("compassbox");

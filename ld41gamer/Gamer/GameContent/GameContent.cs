@@ -14,10 +14,13 @@ namespace ld41gamer.Gamer
     {
         static ContentManager content;
 
+        public static Texture2D tree;
+
         public static void Load(ContentManager c)
         {
             content = c;
             AnimationManager.Load();
+            tree = Texture("tree");
         }
 
         public static void Unload()

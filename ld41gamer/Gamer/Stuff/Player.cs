@@ -116,7 +116,7 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(UtilityContent.box, Rectangle, Color.MonoGameOrange);
+            sb.Draw(Texture, Rectangle, Color.White);
 
         }
 

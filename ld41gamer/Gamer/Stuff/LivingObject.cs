@@ -8,8 +8,8 @@ namespace ld41gamer.Gamer
 {
     public class LivingObject : GameObject
     {
+        public string Name { get; set; }
         public int HealthPoints { get; set; }
         public int Damage { get; set; }
-
     }
 }

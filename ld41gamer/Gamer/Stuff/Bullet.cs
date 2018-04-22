@@ -59,17 +59,20 @@ namespace ld41gamer.Gamer
                 case BulletType.Acorn:
                     if(Speed == 0)
                         Speed = 600f;
-                    AirVelo = -45;
+                    AirVelo = -45f;
                     Texture = GameContent.acorn;
+                    BulletDrop = 200f;
+
                     break;
 
                 case BulletType.Cone:
-
-                    var dis = Vector2.Distance(spawnPos, destination);
-                    Speed = 200f + (dis * .35f);
-                    AirVelo = -10f;
-                    BulletDrop = 50f + (dis*0.1f);
+                    
+                    float xBet = spawnPos.X + (spawnPos.X - destination.X);
+                    AirVelo = -(xBet * .1f);
+                    BulletDrop = (xBet * .1f);
+                    Speed = xBet * 0.22f;
                     Texture = GameContent.cone;
+
                     break;
 
             }
@@ -116,8 +119,10 @@ namespace ld41gamer.Gamer
                     break;
 
                 case BulletType.Cone:
+
                     Gravity(dt);
                     UpdatePosition(gt);
+
                     break;
 
             }

@@ -285,8 +285,7 @@ namespace ld41gamer.Gamer
 
             builder.Draw(sb);
 
-            if(player.IsBuilding || Builder.IsPlacing)
-                builder.DrawRecs(sb);
+
 
             foreach(var e in Enemies)
             {
@@ -313,6 +312,18 @@ namespace ld41gamer.Gamer
                     sb.Draw(UtilityContent.box, recc.Rec, Color.Red);
                 }
 
+        }
+
+        public void DrawTowerRecs(SpriteBatch sb)
+        {
+            foreach(var t in Turrets)
+            {
+                if(player.IsBuying || Builder.IsPlacing)
+                    t.DrawRange(sb);
+            }
+
+            if(player.IsBuilding || Builder.IsPlacing)
+                builder.DrawRecs(sb);
         }
 
         public void DrawScreen(SpriteBatch sb)

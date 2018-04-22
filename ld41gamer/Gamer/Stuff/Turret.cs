@@ -223,11 +223,22 @@ namespace ld41gamer.Gamer
                 //  looking right
                 if(SpriteEffects == SpriteEffects.None)
                 {
-                    if(e.Rectangle.Left > Center.X)
+                    if(Type == TowerType.ConeCatapult)
+                    {
+                        if(e.Rectangle.Left > Center.X + 300)
+                            tryShoot = true;
+                    }
+                    else if(e.Rectangle.Left > Center.X)
                         tryShoot = true;
                 }
                 else
                 {
+                    if(Type == TowerType.ConeCatapult)
+                    {
+                        if(e.Rectangle.Right < Center.X - 300)
+                            tryShoot = true;
+                    }
+                    else
                     if(e.Rectangle.Right < Center.X)
                         tryShoot = true;
                 }
@@ -271,8 +282,11 @@ namespace ld41gamer.Gamer
 
         private void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
+
+
             var dis = Vector2.Distance(spawn, target);
             var off = dis / 10;
+
 
             if(dis > 700)
             {
@@ -282,6 +296,11 @@ namespace ld41gamer.Gamer
 
             off = Rng.Noxt((int)off - 20, (int)off + 20);
 
+            Vector2 dest = target - new Vector2(0, off);
+            Vector2 tCenter = CollisionBox.Center();
+
+            float xBet;
+
             BulletType bulletType;
 
             if(Type == TowerType.ConeCatapult)
@@ -289,7 +308,30 @@ namespace ld41gamer.Gamer
             else
                 bulletType = BulletType.Acorn;
 
-            map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), target - new Vector2(0, off), Damage));
+            if(Type == TowerType.ConeCatapult)
+            {
+                if(SpriteEffects == SpriteEffects.None)
+                {
+                    xBet = tCenter.X + (tCenter.X - target.X);
+                }
+                else
+                {
+                    xBet = target.X + (tCenter.X - target.X);
+                }
+
+                dest = new Vector2(tCenter.X + xBet, tCenter.Y - (xBet));
+
+                int shots = Rng.Noxt(2, 4);
+                map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest, Damage));
+                for(int j = 0; j < shots; j++)
+                {
+                    map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest + new Vector2(Rng.Noxt(-256, 256), Rng.Noxt(-256, 256)), Damage));
+                }
+            }
+            else
+                map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest, Damage));
+
+
 
             int i = map.Bullets.Count - 1;
 
@@ -324,5 +366,6 @@ namespace ld41gamer.Gamer
         {
             recf.Draw(sb, Color.LightBlue);
         }
+
     }
 }

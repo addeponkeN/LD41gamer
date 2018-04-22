@@ -145,6 +145,12 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             sb.End();
 
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
+
+            map.DrawTowerRecs(sb);
+
+            sb.End();
+
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
 
             lbMoney.Draw(sb);

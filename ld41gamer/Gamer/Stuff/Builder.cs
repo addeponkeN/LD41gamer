@@ -156,6 +156,14 @@ namespace ld41gamer.Gamer
 
                     if(Input.LeftClick)
                     {
+                        if(map.player.Money < b.Cost)
+                        {
+                            Console.WriteLine("NO AFFORD");
+                            return;
+                        }
+                        else
+                            map.player.Money -= b.Cost;
+
                         var t = new Turret(b.Type) { Position = b.Position, };
                         t.Column++;
                         t.SetFrame(t.Column, t.Row);

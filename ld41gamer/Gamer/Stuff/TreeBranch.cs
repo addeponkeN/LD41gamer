@@ -24,6 +24,8 @@ namespace ld41gamer.Gamer
         public bool IsActive;
         public bool Hovered;
 
+        public int Cost = 50;
+
         public TreeBranch(TreeBranchType t)
         {
             Type = t;

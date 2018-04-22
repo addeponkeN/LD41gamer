@@ -29,6 +29,7 @@ namespace ld41gamer.Gamer
         public int Reward;
 
         float attackTimer;
+        float wormHoleSpawnTimer;
 
         public Enemy(EnemyType t)
         {
@@ -42,7 +43,8 @@ namespace ld41gamer.Gamer
             {
                 case EnemyType.Ant:
                     Texture = GameContent.antSheet;
-                    SetHp(3);
+                    SetHp(5);
+                    Speed = 75f;
                     Damage = 1;
                     Reward = 1;
                     SetSize(165 / 2, 100 / 2);
@@ -102,6 +104,16 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
 
             var dt = gt.Delta();
+
+            if(Type == EnemyType.WormHole)
+            {
+                wormHoleSpawnTimer += dt;
+                if(wormHoleSpawnTimer >= 5)
+                {
+                    map.SpawnWorm((int)Position.X);
+                    wormHoleSpawnTimer = 0;
+                }
+            }
 
             foreach(var t in map.tree.HitBoxes)
             {

@@ -24,8 +24,10 @@ namespace ld41gamer.Gamer
     {
         public TowerType Type;
 
+        public int Cost { get; set; }
+
         float attackTimer;
-        float attackSpeed;
+        float AttackSpeed;
 
         public float BuildTime;
         public float BuildTimeBase;
@@ -51,7 +53,7 @@ namespace ld41gamer.Gamer
             Texture = UtilityContent.box;
 
             Range = 700;
-            attackSpeed = 2;
+            AttackSpeed = 2;
             IsAnimating = false;
 
             SetSize(192);
@@ -83,14 +85,17 @@ namespace ld41gamer.Gamer
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
                     SetHp(4);
-                    Damage = 2;
+                    Cost = 10;
+                    Damage = 1;
                     BuildTimeBase = 4f;
                     SetFrame(0, 0);
                     break;
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
                     SetHp(4);
+                    Cost = 30;
                     Damage = 3;
+                    AttackSpeed = 5;
                     Range = 1200;
                     BuildTimeBase = 7f;
                     SetFrame(0, 1);
@@ -98,6 +103,7 @@ namespace ld41gamer.Gamer
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
                     SetHp(15);
+                    Cost = 100;
                     Damage = 3;
                     //SplashDamage = true;
                     break;
@@ -181,7 +187,7 @@ namespace ld41gamer.Gamer
                 if(!tryShoot)
                     continue;
 
-                if(attackTimer >= attackSpeed)
+                if(attackTimer >= AttackSpeed)
                 {
                     if(recf.Intersects(e.CollisionBox))
                     {
@@ -222,7 +228,7 @@ namespace ld41gamer.Gamer
 
             off = Rng.Noxt((int)off - 20, (int)off + 20);
 
-            map.AddBullet(new Bullet(BulletType.Acorn, spawn - new Vector2(28 / 2), target - new Vector2(0, off)));
+            map.AddBullet(new Bullet(BulletType.Acorn, spawn - new Vector2(28 / 2), target - new Vector2(0, off), Damage));
             int i = map.Bullets.Count - 1;
 
             if(SpriteEffects == SpriteEffects.None)

@@ -177,6 +177,7 @@
     <Content Include="Content\Sounds\buildsound.wav" />
     <Content Include="Content\Textures\acorn.png" />
     <Content Include="Content\Textures\antSheet.png" />
+    <Content Include="Content\Textures\beaverSheet.png" />
     <Content Include="Content\Textures\blastcloud.png" />
     <Content Include="Content\Textures\botleftBranch.png" />
     <Content Include="Content\Textures\botrightBranch.png" />
@@ -184,6 +185,7 @@
     <Content Include="Content\Textures\boxbox.png" />
     <Content Include="Content\Textures\boxhalf.png" />
     <Content Include="Content\Textures\compassbox.png" />
+    <Content Include="Content\Textures\cone.png" />
     <Content Include="Content\Textures\ground.png" />
     <Content Include="Content\Textures\hammer.png" />
     <Content Include="Content\Textures\layer0.png" />

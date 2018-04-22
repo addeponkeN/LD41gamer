@@ -31,6 +31,7 @@ namespace ld41gamer.Gamer
             waspSheet,
             wormSheet,
             wormHole,
+            beaverSheet,
 
             turretsheet,
 
@@ -67,6 +68,7 @@ namespace ld41gamer.Gamer
             waspSheet = Texture("waspSheet");
             wormSheet = Texture("wormSheet");
             wormHole = Texture("wormHole");
+            beaverSheet = Texture("beaverSheet");
 
             turretsheet = Texture("turretsheet");
             particlesheet = Texture("particlesheet");

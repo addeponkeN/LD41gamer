@@ -101,6 +101,23 @@ namespace ld41gamer.Gamer
             for(int i = 0; i < map.Enemies.Count; i++)
             {
                 var e = map.Enemies[i];
+
+                bool tryShoot = false;
+                //  looking right
+                if(SpriteEffects == SpriteEffects.None)
+                {
+                    if(e.Rectangle.Left > Center.X)
+                        tryShoot = true;
+                }
+                else
+                {
+                    if(e.Rectangle.Right < Center.X)
+                        tryShoot = true;
+                }
+
+                if(!tryShoot)
+                    continue;
+
                 var distance = Vector2.Distance(Position, e.Position);
 
                 if(distance <= Range)

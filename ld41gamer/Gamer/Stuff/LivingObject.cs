@@ -45,6 +45,8 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
+
+
             if(DrawHpBar)
                 HpBar?.Update(HealthPoints, MaxHealthPoints);
         }
@@ -52,6 +54,7 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
+
             if(DrawHpBar)
                 HpBar?.Draw(sb, new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, Rectangle.Top));
         }

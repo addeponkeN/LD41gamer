@@ -74,6 +74,7 @@
     <Compile Include="Gamer\Stuff\Bullet.cs" />
     <Compile Include="Gamer\Stuff\Compass.cs" />
     <Compile Include="Gamer\Stuff\Enemy.cs" />
+    <Compile Include="Gamer\Stuff\GameLabel.cs" />
     <Compile Include="Gamer\Stuff\GameObject.cs" />
     <Compile Include="Gamer\Stuff\HpBar.cs" />
     <Compile Include="Gamer\Stuff\Layer.cs" />

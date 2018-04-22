@@ -64,22 +64,26 @@ namespace ld41gamer.Gamer
             Direction.X = 0;
             //Direction.Y = 0;
 
-            if(Input.KeyHold(Keys.A))
+            if(!IsBuilding)
             {
-                Run(-1);
-                PlayAnimation(AnimationType.PlayerWalking);
-            }
 
-            if(Input.KeyHold(Keys.D))
-            {
-                Run(1);
-                PlayAnimation(AnimationType.PlayerWalking);
-            }
+                if(Input.KeyHold(Keys.A))
+                {
+                    Run(-1);
+                    PlayAnimation(AnimationType.PlayerWalking);
+                }
 
-            if(Input.KeyClick(Keys.Space))
-            {
-                if(IsGrounded)
-                    Jump();
+                if(Input.KeyHold(Keys.D))
+                {
+                    Run(1);
+                    PlayAnimation(AnimationType.PlayerWalking);
+                }
+
+                if(Input.KeyClick(Keys.Space))
+                {
+                    if(IsGrounded)
+                        Jump();
+                }
             }
 
             if(Direction.X == 0)

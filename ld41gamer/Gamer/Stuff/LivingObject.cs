@@ -19,6 +19,8 @@ namespace ld41gamer.Gamer
         public int MaxHealthPoints { get; set; }
         public int Damage { get; set; }
 
+        public bool DrawHpBar = true;
+
         public void SetHp(int hp)
         {
             HealthPoints = hp;
@@ -26,7 +28,7 @@ namespace ld41gamer.Gamer
         }
         public bool IsAlive { get; set; }
 
-        HpBar HpBar;
+        public HpBar HpBar;
 
         public LivingObject()
         {
@@ -36,25 +38,22 @@ namespace ld41gamer.Gamer
 
         public void CreateBar()
         {
-            HpBar = new HpBar((int)Size.X/2, 10);
+            HpBar = new HpBar((int)Size.X / 2, 10);
 
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
-
-            HpBar?.Update(HealthPoints, MaxHealthPoints);
+            if(DrawHpBar)
+                HpBar?.Update(HealthPoints, MaxHealthPoints);
         }
 
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            //HpBar.Position = new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, Rectangle.Top);
-            HpBar?.Draw(sb, new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, Rectangle.Top));
+            if(DrawHpBar)
+                HpBar?.Draw(sb, new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, Rectangle.Top));
         }
-
-
-
     }
 }

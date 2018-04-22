@@ -27,10 +27,13 @@ namespace ld41gamer.Gamer
         float attackSpeed;
 
         public float BuildTime;
+        public float BuildTimeBase;
 
         public bool isBeingBuilt;
 
         Vector2 bulletStartPosLeft, bulletStartPosRight;
+
+
 
         //  range in pixels
         int Range;
@@ -63,17 +66,17 @@ namespace ld41gamer.Gamer
                     break;
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
-                    SetHp(10);
+                    SetHp(4);
                     Damage = 2;
-                    BuildTime = 3f;
+                    BuildTimeBase = 4f;
                     SetFrame(0, 0);
                     break;
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
-                    SetHp(10);
+                    SetHp(4);
                     Damage = 3;
                     Range = 1200;
-                    BuildTime = 7f;
+                    BuildTimeBase = 7f;
                     SetFrame(0, 1);
                     break;
                 case TowerType.ConeCatapult:
@@ -85,14 +88,14 @@ namespace ld41gamer.Gamer
 
             }
 
-            BuildTime = 0.5f;
+            //BuildTimeBase = 0.5f;
+
             CreateBar();
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
-
             attackTimer += gt.Delta();
 
             for(int i = 0; i < map.Enemies.Count; i++)
@@ -118,7 +121,7 @@ namespace ld41gamer.Gamer
             var dis = Vector2.Distance(spawn, target);
             var off = dis / 10;
 
-            if(dis > dis / 2)
+            if(dis > 700)
             {
                 off += off;
                 Console.WriteLine("LONGER RANGER");

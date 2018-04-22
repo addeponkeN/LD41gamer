@@ -77,7 +77,7 @@ namespace ld41gamer.Gamer
             for(int i = 0; i < Con.Count; i++)
             {
                 var t = Con[i];
-
+                t.HpBar.Update(t.BuildTime, t.BuildTimeBase);
                 t.isBeingBuilt = false;
 
                 if(canPlace)
@@ -91,10 +91,10 @@ namespace ld41gamer.Gamer
                     if(Input.KeyHold(Keys.F))
                     {
                         //  is building
-                        t.BuildTime -= dt;
+                        t.BuildTime += dt;
                         map.player.IsBuilding = true;
                         t.isBeingBuilt = true;
-                        if(t.BuildTime <= 0)
+                        if(t.BuildTime >= t.BuildTimeBase)
                         {
                             //  build compelte
                             var turr = new Turret(t.Type);
@@ -155,6 +155,9 @@ namespace ld41gamer.Gamer
                         t.SetFrame(t.Column, t.Row);
                         t.Color = Color.CornflowerBlue;
                         t.SpriteEffects = b.SpriteEffects;
+                        t.HpBar.Foreground.Color = Color.LightGoldenrodYellow;
+                        t.HpBar.Background.Color = Color.DarkGoldenrod;
+
                         Con.Add(t);
                         b = null;
                         p.ShootCooldownTimer = p.ShootCooldown;
@@ -178,9 +181,9 @@ namespace ld41gamer.Gamer
         Turret Create(TowerType type)
         {
             var t = new Turret(type);
+            t.DrawHpBar = false;
             t.Color = new Color(127, 127, 127);
             t.Alpha = 127;
-
             return t;
         }
 

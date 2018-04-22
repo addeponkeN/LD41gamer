@@ -102,7 +102,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             {
                 cam2d.ZoomIn(0.01f);
             }
-
+            
             Input.ScrollValueOld = Input.ScrollValue;
 
             //if(lerpTimer > zin-0.1f)

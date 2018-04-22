@@ -69,6 +69,8 @@ namespace ld41gamer.Screener
             blankTexture = new Texture2D(GraphicsDevice, 1, 1);
             blankTexture.SetData(new[] { Color.White });
 
+            SoundManager.Load(content);
+
             //NetworkManager.Instance.Start();
 
 

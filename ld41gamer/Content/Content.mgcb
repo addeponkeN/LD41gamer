@@ -335,3 +335,9 @@
 /processorParam:TextureFormat=Color
 /build:Textures/wormSheet.png
 
+#begin Sounds/buildsound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/buildsound.wav
+

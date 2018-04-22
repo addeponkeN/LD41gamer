@@ -8,7 +8,8 @@ namespace ld41gamer.Gamer
 {
     public enum GameSoundType
     {
-        Shoot
+        Shoot,
+        Building
     }
 
     public class GameSound
@@ -69,11 +70,14 @@ namespace ld41gamer.Gamer
             c = cm;
             Sounds = new Dictionary<GameSoundType, GameSound>();
             //  load sound here or in gamecontent heh
+
+            AddSound(GameSoundType.Building, "buildsound");
+
         }
 
         static void AddSound(GameSoundType type, string path)
         {
-            var ef = c.Load<SoundEffect>(path);
+            var ef = c.Load<SoundEffect>("Sounds/" + path);
             var gs = new GameSound(ef, SoundChannels);
             Sounds.Add(type, gs);
         }

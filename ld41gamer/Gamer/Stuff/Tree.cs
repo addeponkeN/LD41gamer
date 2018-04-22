@@ -1,9 +1,11 @@
 ﻿using ld41gamer.Gamer.Screener;
+using ld41gamer.Gamer.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
 using Obo.Gui;
+using Obo.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,8 @@ namespace ld41gamer.Gamer
 
         public Rectangle BenchRec;
 
+        AnimatedSprite hammer;
+        float hammerTimer;
         public Tree()
         {
             Texture = GameContent.tree;
@@ -53,6 +57,12 @@ namespace ld41gamer.Gamer
             //walls
 
             BenchRec = new Rectangle(4952, 2470, 100, 100);
+
+            hammer = new AnimatedSprite();
+            hammer.SetSize(100);
+            hammer.SetSourceSize(100);
+            hammer.Texture = GameContent.hammer;
+            hammer.PlayAnimation(AnimationType.Hammer);
 
         }
 
@@ -112,9 +122,8 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
-
+            var dt = gt.Delta();
             var p = map.player;
-
             var mpos = map.MouseWorldPos();
 
             int ii = -1;
@@ -152,9 +161,23 @@ namespace ld41gamer.Gamer
                         var type = TYPE(Branches[ii].Type);
                         Branches[ii].IsActive = true;
                         AddCollisionBranch(type, map);
+                        var rec = GetRec(type);
+                        for(int i = 0; i < 150; i++)
+                        {
+                            var pos = new Vector2(Rng.Noxt(rec.X, rec.Right), Rng.Noxt(rec.Y - 16, rec.Bottom + 32));
+                            Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                        }
+
+                        SoundManager.PlaySound(GameSoundType.Building);
+                        hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
+                        hammerTimer = 2f;
                     }
 
                 }
+
+            hammerTimer -= dt;
+            if(hammerTimer > 0)
+            hammer.UpdateAnimation(gt);
 
             if(BenchRec.Intersects(p.CollisionBox))
             {
@@ -171,8 +194,9 @@ namespace ld41gamer.Gamer
         public void Draw(SpriteBatch sb, Map map)
         {
             base.Draw(sb);
-
-            foreach(var b in Branches)
+            if(hammerTimer > 0)
+                hammer.Draw(sb);
+                foreach(var b in Branches)
             {
                 if(b.IsActive || map.player.IsBuying)
                     b.Draw(sb);

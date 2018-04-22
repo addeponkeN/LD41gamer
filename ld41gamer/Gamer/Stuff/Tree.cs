@@ -118,9 +118,6 @@ namespace ld41gamer.Gamer
             {
                 b.Draw(sb);
             }
-
-            //sb.Draw(Texture, Rectangle, Color.White);
-
         }
     }
 }

@@ -37,22 +37,23 @@ namespace ld41gamer.Gamer
             {
                 case EnemyType.Ant:
                     Texture = GameContent.antSheet;
-                    HealthPoints = 3;
+                    SetHp(3);
                     Damage = 1;
                     Reward = 1;
                     break;
                 case EnemyType.Beetle:
-                    HealthPoints = 7;
+                    SetHp(7);
                     Damage = 2;
                     Reward = 2;
                     break;
                 case EnemyType.FlyingAnt:
-                    HealthPoints = 3;
+                    SetHp(3);
                     Damage = 1;
                     IsFlying = true;
                     Reward = 3;
                     break;
             }
+            CreateBar();
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

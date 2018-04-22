@@ -75,6 +75,7 @@
     <Compile Include="Gamer\Stuff\Compass.cs" />
     <Compile Include="Gamer\Stuff\Enemy.cs" />
     <Compile Include="Gamer\Stuff\GameObject.cs" />
+    <Compile Include="Gamer\Stuff\HpBar.cs" />
     <Compile Include="Gamer\Stuff\Layer.cs" />
     <Compile Include="Gamer\Stuff\LivingObject.cs" />
     <Compile Include="Gamer\Stuff\Map.cs" />

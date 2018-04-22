@@ -58,19 +58,19 @@ namespace ld41gamer.Gamer
             {
                 case TowerType.PeaShooter:
                     Name = "Pea Shooter";
-                    HealthPoints = 5;
+                    SetHp(5);
                     Damage = 1;
                     break;
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
-                    HealthPoints = 10;
+                    SetHp(10);
                     Damage = 2;
                     BuildTime = 3f;
                     SetFrame(0, 0);
                     break;
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
-                    HealthPoints = 10;
+                    SetHp(10);
                     Damage = 3;
                     Range = 1200;
                     BuildTime = 7f;
@@ -78,7 +78,7 @@ namespace ld41gamer.Gamer
                     break;
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
-                    HealthPoints = 15;
+                    SetHp(15);
                     Damage = 3;
                     //SplashDamage = true;
                     break;
@@ -86,7 +86,7 @@ namespace ld41gamer.Gamer
             }
 
             BuildTime = 0.5f;
-
+            CreateBar();
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

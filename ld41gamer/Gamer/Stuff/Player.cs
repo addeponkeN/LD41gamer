@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ld41gamer.Gamer
 {
-    public class Player : GameObject
+    public class Player : LivingObject
     {
 
         public float JumpPower = 775;
@@ -37,7 +37,11 @@ namespace ld41gamer.Gamer
             Size = new Vector2(165, 100);
             SetCollisionBot(40, 80);
 
+            SetHp(1);
+
             PlayAnimation(AnimationType.Idle);
+
+            //CreateBar();
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)

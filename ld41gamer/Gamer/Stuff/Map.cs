@@ -234,7 +234,7 @@ namespace ld41gamer.Gamer
             if(e.IsFlying)
                 e.Position.Y = Rng.Noxt(1450, 2330);
             else
-                e.Position.Y = GroundPosition.Y - e.Size.Y / 2;
+                e.Position.Y = GroundCollisionBox.Top - e.Size.Y;
 
             Enemies.Add(e);
             comp.Add(e);
@@ -243,7 +243,7 @@ namespace ld41gamer.Gamer
         public void SpawnWorm(int posx)
         {
             var e = new Enemy(EnemyType.WormYellow);
-            e.Position = new Vector2(posx, GroundPosition.Y - e.Size.Y / 2);
+            e.Position = new Vector2(posx, GroundCollisionBox.Top - e.Size.Y);
             Enemies.Add(e);
             comp.Add(e);
         }

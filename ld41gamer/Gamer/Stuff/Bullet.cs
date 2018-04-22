@@ -36,16 +36,20 @@ namespace ld41gamer.Gamer
             Position = spawnPos;
             Direction = Vector2.Normalize(destination - spawnPos);
 
-            SetSize(16);
+            if(isPlayer)
+                SetSize(16);
+            else
+                SetSize(28);
             SetSourceSize(100);
             SetFrame(0, 0);
             IsAnimating = false;
 
-            Origin = new Vector2(Size.X / 2, Size.Y / 2);
+            Texture = GameContent.acorn;
+
+            Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
             LifeTime = 5f;
 
-            Texture = GameContent.acorn;
 
             switch(Type)
             {

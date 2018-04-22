@@ -24,12 +24,10 @@ namespace ld41gamer.Gamer
 
         public Parlax(Map map)
         {
-
             Add(new Vector2(0, 0), map.BoxRectangle.Width, map.BoxRectangle.Height);
             Add(new Vector2(0, map.GroundCollisionBox.Top - 512), 1280, 512);
             Add(new Vector2(0, map.GroundCollisionBox.Top - 700), 900, 700);
-            Add(new Vector2(0, map.GroundCollisionBox.Top - 2000), 5001, 2000);
-
+            Add(new Vector2(0, map.GroundCollisionBox.Top - 202 * 4), 858 * 4, 202 * 4);
         }
 
         void Add(Vector2 pos, float w, float h)

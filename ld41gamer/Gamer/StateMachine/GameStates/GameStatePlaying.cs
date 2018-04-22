@@ -22,12 +22,10 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         public Camera2D cam2d;
 
-        float camLerp;
         float lerpTimer = 1f;
 
-        bool lerp;
+        GameLabel lbMoney;
 
-        Vector2 outpos;
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -45,6 +43,10 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             cam2d = new Camera2D(port);
             cam2d.MinimumZoom = 0.1f;
             cam2d.MaximumZoom = 3.1f;
+
+            lbMoney = new GameLabel(GameContent.acorn, "0", new Vector2(Globals.ScreenWidth * 0.85f, 8));
+            lbMoney.Item.Size = new Vector2(64);
+
         }
 
         //  update always
@@ -54,6 +56,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
 
             map.Update(gt, game);
+
+            lbMoney.Text = map.player.Money.ToString();
 
             var dt = gt.Delta();
 
@@ -129,6 +133,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             sb.End();
 
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
+
+            lbMoney.Draw(sb);
 
             map.DrawScreen(sb);
 

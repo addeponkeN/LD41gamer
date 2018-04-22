@@ -17,12 +17,10 @@ namespace ld41gamer.Gamer
         public static Texture2D
             tree,
             treeInside,
-            player,
             playerSheet,
             compassbox,
             ground,
             acorn,
-            enemysheet,
             particlesheet,
             antSheet,
             waspSheet,
@@ -41,6 +39,8 @@ namespace ld41gamer.Gamer
             layer2,
             layer3
             ;
+
+        public static SpriteFont font14, font24;
 
         public static void Load(ContentManager c)
         {
@@ -69,6 +69,9 @@ namespace ld41gamer.Gamer
             layer1 = Texture("layer1");
             layer2 = Texture("layer2");
             layer3 = Texture("layer3");
+
+            font14 = Font("font14");
+            font24 = Font("font24");
         }
 
         public static void Unload()

@@ -297,3 +297,17 @@
 /processorParam:TextureFormat=Color
 /build:Textures/playerSheet.png
 
+#begin Fonts/font14.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font14.spritefont
+
+#begin Fonts/font24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font24.spritefont
+

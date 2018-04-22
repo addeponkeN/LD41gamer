@@ -361,6 +361,7 @@ namespace ld41gamer.Gamer
                 if(blastTimer >= 0)
                     blastCloud.Draw(sb);
 
+            DrawShadow(sb);
 
         }
 

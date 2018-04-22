@@ -132,17 +132,19 @@ namespace ld41gamer.Gamer
             {
 
                 case BulletType.Acorn:
+
                     Gravity(dt);
                     UpdatePosition(gt);
                     RotateToDestination();
+
                     break;
 
                 case BulletType.Cone:
+
                     Gravity(dt);
                     UpdatePosition(gt);
 
-                    Rotation = dt * rotationSpeed;
-
+                    Rotation += dt * rotationSpeed;
                     break;
 
             }

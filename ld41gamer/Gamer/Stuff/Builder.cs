@@ -126,7 +126,7 @@ namespace ld41gamer.Gamer
 
             }
 
-
+            IsPlacing = false;
             if(b != null)
             {
                 IsPlacing = true;
@@ -157,6 +157,7 @@ namespace ld41gamer.Gamer
                         t.SpriteEffects = b.SpriteEffects;
                         Con.Add(t);
                         b = null;
+                        p.ShootCooldownTimer = p.ShootCooldown;
                     }
 
                 }
@@ -168,10 +169,6 @@ namespace ld41gamer.Gamer
 
                 if(Input.RightClick)
                     b = null;
-            }
-            else
-            {
-                IsPlacing = false;
             }
 
             hammer.UpdateAnimation(gt);

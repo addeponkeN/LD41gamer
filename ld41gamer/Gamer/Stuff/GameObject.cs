@@ -47,9 +47,9 @@ namespace ld41gamer.Gamer
         public Vector2 CollisionPosition => new Vector2(Position.X + CollisionOrigin.X, Position.Y + CollisionOrigin.Y);
 
         public Rectangle CollisionBox => new Rectangle(
-            (int)(Position.X + CollisionOrigin.X - (CollisionSize.X / 2)),
-            (int)(Position.Y + CollisionOrigin.Y - (CollisionSize.Y / 2)),
-            (int)CollisionSize.X, (int)CollisionSize.Y);
+                (int)(Position.X + CollisionOrigin.X - (CollisionSize.X / 2)),
+                (int)(Position.Y + CollisionOrigin.Y - (CollisionSize.Y / 2)),
+                (int)CollisionSize.X, (int)CollisionSize.Y);
         #endregion
 
 

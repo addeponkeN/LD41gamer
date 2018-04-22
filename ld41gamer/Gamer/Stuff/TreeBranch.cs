@@ -21,12 +21,13 @@ namespace ld41gamer.Gamer
     public class TreeBranch : GameObject
     {
         public TreeBranchType Type;
-        public bool Active;
+        public bool IsActive;
+        public bool Hovered;
 
         public TreeBranch(TreeBranchType t)
         {
             Type = t;
-            Active = true;
+            IsActive = false;
             IsAnimating = false;
             SpriteEffects = SpriteEffects.FlipHorizontally;
             switch(t)
@@ -57,15 +58,30 @@ namespace ld41gamer.Gamer
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
-            if(Active)
-                base.Update(gt, map, gs);
-        }
+            if(IsActive)
+            {
+                Color = new Color(255, 255, 255);
+                Alpha = 255;
+            }
+            else
+            {
+                int v;
 
+                if(Hovered)
+                    v = 150;
+                else
+                    v = 75;
+
+                Color = new Color(v, v, v);
+                Alpha = v;
+
+            }
+        }
 
         public override void Draw(SpriteBatch sb)
         {
-            if(Active)
-                base.Draw(sb);
+            base.Draw(sb);
         }
     }
 }
+

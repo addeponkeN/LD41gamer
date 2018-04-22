@@ -21,6 +21,7 @@ namespace ld41gamer.Gamer
         WaspWalk,
 
         Hammer,
+        BlastCloud,
     }
 
     public class AnimationManager
@@ -40,6 +41,7 @@ namespace ld41gamer.Gamer
             AddAnimation(new int[] { 0, 1, 2 }, 0, 152, 106, AnimationType.WaspWalk);
 
             AddAnimation(new int[] { 0, 1 }, 0, 100, 100, AnimationType.Hammer);
+            AddAnimation(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 0, 221, 123, AnimationType.BlastCloud);
         }
 
         /// <summary>

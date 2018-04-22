@@ -133,7 +133,7 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt, GameScreen gs)
         {
             player.Update(gt, this, gs);
-            parlax.Update(gt,this);
+            parlax.Update(gt, this);
             pengine.Update(gt, this);
 
             for(int i = 0; i < Bullets.Count; i++)
@@ -287,7 +287,8 @@ namespace ld41gamer.Gamer
 
             pengine.Draw(sb);
 
-            comp.Draw(sb);
+            if(!player.IsBuying)
+                comp.Draw(sb);
 
             if(Globals.IsDebugging)
                 foreach(var recc in CollisionBoxes)

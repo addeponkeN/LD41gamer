@@ -44,12 +44,12 @@ namespace ld41gamer.Gamer
             PlatformCollision = new List<Rectangle>();
 
             //platforms
-            PlatformCollision.Add(new Rectangle(5039, 2320, 92, 10));
+            PlatformCollision.Add(new Rectangle(5050, 2320, 72, 10));
             PlatformCollision.Add(new Rectangle(4926, 2167, 92, 10));
-            PlatformCollision.Add(new Rectangle(5036, 1982, 92, 10));
-            PlatformCollision.Add(new Rectangle(4935, 1844, 92, 10));
+            PlatformCollision.Add(new Rectangle(5036, 1988, 92, 10));
+            PlatformCollision.Add(new Rectangle(4935, 1852, 92, 10));
             PlatformCollision.Add(new Rectangle(5024, 1686, 92, 10));
-            PlatformCollision.Add(new Rectangle(4924, 1532, 92, 10));
+            PlatformCollision.Add(new Rectangle(4924, 1542, 92, 10));
 
             //walls
 
@@ -77,7 +77,7 @@ namespace ld41gamer.Gamer
             switch(type)
             {
                 case TreeBranchType.TopLeft:
-                    rec = new Rectangle(4466, 1550, 454, 15);
+                    rec = new Rectangle(4466, 1550, 459, 15);
                     break;
                 case TreeBranchType.TopRight:
                     rec = new Rectangle(5110, 1690, 454, 15);
@@ -86,7 +86,7 @@ namespace ld41gamer.Gamer
                     rec = new Rectangle(5125, 1995, 454, 15);
                     break;
                 case TreeBranchType.BotLeft:
-                    rec = new Rectangle(4454, 1854, 454, 15);
+                    rec = new Rectangle(4454, 1854, 477, 15);
                     break;
             }
             return rec;

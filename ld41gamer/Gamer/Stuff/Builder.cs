@@ -124,7 +124,7 @@ namespace ld41gamer.Gamer
             }
             if(Input.KeyClick(Keys.D3))
             {
-
+                b = Create(TowerType.ConeCatapult);
             }
             if(Input.KeyClick(Keys.D4))
             {
@@ -165,7 +165,7 @@ namespace ld41gamer.Gamer
                             map.player.Money -= b.Cost;
 
                         var t = new Turret(b.Type) { Position = b.Position, };
-                        t.Column++;
+                        t.Column = 3;
                         t.SetFrame(t.Column, t.Row);
                         t.Color = Color.CornflowerBlue;
                         t.SetEffect(b.SpriteEffects);

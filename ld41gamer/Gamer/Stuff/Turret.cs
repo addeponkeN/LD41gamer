@@ -82,6 +82,7 @@ namespace ld41gamer.Gamer
                     SetHp(5);
                     Damage = 1;
                     break;
+
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
                     SetHp(4);
@@ -90,6 +91,7 @@ namespace ld41gamer.Gamer
                     BuildTimeBase = 4f;
                     SetFrame(0, 0);
                     break;
+
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
                     SetHp(4);
@@ -100,12 +102,15 @@ namespace ld41gamer.Gamer
                     BuildTimeBase = 7f;
                     SetFrame(0, 1);
                     break;
+
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
                     SetHp(15);
                     Cost = 100;
                     Damage = 3;
+                    SetFrame(0, 0);
                     //SplashDamage = true;
+                    IsAnimating = true;
                     break;
 
             }

@@ -102,7 +102,7 @@ namespace ld41gamer.Gamer
 
             }
 
-            BuildTimeBase = 0.5f;
+            //BuildTimeBase = 0.5f;
 
             float Range2 = Range / 2;
             float Range4 = Range / 4;

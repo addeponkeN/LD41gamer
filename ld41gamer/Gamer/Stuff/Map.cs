@@ -223,9 +223,9 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Wasp);
 
-            var r = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length-2);
+            var r = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
             //  e type
-                e = new Enemy((EnemyType)r);
+            e = new Enemy((EnemyType)r);
 
             //  side
             if(Rng.Noxt(0, 1) == 0)
@@ -275,10 +275,14 @@ namespace ld41gamer.Gamer
             foreach(var t in Turrets)
             {
                 t.Draw(sb);
-                t.DrawRange(sb);
+                if(player.IsBuying || Builder.IsPlacing)
+                    t.DrawRange(sb);
             }
 
             builder.Draw(sb);
+
+            if(player.IsBuilding || Builder.IsPlacing)
+                builder.DrawRecs(sb);
 
             foreach(var e in Enemies)
             {

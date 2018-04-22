@@ -208,8 +208,13 @@ namespace ld41gamer.Gamer
             }
 
             b?.Draw(sb);
-            b?.DrawRange(sb);
 
+
+        }
+
+        public void DrawRecs(SpriteBatch sb)
+        {
+            b?.DrawRange(sb);
         }
     }
 }

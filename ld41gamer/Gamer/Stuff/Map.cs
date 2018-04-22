@@ -40,6 +40,8 @@ namespace ld41gamer.Gamer
         public List<Enemy> Enemies;
         public List<Turret> Turrets;
 
+        public static ParticleEngine pengine;
+
         public Tree tree;
 
         public List<Sprite> Props = new List<Sprite>();
@@ -51,6 +53,8 @@ namespace ld41gamer.Gamer
         public Compass comp;
 
         public Builder builder;
+
+        public Parlax parlax;
 
         float enemySpawnTimer = 4.5f;
 
@@ -77,18 +81,20 @@ namespace ld41gamer.Gamer
             Turrets = new List<Turret>();
             CollisionBoxes = new List<Recc>();
 
+            pengine = new ParticleEngine();
+
             comp = new Compass();
 
             builder = new Builder();
 
-            for(int i = 0; i < 30; i++)
-            {
-                var p = new Sprite();
-                p.SetSize(32);
-                p.Color = Color.DarkSeaGreen;
-                p.Position = new Vector2(5 * (i * 36), GroundRectangle.Top - Rng.Noxt(16, 32));
-                Props.Add(p);
-            }
+            //for(int i = 0; i < GroundRectangle.Right; i += 36)
+            //{
+            //    var p = new Sprite();
+            //    p.SetSize(32);
+            //    p.Color = Color.DarkSeaGreen;
+            //    p.Position = new Vector2(i, GroundRectangle.Top - Rng.Noxt(-8, 64));
+            //    Props.Add(p);
+            //}
 
             tree = new Tree();
             tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y + 53);
@@ -97,9 +103,10 @@ namespace ld41gamer.Gamer
             {
                 tree.Add(t, this);
             }
+
+
             // -------------------------------
             //  create collision boxes
-            //CollisionBoxes.Add(new Recc(tree.PlatformCollision[1], true));
 
             for(int i = 0; i < tree.PlatformCollision.Count; i++)
             {
@@ -115,6 +122,7 @@ namespace ld41gamer.Gamer
             player = new Player();
             player.Position = new Vector2(GHelper.Center(GroundRectangle, player.Size).X, GroundPosition.Y - player.Size.Y);
 
+            parlax = new Parlax(this);
         }
 
         public void AddBullet(Bullet bullet)
@@ -125,6 +133,8 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt, GameScreen gs)
         {
             player.Update(gt, this, gs);
+            parlax.Update(gt,this);
+            pengine.Update(gt, this);
 
             for(int i = 0; i < Bullets.Count; i++)
             {
@@ -150,6 +160,18 @@ namespace ld41gamer.Gamer
                     var b = Bullets[v];
                     if(e.Rectangle.Intersects(b.Rectangle))
                     {
+                        //  enemy is hit
+                        int blood = Rng.Noxt(3, 5);
+                        for(int o = 0; o < blood; o++)
+                        {
+                            var pos = e.CollisionBox.Center() + new Vector2(Rng.Noxt(-16, 16), Rng.Noxt(-16, 16));
+                            var dir = new Vector2(Rng.Noxt(-1, 1), -1);
+                            var p = new Particle(ParticleType.Blood, pos, dir);
+                            p.endPos = new Vector2(0, GroundCollisionBox.Top + p.Size.Y + Rng.Noxt(-20, 8));
+                            pengine.Add(p);
+                        }
+
+
                         e.HealthPoints--;
                         Bullets.Remove(b);
                     }
@@ -220,10 +242,12 @@ namespace ld41gamer.Gamer
 
         public void DrawWorld(SpriteBatch sb)
         {
-            sb.Draw(GameContent.layer0, BoxRectangle, Color.White);
-            sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
-            sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
-            sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
+            parlax.Draw(sb, this);
+
+            //sb.Draw(GameContent.layer0, BoxRectangle, Color.White);
+            //sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
+            //sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
+            //sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
 
             for(int i = 0; i < GroundRectangle.Width; i += GameContent.ground.Width)
                 sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White);
@@ -247,6 +271,8 @@ namespace ld41gamer.Gamer
             foreach(var e in Enemies)
             {
                 e.Draw(sb);
+                if(Globals.IsDebugging)
+                    sb.Draw(UtilityContent.box, e.CollisionBox, Color.Red);
             }
 
             player.Draw(sb);
@@ -255,6 +281,8 @@ namespace ld41gamer.Gamer
             {
                 b.Draw(sb);
             }
+
+            pengine.Draw(sb);
 
             comp.Draw(sb);
 

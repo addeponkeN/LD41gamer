@@ -40,6 +40,7 @@ namespace ld41gamer.Gamer
                     SetHp(3);
                     Damage = 1;
                     Reward = 1;
+                    SetCollisionBot(114/2, 50/2);
                     break;
                 case EnemyType.Beetle:
                     SetHp(7);

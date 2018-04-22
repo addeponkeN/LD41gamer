@@ -79,6 +79,8 @@
     <Compile Include="Gamer\Stuff\Layer.cs" />
     <Compile Include="Gamer\Stuff\LivingObject.cs" />
     <Compile Include="Gamer\Stuff\Map.cs" />
+    <Compile Include="Gamer\Stuff\Parlax.cs" />
+    <Compile Include="Gamer\Stuff\ParticleEngine.cs" />
     <Compile Include="Gamer\Stuff\Player.cs" />
     <Compile Include="Gamer\Stuff\Turret.cs" />
     <Compile Include="Gamer\Stuff\Tree.cs" />

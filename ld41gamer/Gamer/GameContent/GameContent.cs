@@ -23,6 +23,7 @@ namespace ld41gamer.Gamer
             ground,
             acorn,
             enemysheet,
+            particlesheet,
             antSheet,
             hammer,
 
@@ -53,6 +54,7 @@ namespace ld41gamer.Gamer
             hammer = Texture("hammer");
 
             turretsheet = Texture("turretsheet");
+            particlesheet = Texture("particlesheet");
 
             botleftBranch = Texture("botleftBranch");
             botrightBranch = Texture("botrightBranch");

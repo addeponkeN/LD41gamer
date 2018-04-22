@@ -79,7 +79,10 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
                     lerpTimer = 1f;
             }
 
-            cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
+            if(map.player.IsBuying || lerpTimer < 1f)
+            {
+                cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
+            }
 
             x = MathHelper.Lerp(map.tree.Center.X, map.player.Center.X, lerpTimer);
             y = MathHelper.Lerp(map.tree.Center.Y, map.player.Center.Y, lerpTimer);

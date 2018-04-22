@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
+using Obo.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace ld41gamer.Gamer
 
         public Turret b;
 
+        float pTimer;
+
         public Builder()
         {
             Con = new List<Turret>();
@@ -31,13 +34,6 @@ namespace ld41gamer.Gamer
             hammer.Texture = GameContent.hammer;
             hammer.PlayAnimation(AnimationType.Hammer);
         }
-
-        public void Add()
-        {
-
-        }
-
-
 
         public void Update(GameTime gt, Map map)
         {
@@ -90,6 +86,14 @@ namespace ld41gamer.Gamer
                 {
                     if(Input.KeyHold(Keys.F))
                     {
+                        pTimer += dt;
+                        if(pTimer > 0.4)
+                        {
+                            //var pos = new Vector2(p.CollisionBox.Center().X + Rng.Noxt(-48, 48), p.CollisionBox.Center().Y + Rng.Noxt(-48, 48));
+                            var pos = t.CollisionBox.Center() + new Vector2(36, 28) + new Vector2(Rng.Noxt(-48, 48), Rng.Noxt(-48, 48));
+                            Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                            pTimer = 0;
+                        }
                         //  is building
                         t.BuildTime += dt;
                         map.player.IsBuilding = true;

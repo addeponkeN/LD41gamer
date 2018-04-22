@@ -201,18 +201,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/toprightBranch.png
 
-#begin Textures/turretsheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/turretsheet.png
-
 #begin Textures/hammer.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -364,4 +352,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/beaverSheet.png
+
+#begin Textures/turretsheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/turretsheet.png
 

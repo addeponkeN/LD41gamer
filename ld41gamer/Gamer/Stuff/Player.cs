@@ -221,7 +221,7 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            DrawShadow(sb, 0, 20);
+            DrawShadow(sb, 0, -25);
 
             if(Globals.IsDebugging)
                 sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);

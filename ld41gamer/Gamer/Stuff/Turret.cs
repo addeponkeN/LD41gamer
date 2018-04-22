@@ -310,24 +310,21 @@ namespace ld41gamer.Gamer
 
             if(Type == TowerType.ConeCatapult)
             {
+
                 if(SpriteEffects == SpriteEffects.None)
                 {
-                    xBet = tCenter.X + (tCenter.X - target.X);
-                    dest = new Vector2(tCenter.X + xBet, tCenter.Y - (xBet));
-
                     xBet = Center.X + (dis / 2);
+                    //dest = new Vector2(tCenter.X + xBet, tCenter.Y);
                 }
                 else
                 {
-                    xBet = target.X + (tCenter.X - target.X);
-                    dest = new Vector2(tCenter.X - xBet, tCenter.Y - (xBet));
-
                     xBet = Center.X - (dis / 2);
+                   // dest = new Vector2(tCenter.X - xBet, tCenter.Y);
                 }
 
 
                 int shots = Rng.Noxt(2, 4);
-                map.AddBullet(new Bullet(bulletType, spawn , dest, Damage, xBet));
+                map.AddBullet(new Bullet(bulletType, spawn, dest, Damage, xBet));
                 for(int j = 0; j < shots; j++)
                 {
                     map.AddBullet(new Bullet(bulletType, spawn, dest + new Vector2(Rng.Noxt(-256, 256), Rng.Noxt(-256, 256)), Damage, xBet));

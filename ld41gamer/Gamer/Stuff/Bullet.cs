@@ -7,6 +7,7 @@ using ld41gamer.Gamer.Screener;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Obo.GameUtility;
+using Obo.Utility;
 
 namespace ld41gamer.Gamer
 {
@@ -32,11 +33,18 @@ namespace ld41gamer.Gamer
 
         public int Damage = 1;
 
+        float Angle;
+
+        Vector2 Destination;
+
+        float rotationSpeed;
+
         public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, float xbet = 0f, bool isPlayer = false)
         {
             Type = t;
             Position = spawnPos;
             Direction = Vector2.Normalize(destination - spawnPos);
+            Destination = destination;
             Damage = damage;
 
             if(isPlayer)
@@ -67,11 +75,18 @@ namespace ld41gamer.Gamer
 
                 case BulletType.Cone:
 
-                    float xBet = xbet;
+                    var dis = Vector2.Distance(spawnPos, destination);
 
-                    AirVelo = -(xBet * .1f);
-                    BulletDrop = (xBet * .1f);
-                    Speed = xBet * 0.25f;
+                    //AirVelo = -(xbet * .1f);
+                    //BulletDrop = (xbet * .1f);
+                    //Speed = dis*0.075f;
+
+                    AirVelo = -300f;
+                    BulletDrop = 300f;
+                    Speed = 200f + (dis/5);
+
+                    rotationSpeed = Rng.NoxtFloat(-(float)MathHelper.Pi, (float)MathHelper.Pi);
+
                     Texture = GameContent.cone;
 
                     break;
@@ -84,6 +99,7 @@ namespace ld41gamer.Gamer
                 Speed += 120;
             }
 
+            //RotateToDestination();
 
         }
 
@@ -100,15 +116,15 @@ namespace ld41gamer.Gamer
 
         public void RotateToDestination()
         {
-            var dir = Vector2.Normalize(oldPos - Position);
-            float angle = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
-            Rotation = angle;
+            Rotation = Angle;
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
             var dt = gt.Delta();
+
+
 
             LifeTime -= dt;
 
@@ -122,14 +138,17 @@ namespace ld41gamer.Gamer
                     break;
 
                 case BulletType.Cone:
-
                     Gravity(dt);
                     UpdatePosition(gt);
+
+                    Rotation = dt * rotationSpeed;
 
                     break;
 
             }
 
+            var dir = Vector2.Normalize(oldPos - Position);
+            Angle = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
             oldPos = Position;
 
         }

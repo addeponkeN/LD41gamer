@@ -18,6 +18,7 @@ namespace ld41gamer.Gamer
         WormYellow,
         WormRed,
         Wasp,
+        Beaver,
 
         WormHole,
     }
@@ -94,6 +95,15 @@ namespace ld41gamer.Gamer
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     PlayAnimation(AnimationType.WormRed);
+                    break;
+                case EnemyType.Beaver:
+                    Texture = GameContent.beaverSheet;
+                    SetHp(30);
+                    Damage = 2;
+                    Reward = 25;
+                    SetSize(95, 77);
+                    SetCollisionBot(80, 75);
+                    PlayAnimation(AnimationType.BeaverWalk);
                     break;
             }
             CreateBar();

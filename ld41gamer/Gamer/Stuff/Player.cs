@@ -29,7 +29,7 @@ namespace ld41gamer.Gamer
 
         public int LatestDirection;
 
-        public int Money = 200;
+        public int Money = 200000;
 
         public Player()
         {

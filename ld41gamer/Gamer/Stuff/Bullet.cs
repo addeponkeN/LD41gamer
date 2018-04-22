@@ -47,8 +47,6 @@ namespace ld41gamer.Gamer
             SetFrame(0, 0);
             IsAnimating = false;
 
-            Texture = GameContent.acorn;
-
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
             LifeTime = 20f;
@@ -62,22 +60,28 @@ namespace ld41gamer.Gamer
                     if(Speed == 0)
                         Speed = 600f;
                     AirVelo = -45;
+                    Texture = GameContent.acorn;
                     break;
 
                 case BulletType.Cone:
-                    Speed = 200f;
-                    AirVelo = -100f;
+
+                    var dis = Vector2.Distance(spawnPos, destination);
+                    Speed = 200f + (dis * .35f);
+                    AirVelo = -10f;
+                    BulletDrop = 50f + (dis*0.1f);
+                    Texture = GameContent.cone;
                     break;
 
             }
 
-            if(!isPlayer)
-                BulletDrop = 200f;
-            else
+            if(isPlayer)
             {
                 BulletDrop = 650f;
                 Speed += 120;
             }
+
+
+
 
         }
 
@@ -112,6 +116,8 @@ namespace ld41gamer.Gamer
                     break;
 
                 case BulletType.Cone:
+                    Gravity(dt);
+                    UpdatePosition(gt);
                     break;
 
             }

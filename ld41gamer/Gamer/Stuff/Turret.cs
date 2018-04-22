@@ -47,6 +47,10 @@ namespace ld41gamer.Gamer
         //  range in pixels
         int Range;
 
+        bool shoot;
+        bool shot;
+        Vector2 target;
+
         public Turret(TowerType t)
         {
             Type = t;
@@ -108,14 +112,22 @@ namespace ld41gamer.Gamer
                     SetHp(15);
                     Cost = 100;
                     Damage = 3;
+                    Range = 1800;
+                    BuildTimeBase = 15f;
                     SetFrame(0, 0);
+                    AttackSpeed = 2f;
                     //SplashDamage = true;
                     IsAnimating = true;
+                    PlayAnimation(AnimationType.CatapultIdle);
+
+                    bulletStartPosRight = new Vector2(90, 105);
+                    bulletStartPosLeft = new Vector2(90, 105);
+
                     break;
 
             }
 
-            //BuildTimeBase = 0.5f;
+            BuildTimeBase = 0.5f;
 
             float Range2 = Range / 2;
             float Range4 = Range / 4;
@@ -168,9 +180,40 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
             attackTimer += gt.Delta();
             blastTimer -= gt.Delta();
-            blastCloud.UpdateAnimation(gt);
+
+            if(Type != TowerType.ConeCatapult)
+                blastCloud.UpdateAnimation(gt);
 
             UpdateRec();
+
+
+            if(Type == TowerType.ConeCatapult)
+            {
+                if(shoot)
+                {
+                    PlayAnimation(AnimationType.CatapultShoot);
+
+                    if(frame >= 2 && !shot)
+                    {
+                        shot = true;
+                        if(SpriteEffects == SpriteEffects.None)
+                            Shoot(map, Position + bulletStartPosRight, target);
+                        else
+                            Shoot(map, Position + bulletStartPosLeft, target);
+
+                    }
+
+                    if(frame >= CurrentAnimation.Length - 1)
+                    {
+                        shot = false;
+                        shoot = false;
+                        PlayAnimation(AnimationType.CatapultIdle);
+                        attackTimer = 0;
+                    }
+
+                }
+            }
+
 
             for(int i = 0; i < map.Enemies.Count; i++)
             {
@@ -196,12 +239,18 @@ namespace ld41gamer.Gamer
                 {
                     if(recf.Intersects(e.CollisionBox))
                     {
-                        if(SpriteEffects == SpriteEffects.None)
-                            Shoot(map, Position + bulletStartPosRight, e.Center);
-                        else
-                            Shoot(map, Position + bulletStartPosLeft, e.Center);
+                        target = e.Center;
+                        if(Type != TowerType.ConeCatapult)
+                        {
+                            if(SpriteEffects == SpriteEffects.None)
+                                Shoot(map, Position + bulletStartPosRight, target);
+                            else
+                                Shoot(map, Position + bulletStartPosLeft, target);
 
-                        attackTimer = 0;
+                            attackTimer = 0;
+                        }
+                        else
+                            shoot = true;
                     }
                 }
 
@@ -233,7 +282,15 @@ namespace ld41gamer.Gamer
 
             off = Rng.Noxt((int)off - 20, (int)off + 20);
 
-            map.AddBullet(new Bullet(BulletType.Acorn, spawn - new Vector2(28 / 2), target - new Vector2(0, off), Damage));
+            BulletType bulletType;
+
+            if(Type == TowerType.ConeCatapult)
+                bulletType = BulletType.Cone;
+            else
+                bulletType = BulletType.Acorn;
+
+            map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), target - new Vector2(0, off), Damage));
+
             int i = map.Bullets.Count - 1;
 
             if(SpriteEffects == SpriteEffects.None)
@@ -255,8 +312,10 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            if(blastTimer >= 0)
-                blastCloud.Draw(sb);
+
+            if(Type != TowerType.ConeCatapult)
+                if(blastTimer >= 0)
+                    blastCloud.Draw(sb);
 
 
         }

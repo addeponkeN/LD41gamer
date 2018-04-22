@@ -1,4 +1,5 @@
 ﻿using ld41gamer.Gamer.Screener;
+using ld41gamer.Gamer.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Obo.GameUtility;
@@ -33,7 +34,8 @@ namespace ld41gamer.Gamer
 
         Vector2 bulletStartPosLeft, bulletStartPosRight;
 
-
+        AnimatedSprite blastCloud;
+        float blastTimer;
 
         //  range in pixels
         int Range;
@@ -54,8 +56,15 @@ namespace ld41gamer.Gamer
 
             Texture = GameContent.turretsheet;
 
-            bulletStartPosRight = new Vector2(156, 135);
-            bulletStartPosLeft = new Vector2(27, 135);
+            bulletStartPosRight = new Vector2(154, 144);
+            bulletStartPosLeft = new Vector2(37, 144);
+
+            blastCloud = new AnimatedSprite();
+            blastCloud.SetSize(96);
+            blastCloud.SetSourceSize(221, 123);
+            blastCloud.Texture = GameContent.blastcloud;
+            blastCloud.PlayAnimation(AnimationType.BlastCloud);
+            blastCloud.FrameLength = .1f;
 
             switch(t)
             {
@@ -88,7 +97,7 @@ namespace ld41gamer.Gamer
 
             }
 
-            //BuildTimeBase = 0.5f;
+            BuildTimeBase = 0.5f;
 
             CreateBar();
         }
@@ -97,6 +106,8 @@ namespace ld41gamer.Gamer
         {
             base.Update(gt, map, gs);
             attackTimer += gt.Delta();
+            blastTimer -= gt.Delta();
+            blastCloud.UpdateAnimation(gt);
 
             for(int i = 0; i < map.Enemies.Count; i++)
             {
@@ -145,12 +156,31 @@ namespace ld41gamer.Gamer
             }
 
             off = Rng.Noxt((int)off - 20, (int)off + 20);
-            map.AddBullet(new Bullet(BulletType.Acorn, spawn, target - new Vector2(0, off)));
+
+            map.AddBullet(new Bullet(BulletType.Acorn, spawn - new Vector2(28 / 2), target - new Vector2(0, off)));
+            int i = map.Bullets.Count - 1;
+
+            if(SpriteEffects == SpriteEffects.None)
+                map.Bullets[i].Position.X -= 10;
+            else
+                map.Bullets[i].Position.X += 10;
+
+            blastCloud.frame = 0;
+            if(SpriteEffects == SpriteEffects.None)
+            {
+                blastCloud.SpriteEffects = SpriteEffects.FlipHorizontally;
+                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) - new Vector2(4, 9);
+            }
+            else
+                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) - new Vector2(-4, 9);
+            blastTimer = (float)blastCloud.AnimationDuration - .1f;
         }
 
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
+            if(blastTimer >= 0)
+                blastCloud.Draw(sb);
         }
     }
 }

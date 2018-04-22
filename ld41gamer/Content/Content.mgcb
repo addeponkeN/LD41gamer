@@ -273,6 +273,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/blastcloud.png
 
+#begin Textures/waspSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/waspSheet.png
+
 #begin Textures/playerSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -285,15 +297,17 @@
 /processorParam:TextureFormat=Color
 /build:Textures/playerSheet.png
 
-#begin Textures/waspSheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
+#begin Fonts/font14.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/waspSheet.png
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font14.spritefont
+
+#begin Fonts/font24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font24.spritefont
 

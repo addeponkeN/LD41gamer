@@ -38,29 +38,34 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt, Map map)
         {
             var dt = gt.Delta();
-            if(map.player.IsMoving)
-                for(int i = 0; i < 4; i++)
-                {
-                    var p = list[i];
-                    float speed = (map.player.Speed / (4 - i)) * 0.35f;
-                    p.OffSetX += speed * (-map.player.Direction.X / 2) * dt;
-                }
+            //if(map.player.IsMoving)
+            //    for(int i = 0; i < 4; i++)
+            //    {
+            //        var p = list[i];
+            //        float speed = (map.player.Speed / (4 - i)) * 0.35f;
+            //        p.OffSetX += speed * (-map.player.Direction.X / 2) * dt;
+            //    }
         }
 
 
         public void Draw(SpriteBatch sb, Map map)
         {
 
+            var dis = Vector2.Distance(new Vector2(Map.WallLeft, map.Game.cam2d.Position.Y), map.Game.cam2d.Position);
             for(int i = 0; i < 4; i++)
             {
                 var p = list[i];
+
+                //var lp = (Map.PlayerSpawnPos.X / map.player.Center.X);
+
+
                 switch(i)
                 {
                     case 0:
 
-                        for(float x = 0; x < map.BoxRectangle.Right - p.OffSetX; x += p.Rectangle.Width)
+                        for(float x = 0; x < map.BoxRectangle.Right; x += p.Rectangle.Width)
                         {
-                            p.Position.X = x;
+                            p.Position.X = x + (dis * 0.55f);
                             sb.Draw(GameContent.layer0, p.Rectangle, Color.White, Layer.BACK + 0.10f);
                         }
 
@@ -69,7 +74,7 @@ namespace ld41gamer.Gamer
 
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
-                            p.Position.X = x;
+                            p.Position.X = x + (dis * 0.40f);
                             sb.Draw(GameContent.layer1, p.Rectangle, Color.White, Layer.BACK + 0.11f);
                         }
 
@@ -78,15 +83,15 @@ namespace ld41gamer.Gamer
 
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
-                            p.Position.X = x;
+                            p.Position.X = x + (dis * 0.28f);
                             sb.Draw(GameContent.layer2, p.Rectangle, Color.White, Layer.BACK + 0.12f);
                         }
 
                         break;
                     case 3:
-                        for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
+                        for(float x = 0; x < map.BoxRectangle.Right; x += p.Rectangle.Width)
                         {
-                            p.Position.X = x;
+                            p.Position.X = x - (dis*0.05f);
                             sb.Draw(GameContent.layer3, p.Rectangle, Color.White, Layer.BACK + 0.13f);
                         }
 

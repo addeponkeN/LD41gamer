@@ -15,6 +15,7 @@ namespace ld41gamer.Gamer
         PlayerWalking,
         PlayerJumping,
         PlayerFalling,
+        PlayerDeath,
         Idle,
 
         EnemyWalk,
@@ -43,6 +44,7 @@ namespace ld41gamer.Gamer
             AddAnimation(new int[] { 2 }, 0, 165, 100, AnimationType.PlayerJumping);
             AddAnimation(new int[] { 3 }, 0, 165, 100, AnimationType.PlayerFalling);
             AddAnimation(new int[] { 1, 2, 3 }, 0, 165, 100, AnimationType.PlayerWalking);
+            AddAnimation(new int[] { 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, }, 0, 165, 100, AnimationType.PlayerDeath);
 
             AddAnimation(new int[] { 1, 2, 3 }, 0, 165, 100, AnimationType.EnemyWalk);
             AddAnimation(new int[] { 0, 1, 2, 1 }, 0, 152, 106, AnimationType.WaspWalk);

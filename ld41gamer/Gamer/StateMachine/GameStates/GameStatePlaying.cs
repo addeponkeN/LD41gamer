@@ -15,6 +15,19 @@ using MonoGame.Extended.ViewportAdapters;
 
 namespace ld41gamer.Gamer.StateMachine.GameStates
 {
+
+    public enum GameStater
+    {
+        Level1,
+
+        Level2,
+
+        Level3,
+
+        Level4,
+
+    }
+
     public class GameStatePlaying : GameState
     {
 
@@ -91,7 +104,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             x = MathHelper.Lerp(map.tree.Center.X, map.player.Center.X, lerpTimer);
             y = MathHelper.Lerp(map.tree.Center.Y, map.player.Center.Y, lerpTimer);
 
-            pos = new Vector2(x, y);
+            pos = new Vector2(x, y + 1);
             cam2d.LookAt(pos);
 
             if(Input.WheelDown)
@@ -102,7 +115,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             {
                 cam2d.ZoomIn(0.01f);
             }
-            
+
             Input.ScrollValueOld = Input.ScrollValue;
 
             //if(lerpTimer > zin-0.1f)
@@ -112,8 +125,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         void LockCamToMap(Map map)
         {
-            int left = 760;
-            int right = 9900;
+            int left = Map.WallLeft;
+            int right = Map.WallRight;
+
             if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom)
             {
                 int y = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
@@ -129,7 +143,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             if(cam2d.BoundingRectangle.Right > right)
             {
                 //int x = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
-                //cam2d.Position = new Vector2(cam2d.Position.X, cam2d.Position.Y - y);
+                cam2d.Position = new Vector2(right - cam2d.BoundingRectangle.Width, cam2d.Position.Y);
             }
         }
 
@@ -163,6 +177,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             DrawString(sb, $"PlayerCenter: X:{(int)map.player.Center.X}  Y:{(int)map.player.Center.Y}");
             DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
             DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
+
+            map.DrawScreen(sb);
 
             sb.End();
         }

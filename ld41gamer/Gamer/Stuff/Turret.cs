@@ -115,7 +115,7 @@ namespace ld41gamer.Gamer
                     Range = 1800;
                     BuildTimeBase = 15f;
                     SetFrame(0, 0);
-                    AttackSpeed = 2f;
+                    AttackSpeed = 8f;
                     //SplashDamage = true;
                     IsAnimating = true;
                     PlayAnimation(AnimationType.CatapultIdle);

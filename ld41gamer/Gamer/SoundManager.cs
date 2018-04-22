@@ -40,6 +40,8 @@ namespace ld41gamer.Gamer
 
         public void Loop()
         {
+            if(loop.IsLooped)
+                return;
             loop.IsLooped = true;
             loop.Play();
         }
@@ -47,6 +49,8 @@ namespace ld41gamer.Gamer
         public void Loop(float vol)
         {
             loop.Volume = vol * SoundManager.Master;
+            if(loop.IsLooped)
+                return;
             loop.IsLooped = true;
             loop.Play();
         }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Obo.GameUtility;
+using Obo.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -165,6 +166,15 @@ namespace ld41gamer.Gamer
             }
         }
 
+        public static EnemyType RandomType()
+        {
+            return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
+        }
+
+        public static EnemyType RandomTypeNotWormHole()
+        {
+            return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
+        }
 
         public override void Draw(SpriteBatch sb)
         {

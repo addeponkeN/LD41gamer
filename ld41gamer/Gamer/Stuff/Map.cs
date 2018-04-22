@@ -57,11 +57,24 @@ namespace ld41gamer.Gamer
 
         public Parlax parlax;
 
-        float enemySpawnTimer = 4.5f;
+        public GameStater GameState = GameStater.Level1;
+
+        float enemySpawnTimer = 0f;
+        float enemySpawnCd;
 
         public List<Recc> CollisionBoxes;
 
         bool isInsideTree;
+
+        float insideLerp;
+
+        public static int WallLeft = 760;
+        public static int WallRight = 9900;
+
+        public static Vector2 PlayerSpawnPos;
+
+        public static float FadeLerp = 1f;
+        public Sprite fadeBox;
 
         public Vector2 MouseWorldPos()
         {
@@ -87,6 +100,10 @@ namespace ld41gamer.Gamer
             comp = new Compass();
 
             builder = new Builder();
+
+            fadeBox = new Sprite(UtilityContent.box);
+            fadeBox.Size = Globals.ScreenSize;
+            fadeBox.Position = new Vector2(0);
 
             //for(int i = 0; i < GroundRectangle.Right; i += 36)
             //{
@@ -121,7 +138,8 @@ namespace ld41gamer.Gamer
             BoxRectangle = new Rectangle(0, 0, GroundRectangle.Right, GroundRectangle.Bottom);
 
             player = new Player();
-            player.Position = new Vector2(GHelper.Center(GroundRectangle, player.Size).X, GroundPosition.Y - player.Size.Y);
+            PlayerSpawnPos = new Vector2(GHelper.Center(GroundRectangle, player.Size).X, GroundCollisionBox.Y - player.Size.Y);
+            player.Position = PlayerSpawnPos;
 
             parlax = new Parlax(this);
         }
@@ -133,9 +151,13 @@ namespace ld41gamer.Gamer
 
         public void Update(GameTime gt, GameScreen gs)
         {
+            var dt = gt.Delta();
+
             player.Update(gt, this, gs);
             parlax.Update(gt, this);
             pengine.Update(gt, this);
+
+            UpdateSpawning(gt);
 
             for(int i = 0; i < Bullets.Count; i++)
             {
@@ -155,6 +177,20 @@ namespace ld41gamer.Gamer
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
+
+                if(player.IsAlive)
+                    if(e.CollisionBox.Intersects(player.CollisionBox))
+                    {
+                        int dir = 0;
+                        if(e.SpriteEffects == SpriteEffects.None)
+                            dir = 1;
+                        else
+                            dir = -1;
+
+                        //  player die
+                        //player.Die(dir);
+
+                    }
 
                 for(int v = 0; v < Bullets.Count; v++)
                 {
@@ -190,16 +226,8 @@ namespace ld41gamer.Gamer
             Bullets.RemoveAll(x => x.LifeTime < 0);
             Enemies.RemoveAll(x => !x.IsAlive);
 
-            enemySpawnTimer += gt.Delta();
-
-            if(enemySpawnTimer >= 5)
-            {
-                SpawnEnemy();
-                enemySpawnTimer = 0;
-            }
-
             if(Input.KeyClick(Keys.P))
-                SpawnEnemy();
+                SpawnEnemy(Enemy.RandomTypeNotWormHole());
 
             CheckCollision();
 
@@ -214,23 +242,45 @@ namespace ld41gamer.Gamer
                 isInsideTree = true;
             else
                 isInsideTree = false;
+
+
+            if(isInsideTree)
+            {
+                if(insideLerp < 1f)
+                    insideLerp += dt * 1.5f;
+            }
+            else
+            {
+                if(insideLerp > 0f)
+                    insideLerp -= dt * 2f;
+            }
+
         }
 
-        public void SpawnEnemy()
+        public enum Side
         {
-            var e = new Enemy(EnemyType.Wasp);
+            None,
+            Left,
+            Right
+        }
 
-            //  e type
-            var r = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
-            e = new Enemy((EnemyType)r);
+        public void SpawnEnemy(EnemyType type, Side side = Side.None)
+        {
+            var e = new Enemy(type);
 
-            //  side
-            if(Rng.Noxt(0, 1) == 0)
-                e.Position.X = GroundPosition.ToVector2().X - e.Size.X / 2;
+            if(side == Side.None)
+            {
+                if(Rng.NextBool)
+                    side = Side.Left;
+                else
+                    side = Side.Right;
+            }
+
+            if(side == Side.Left)
+                e.Position.X = Map.WallLeft - e.Size.X / 2;
             else
-                e.Position.X = GroundRectangle.Width - e.Size.X / 2;
+                e.Position.X = Map.WallRight - e.Size.X / 2;
 
-            //  flying
             if(e.IsFlying)
                 e.Position.Y = Rng.Noxt(1450, 2330);
             else
@@ -238,6 +288,52 @@ namespace ld41gamer.Gamer
 
             Enemies.Add(e);
             comp.Add(e);
+        }
+
+
+        public void UpdateSpawning(GameTime gt)
+        {
+            var dt = gt.Delta();
+
+
+            EnemyType type;
+            Side side;
+            int count;
+
+            enemySpawnTimer += dt;
+
+            if(enemySpawnTimer >= enemySpawnCd)
+            {
+
+                switch(GameState)
+                {
+
+                    case GameStater.Level1:
+                        enemySpawnCd = 10;
+                        SpawnEnemy(EnemyType.WormYellow);
+                        break;
+
+
+                    case GameStater.Level2:
+
+                        break;
+
+
+                    case GameStater.Level3:
+
+                        break;
+
+
+                    case GameStater.Level4:
+
+                        break;
+                }
+
+
+                enemySpawnTimer = 0;
+
+            }
+
         }
 
         public void SpawnWorm(int posx)
@@ -273,8 +369,10 @@ namespace ld41gamer.Gamer
             }
 
             tree.Draw(sb, this);
-            if(isInsideTree)
-                sb.Draw(GameContent.treeInside, tree.Position, Color.White, Layer.TreeInside);
+
+            int alp = (int)MathHelper.Lerp(0, 255, insideLerp);
+
+            sb.Draw(GameContent.treeInside, tree.Position, new Color(alp, alp, alp, alp), Layer.TreeInside);
 
             foreach(var t in Turrets)
             {
@@ -328,8 +426,14 @@ namespace ld41gamer.Gamer
 
         public void DrawScreen(SpriteBatch sb)
         {
-            //comp.Draw(sb);
+            //fadeBox.Color = Color.Lerp(Color.Black, Color.White, FadeLerp);
+            fadeBox.Color = Color.Black;
+            fadeBox.Alpha = (int)MathHelper.Lerp(255, 0, FadeLerp);
+            //fadeBox.Alpha = 255;
+            fadeBox.Draw(sb);
         }
+
+
 
     }
 }

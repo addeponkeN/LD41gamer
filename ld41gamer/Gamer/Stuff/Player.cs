@@ -29,6 +29,16 @@ namespace ld41gamer.Gamer
 
         public int LatestDirection;
 
+        public float deadTimer;
+        public float respawnTimer;
+
+        public bool isRespawning;
+        public bool respawned;
+
+        bool toBlack;
+
+        public float knockSpeed;
+
         public int Money = 200000;
 
         public Player()
@@ -53,56 +63,139 @@ namespace ld41gamer.Gamer
             var dt = gt.Delta();
             //UpdatePosition(gt);
 
-            Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
+            if(IsAlive)
+            {
+                Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
 
-            if(!IsGrounded)
-                JumpVelo += Map.Gravity * dt;
+                if(!IsGrounded)
+                    JumpVelo += Map.Gravity * dt;
 
-            if(Input.KeyHold(Keys.LeftShift))
-                Speed = 1200;
+                if(Input.KeyHold(Keys.LeftShift))
+                    Speed = 1200;
+                else
+                    Speed = 290;
+
+                Direction.X = 0;
+                //Direction.Y = 0;
+
+                if(!IsBuilding)
+                {
+
+                    if(Input.KeyHold(Keys.A))
+                    {
+                        Run(-1);
+                        PlayAnimation(AnimationType.PlayerWalking);
+                    }
+
+                    if(Input.KeyHold(Keys.D))
+                    {
+                        Run(1);
+                        PlayAnimation(AnimationType.PlayerWalking);
+                    }
+
+                    if(Input.KeyClick(Keys.Space))
+                    {
+                        if(IsGrounded)
+                            Jump();
+                    }
+                }
+
+                if(Direction.X == 0)
+                {
+                    IsMoving = false;
+                }
+
+                if(!IsGrounded && !IsFalling)
+                    PlayAnimation(AnimationType.PlayerJumping);
+                else if(JumpVelo > 25)
+                    PlayAnimation(AnimationType.PlayerFalling);
+                else if(Direction.X == 0 && IsGrounded)
+                    PlayAnimation(AnimationType.Idle);
+
+                if(Direction.X != 0)
+                    LatestDirection = (int)Direction.X;
+            }
             else
-                Speed = 290;
-
-            Direction.X = 0;
-            //Direction.Y = 0;
-
-            if(!IsBuilding)
             {
+                //  is dead
 
-                if(Input.KeyHold(Keys.A))
+                if(frame >= CurrentAnimation.Length - 2)
+                    frame = CurrentAnimation.Length - 2;
+
+                //  dead for abit,  
+                deadTimer -= dt;
+                knockSpeed -= dt * 800f;
+                if(knockSpeed <= 1)
+                    knockSpeed = 0f;
+
+                Position.X += Direction.X * knockSpeed * dt;
+
+
+                //  dead complete, start respawn
+
+
+                //  start fade to black state
+                if(deadTimer <= 0 && !isRespawning)
                 {
-                    Run(-1);
-                    PlayAnimation(AnimationType.PlayerWalking);
+                    isRespawning = true;
+                    respawnTimer = 3f;
+                    toBlack = true;
                 }
 
-                if(Input.KeyHold(Keys.D))
+                if(isRespawning)
                 {
-                    Run(1);
-                    PlayAnimation(AnimationType.PlayerWalking);
+
+                    //  fade to black
+                    if(toBlack)
+                    {
+                        respawnTimer -= dt;
+                        Map.FadeLerp = (respawnTimer / 3f);
+
+                        //  fade to black complete,  start fade to white
+                        if(respawnTimer <= 0)
+                        {
+                            toBlack = false;
+                            Position = Map.PlayerSpawnPos;
+                            PlayAnimation(AnimationType.Idle);
+                        }
+                    }
+
+                    //  fade to white
+                    else
+                    {
+                        respawnTimer += dt;
+                        Map.FadeLerp = (respawnTimer / 3f);
+
+                        //  fade to white complete,  now alive
+                        if(respawnTimer >= 3f)
+                        {
+                            IsAlive = true;
+                            isRespawning = false;
+                        }
+                    }
+
                 }
 
-                if(Input.KeyClick(Keys.Space))
-                {
-                    if(IsGrounded)
-                        Jump();
-                }
             }
 
-            if(Direction.X == 0)
-            {
-                IsMoving = false;
-                //PlayAnimation(AnimationType.Idle);
-            }
 
-            if(!IsGrounded && !IsFalling)
-                PlayAnimation(AnimationType.PlayerJumping);
-            else if(JumpVelo > 25)
-                PlayAnimation(AnimationType.PlayerFalling);
-            else if(Direction.X == 0 && IsGrounded)
-                PlayAnimation(AnimationType.Idle);
+        }
 
-            if(Direction.X != 0)
-                LatestDirection = (int)Direction.X;
+        public void RespawnEnd()
+        {
+
+        }
+
+        public void Die(int dir)
+        {
+            PlayAnimation(AnimationType.PlayerDeath);
+            IsAlive = false;
+
+            Direction.X = dir;
+            Direction.Y = -1;
+            knockSpeed = 500f;
+
+            deadTimer = 6f;
         }
 
         public void UpdateShooting(Map map, GameTime gt)
@@ -110,7 +203,7 @@ namespace ld41gamer.Gamer
             var dt = gt.Delta();
             if(ShootCooldownTimer < 0)
             {
-                if(!IsBuying && !Builder.IsPlacing && !IsBuilding)
+                if(!IsBuying && !Builder.IsPlacing && !IsBuilding && IsAlive)
                     if(Input.LeftHold)
                     {
                         Shoot(map);
@@ -122,8 +215,7 @@ namespace ld41gamer.Gamer
                 ShootCooldownTimer -= dt;
             }
         }
-
-
+        
         void Jump()
         {
             IsGrounded = false;
@@ -153,17 +245,19 @@ namespace ld41gamer.Gamer
             map.AddBullet(b);
         }
 
-
         public void Collision(List<Recc> recs)
         {
 
+            //  map collision
+            if(Rectangle.Left < Map.WallLeft-35)
+                Position = new Vector2(Map.WallLeft-35, Position.Y);
+            else if(Rectangle.Right+50 > Map.WallRight)
+                Position = new Vector2(Map.WallRight - Rectangle.Width-50, Position.Y);
 
             IsGrounded = false;
             foreach(var recc in recs)
             {
                 var rec = recc.Rec;
-
-
 
                 if(recc.IsPlatform)
                 {
@@ -218,10 +312,14 @@ namespace ld41gamer.Gamer
             }
 
         }
+
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            DrawShadow(sb, 0, -25);
+            if(IsAlive)
+                DrawShadow(sb, 0, -28, 45, -15);
+            else
+                DrawShadow(sb, 0, -28, 65, -15);
 
             if(Globals.IsDebugging)
                 sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);

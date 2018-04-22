@@ -223,14 +223,22 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Wasp);
 
+            //  e type
             if(Rng.Noxt(0, 1) == 0)
                 e = new Enemy(EnemyType.Ant);
 
-            var side = Rng.Noxt(0, 1);
-            if(side == 0)
-                e.Position = GroundPosition.ToVector2() - e.Size / 2;
+            //  side
+            if(Rng.Noxt(0, 1) == 0)
+                e.Position.X = GroundPosition.ToVector2().X - e.Size.X / 2;
             else
-                e.Position = new Vector2(GroundRectangle.Width, GroundPosition.Y) - e.Size / 2;
+                e.Position.X = GroundRectangle.Width - e.Size.X / 2;
+
+            //  flying
+            if(e.IsFlying)
+                e.Position.Y = Rng.Noxt(1450, 2330);
+            else
+                e.Position.Y = GroundPosition.Y - e.Size.Y / 2;
+
 
             Enemies.Add(e);
             comp.Add(e);

@@ -48,7 +48,7 @@ namespace ld41gamer.Gamer
 
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
-            LifeTime = 5f;
+            LifeTime = 20f;
 
 
             switch(Type)

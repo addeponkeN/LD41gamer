@@ -14,6 +14,8 @@ namespace ld41gamer.Gamer
     {
         Ant,
         Beetle,
+        Worm,
+        WormHole,
         Wasp
     }
 
@@ -29,7 +31,6 @@ namespace ld41gamer.Gamer
         {
             Type = t;
             Speed = 50f;
-            SetSize(165 / 2, 100 / 2);
 
             PlayAnimation(AnimationType.EnemyWalk);
 
@@ -40,7 +41,8 @@ namespace ld41gamer.Gamer
                     SetHp(3);
                     Damage = 1;
                     Reward = 1;
-                    SetCollisionBot(114/2, 50/2);
+                    SetSize(165 / 2, 100 / 2);
+                    SetCollisionBot(114 / 2, 50 / 2);
                     break;
                 case EnemyType.Beetle:
                     SetHp(7);
@@ -50,11 +52,27 @@ namespace ld41gamer.Gamer
                 case EnemyType.Wasp:
                     Texture = GameContent.waspSheet;
                     SetSize(152 / 2, 106 / 2);
+                    SetCollisionCenter(111 / 2, 84 / 2);
                     PlayAnimation(AnimationType.WaspWalk);
                     SetHp(5);
                     Damage = 1;
                     IsFlying = true;
                     Reward = 3;
+                    break;
+                case EnemyType.WormHole:
+                    //Texture = GameContent.wormHole;
+                    SetHp(30);
+                    Speed = 0;
+                    Damage = 0;
+                    Reward = 10;
+                    break;
+                case EnemyType.Worm:
+                    Texture = GameContent.antSheet;
+                    SetHp(3);
+                    Damage = 1;
+                    Reward = 1;
+                    SetSize(165 / 2, 100 / 2);
+                    SetCollisionBot(114 / 2, 50 / 2);
                     break;
             }
             CreateBar();

@@ -19,7 +19,7 @@ namespace ld41gamer.Gamer
         public float Scale;
         public float timer;
 
-        public GameLabel(Texture2D tex, string msg, Vector2 position) : base(GameContent.font24, msg)
+        public GameLabel(Texture2D tex, string msg, Vector2 position) : base(GameContent.font48, msg)
         {
             Item = new Sprite(tex);
             SetPosition(position);

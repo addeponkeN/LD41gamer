@@ -48,7 +48,7 @@ namespace ld41gamer.Gamer
             shadow
             ;
 
-        public static SpriteFont font14, font24;
+        public static SpriteFont font14, font24, font48;
 
         public static void Load(ContentManager c, GraphicsDevice gd)
         {
@@ -85,6 +85,7 @@ namespace ld41gamer.Gamer
 
             font14 = Font("font14");
             font24 = Font("font24");
+            font48 = Font("font48");
 
             shadow = Extras.DrawCircle(gd, 400, .25f, Color.Black);
         }

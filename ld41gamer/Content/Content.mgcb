@@ -365,3 +365,10 @@
 /processorParam:TextureFormat=Color
 /build:Textures/turretsheet.png
 
+#begin Fonts/font48.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font48.spritefont
+

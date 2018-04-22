@@ -14,7 +14,6 @@ namespace ld41gamer.Gamer
 {
     public class Tree : GameObject
     {
-
         public int Level { get; set; }
         public int HealthPoints { get; set; }
 
@@ -63,11 +62,6 @@ namespace ld41gamer.Gamer
             b.Position = Position;
 
             Branches.Add(b);
-
-            Rectangle rec = GetRec(type);
-
-            map.CollisionBoxes.Add(new Recc(rec, true));
-
         }
 
         Rectangle GetRec(TreeBranchType type)
@@ -92,11 +86,75 @@ namespace ld41gamer.Gamer
             return rec;
         }
 
+        public void AddCollisionBranch(TreeBranchType type, Map map)
+        {
+            var rec = GetRec(type);
+            map.CollisionBoxes.Add(new Recc(rec, true));
+        }
+
+        public TreeBranchType TYPE(TreeBranchType type)
+        {
+            if(type == TreeBranchType.BotLeft)
+                type = TreeBranchType.BotRight;
+
+            else if(type == TreeBranchType.BotRight)
+                type = TreeBranchType.BotLeft;
+
+            else if(type == TreeBranchType.TopLeft)
+                type = TreeBranchType.TopRight;
+
+            else
+                type = TreeBranchType.TopLeft;
+
+            return type;
+        }
+
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
 
             var p = map.player;
+
+            var mpos = map.MouseWorldPos();
+
+            int ii = -1;
+            float near = 99999f;
+            for(int i = 0; i < Branches.Count; i++)
+            {
+                var b = Branches[i];
+                b.Update(gt, map, gs);
+                if(!b.IsActive)
+                {
+
+                    b.Hovered = false;
+                    TreeBranchType type = TYPE(b.Type);
+
+                    var rec = GetRec(type);
+
+                    var dis = Vector2.Distance(mpos, rec.Center());
+
+                    if(dis < near)
+                    {
+                        near = dis;
+                        ii = i;
+                    }
+                }
+            }
+
+            if(p.IsBuying)
+                if(ii != -1)
+                {
+                    Branches[ii].Hovered = true;
+
+                    if(Input.LeftClick)
+                    {
+                        //  buy ~~
+                        var type = TYPE(Branches[ii].Type);
+                        Branches[ii].IsActive = true;
+                        AddCollisionBranch(type, map);
+                    }
+
+                }
 
             if(BenchRec.Intersects(p.CollisionBox))
             {
@@ -110,13 +168,14 @@ namespace ld41gamer.Gamer
 
         }
 
-        public override void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Map map)
         {
             base.Draw(sb);
 
             foreach(var b in Branches)
             {
-                b.Draw(sb);
+                if(b.IsActive || map.player.IsBuying)
+                    b.Draw(sb);
             }
         }
     }

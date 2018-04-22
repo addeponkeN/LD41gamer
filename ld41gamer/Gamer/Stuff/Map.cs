@@ -184,8 +184,11 @@ namespace ld41gamer.Gamer
 
             CheckCollision();
 
+
             tree.Update(gt, this, gs);
             builder.Update(gt, this);
+
+            player.UpdateShooting(this, gt);
 
 
             if(player.Rectangle.Intersects(tree.HitBoxes[1]))
@@ -230,7 +233,7 @@ namespace ld41gamer.Gamer
                 p.Draw(sb);
             }
 
-            tree.Draw(sb);
+            tree.Draw(sb, this);
             if(isInsideTree)
                 sb.Draw(GameContent.treeInside, tree.Position, Color.White);
 

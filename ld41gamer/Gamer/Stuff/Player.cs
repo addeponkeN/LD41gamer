@@ -21,6 +21,7 @@ namespace ld41gamer.Gamer
         public bool IsFalling => JumpVelo > -0.1f;
 
         public float ShootCooldownTimer;
+        public float ShootCooldown = 0.80f;
 
         public bool IsMoving { get; set; }
         public bool IsBuilding { get; set; }
@@ -91,25 +92,29 @@ namespace ld41gamer.Gamer
                 PlayAnimation(AnimationType.PlayerJumping);
             else if(JumpVelo > 25)
                 PlayAnimation(AnimationType.PlayerFalling);
-            else if(Direction.X == 0)
+            else if(Direction.X == 0 && IsGrounded)
                 PlayAnimation(AnimationType.Idle);
 
+            if(Direction.X != 0)
+                LatestDirection = (int)Direction.X;
+        }
 
+        public void UpdateShooting(Map map, GameTime gt)
+        {
+            var dt = gt.Delta();
             if(ShootCooldownTimer < 0)
             {
-                if(Input.LeftHold)
-                {
-                    Shoot(map);
-                    ShootCooldownTimer = 0.75f;
-                }
+                if(!IsBuying && !Builder.IsPlacing && !IsBuilding)
+                    if(Input.LeftHold)
+                    {
+                        Shoot(map);
+                        ShootCooldownTimer = ShootCooldown;
+                    }
             }
             else
             {
                 ShootCooldownTimer -= dt;
             }
-
-            if(Direction.X != 0)
-                LatestDirection = (int)Direction.X;
         }
 
 

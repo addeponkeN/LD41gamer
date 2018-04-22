@@ -27,7 +27,8 @@ namespace ld41gamer.Gamer
             enemy = en;
             SetSize(42);
             enemyBox = new Sprite(en.Texture);
-            enemyBox.SetSize(26);
+            //enemyBox.SetSize(26);
+            enemyBox.Size = enemy.Size / 3;
             enemyBox.SetSourceSize(en.CurrentAnimation[0].Size.X, en.CurrentAnimation[0].Size.Y);
             enemyBox.SetFrame(0, 0);
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
@@ -64,7 +65,7 @@ namespace ld41gamer.Gamer
         {
             base.Draw(sb);
             var rec = new Rectangle(Rectangle.X - ((int)Size.X / 2), Rectangle.Y - ((int)Size.Y / 2), (int)Size.X, (int)Size.Y);
-            var p = GHelper.Center(rec, enemyBox.Size);
+            var p = GHelper.Center(rec, enemy.CollisionSize / 3);
             enemyBox.Position = p;
             enemyBox.Draw(sb);
         }

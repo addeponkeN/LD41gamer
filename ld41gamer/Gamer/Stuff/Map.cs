@@ -223,9 +223,12 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Wasp);
 
+            var r = Rng.Noxt(0, 2);
             //  e type
-            if(Rng.Noxt(0, 1) == 0)
+            if(r == 0)
                 e = new Enemy(EnemyType.Ant);
+            else if(r == 1)
+                e = new Enemy(EnemyType.Worm);
 
             //  side
             if(Rng.Noxt(0, 1) == 0)

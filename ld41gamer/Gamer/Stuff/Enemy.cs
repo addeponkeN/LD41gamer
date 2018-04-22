@@ -60,19 +60,21 @@ namespace ld41gamer.Gamer
                     Reward = 3;
                     break;
                 case EnemyType.WormHole:
-                    //Texture = GameContent.wormHole;
+                    Texture = GameContent.wormHole;
                     SetHp(30);
+                    SetSize(Texture.Width / 2, Texture.Height / 2);
                     Speed = 0;
                     Damage = 0;
                     Reward = 10;
                     break;
                 case EnemyType.Worm:
-                    Texture = GameContent.antSheet;
+                    Texture = GameContent.wormSheet;
                     SetHp(3);
                     Damage = 1;
                     Reward = 1;
-                    SetSize(165 / 2, 100 / 2);
+                    SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(114 / 2, 50 / 2);
+                    PlayAnimation(AnimationType.WormWalk);
                     break;
             }
             CreateBar();

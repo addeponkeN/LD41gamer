@@ -37,8 +37,8 @@ namespace ld41gamer.Gamer
             IsAnimating = false;
 
             HitBoxes = new List<Rectangle>();
-            HitBoxes.Add(new Rectangle(4820, 2480, 450, 150));
-            HitBoxes.Add(new Rectangle(4916, 1180, 200, 1400));
+            HitBoxes.Add(new Rectangle(4820, 2480, 420, 150));
+            HitBoxes.Add(new Rectangle(4916, 1180, 220, 1400));
 
             PlatformCollision = new List<Rectangle>();
 

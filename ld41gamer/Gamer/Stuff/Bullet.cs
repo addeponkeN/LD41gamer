@@ -32,7 +32,7 @@ namespace ld41gamer.Gamer
 
         public int Damage = 1;
 
-        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, bool isPlayer = false)
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, float xbet = 0f, bool isPlayer = false)
         {
             Type = t;
             Position = spawnPos;
@@ -66,11 +66,12 @@ namespace ld41gamer.Gamer
                     break;
 
                 case BulletType.Cone:
-                    
-                    float xBet = spawnPos.X + (spawnPos.X - destination.X);
+
+                    float xBet = xbet;
+
                     AirVelo = -(xBet * .1f);
                     BulletDrop = (xBet * .1f);
-                    Speed = xBet * 0.22f;
+                    Speed = xBet * 0.25f;
                     Texture = GameContent.cone;
 
                     break;
@@ -84,8 +85,6 @@ namespace ld41gamer.Gamer
             }
 
 
-
-
         }
 
         void Gravity(float dt)
@@ -97,7 +96,10 @@ namespace ld41gamer.Gamer
         public override void UpdatePosition(GameTime gt)
         {
             base.UpdatePosition(gt);
+        }
 
+        public void RotateToDestination()
+        {
             var dir = Vector2.Normalize(oldPos - Position);
             float angle = (float)Math.Atan2(dir.Y, dir.X) + MathHelper.PiOver2;
             Rotation = angle;
@@ -116,6 +118,7 @@ namespace ld41gamer.Gamer
                 case BulletType.Acorn:
                     Gravity(dt);
                     UpdatePosition(gt);
+                    RotateToDestination();
                     break;
 
                 case BulletType.Cone:

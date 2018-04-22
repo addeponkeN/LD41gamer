@@ -148,7 +148,7 @@ namespace ld41gamer.Gamer
         {
             var des = map.MouseWorldPos();
 
-            var b = new Bullet(BulletType.Acorn, Center, des, 1, true);
+            var b = new Bullet(BulletType.Acorn, Center, des, 1, 0f, true);
 
             map.AddBullet(b);
         }

@@ -283,7 +283,7 @@ namespace ld41gamer.Gamer
         private void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
 
-
+            spawn = spawn - new Vector2(28 / 2);
             var dis = Vector2.Distance(spawn, target);
             var off = dis / 10;
 
@@ -313,23 +313,28 @@ namespace ld41gamer.Gamer
                 if(SpriteEffects == SpriteEffects.None)
                 {
                     xBet = tCenter.X + (tCenter.X - target.X);
+                    dest = new Vector2(tCenter.X + xBet, tCenter.Y - (xBet));
+
+                    xBet = Center.X + (dis / 2);
                 }
                 else
                 {
                     xBet = target.X + (tCenter.X - target.X);
+                    dest = new Vector2(tCenter.X - xBet, tCenter.Y - (xBet));
+
+                    xBet = Center.X - (dis / 2);
                 }
 
-                dest = new Vector2(tCenter.X + xBet, tCenter.Y - (xBet));
 
                 int shots = Rng.Noxt(2, 4);
-                map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest, Damage));
+                map.AddBullet(new Bullet(bulletType, spawn , dest, Damage, xBet));
                 for(int j = 0; j < shots; j++)
                 {
-                    map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest + new Vector2(Rng.Noxt(-256, 256), Rng.Noxt(-256, 256)), Damage));
+                    map.AddBullet(new Bullet(bulletType, spawn, dest + new Vector2(Rng.Noxt(-256, 256), Rng.Noxt(-256, 256)), Damage, xBet));
                 }
             }
             else
-                map.AddBullet(new Bullet(bulletType, spawn - new Vector2(28 / 2), dest, Damage));
+                map.AddBullet(new Bullet(bulletType, spawn, dest, Damage));
 
 
 

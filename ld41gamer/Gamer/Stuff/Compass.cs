@@ -22,16 +22,26 @@ namespace ld41gamer.Gamer
 
         public bool IsDrawing;
 
+        static float count = 1;
+
         public CompassItem(Enemy en) : base(GameContent.compassbox)
         {
             enemy = en;
             SetSize(42);
+
+            var layer = Layer.Compass + (count / 5000);
+
+            DrawLayer = layer;
+
             enemyBox = new Sprite(en.Texture);
             //enemyBox.SetSize(26);
             enemyBox.SetSourceSize(en.CurrentAnimation[0].Size.X, en.CurrentAnimation[0].Size.Y);
             enemyBox.Size = enemy.Size / 3;
             enemyBox.SetFrame(0, enemy.Row);
+            enemyBox.DrawLayer = layer + 0.0001f;
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
+
+            count += 1f;
         }
 
         public void Update(GameTime gt, Map map, Player player)

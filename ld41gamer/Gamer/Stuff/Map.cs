@@ -234,7 +234,7 @@ namespace ld41gamer.Gamer
             if(e.IsFlying)
                 e.Position.Y = Rng.Noxt(1450, 2330);
             else
-                e.Position.Y = GroundPosition.Y - e.Size.Y / 2;
+                e.Position.Y = GroundCollisionBox.Top - e.Size.Y;
 
             Enemies.Add(e);
             comp.Add(e);

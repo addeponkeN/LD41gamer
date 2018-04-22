@@ -32,6 +32,7 @@ namespace ld41gamer.Gamer
             IsActive = false;
             IsAnimating = false;
             SpriteEffects = SpriteEffects.FlipHorizontally;
+            DrawLayer = Layer.TreeInside - 0.005f;
             switch(t)
             {
 

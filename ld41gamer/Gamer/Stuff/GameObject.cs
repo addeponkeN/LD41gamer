@@ -80,7 +80,7 @@ namespace ld41gamer.Gamer
 
             if(CollisionBox.Bottom < Map.GroundCollisionBox.Top)
             {
-                y = Map.GroundCollisionBox.Top - size.Y;
+                y = Map.GroundCollisionBox.Top - (size.Y/3);
             }
             else
                 y = CollisionBox.Bottom - (size.Y / 3);

@@ -22,6 +22,8 @@ namespace ld41gamer.Gamer
 
         public const float HpBar = 0.8f;
 
+        public const float Compass = 0.81f;
+
 
         public const float Particle = 0.7f;
         

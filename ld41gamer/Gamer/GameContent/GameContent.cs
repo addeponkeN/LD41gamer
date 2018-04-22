@@ -22,10 +22,13 @@ namespace ld41gamer.Gamer
             ground,
             acorn,
             particlesheet,
-            antSheet,
-            waspSheet,
             hammer,
             blastcloud,
+
+            antSheet,
+            waspSheet,
+            wormSheet,
+            wormHole,
 
             turretsheet,
 
@@ -52,10 +55,13 @@ namespace ld41gamer.Gamer
             compassbox = Texture("compassbox");
             ground = Texture("ground");
             acorn = Texture("acorn");
-            antSheet = Texture("antSheet");
-            waspSheet = Texture("waspSheet");
             hammer = Texture("hammer");
             blastcloud = Texture("blastcloud");
+
+            antSheet = Texture("antSheet");
+            waspSheet = Texture("waspSheet");
+            wormSheet = Texture("wormSheet");
+            wormHole = Texture("wormHole");
 
             turretsheet = Texture("turretsheet");
             particlesheet = Texture("particlesheet");

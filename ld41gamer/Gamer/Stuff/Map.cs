@@ -3,6 +3,7 @@ using ld41gamer.Gamer.Sprites;
 using ld41gamer.Gamer.StateMachine.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
 using Obo.Utility;
 using System;
@@ -203,6 +204,9 @@ namespace ld41gamer.Gamer
                 SpawnEnemy();
                 enemySpawnTimer = 0;
             }
+
+            if(Input.KeyClick(Keys.P))
+                SpawnEnemy();
 
             CheckCollision();
 

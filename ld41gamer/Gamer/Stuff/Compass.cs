@@ -43,7 +43,7 @@ namespace ld41gamer.Gamer
             else
                 IsDrawing = true;
 
-            var target = enemy.Center;
+            var target = enemy.CollisionBox.Center();
 
             Vector2 center = new Vector2(cam.BoundingRectangle.Center.X, cam.BoundingRectangle.Center.Y);
 
@@ -65,7 +65,9 @@ namespace ld41gamer.Gamer
         {
             base.Draw(sb);
             var rec = new Rectangle(Rectangle.X - ((int)Size.X / 2), Rectangle.Y - ((int)Size.Y / 2), (int)Size.X, (int)Size.Y);
-            var p = GHelper.Center(rec, enemy.CollisionSize / 3);
+            var c = enemy.CollisionSize / 3;
+            var p = new Vector2(GHelper.Center(rec, c).X, rec.Y + (rec.Height / 2) - enemyBox.Size.Y + c.Y);
+
             enemyBox.Position = p;
             enemyBox.Draw(sb);
         }

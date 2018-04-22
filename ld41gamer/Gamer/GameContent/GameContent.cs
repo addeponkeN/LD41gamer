@@ -22,6 +22,7 @@ namespace ld41gamer.Gamer
             compassbox,
             ground,
             acorn,
+            cone,
             particlesheet,
             hammer,
             blastcloud,
@@ -58,6 +59,7 @@ namespace ld41gamer.Gamer
             compassbox = Texture("compassbox");
             ground = Texture("ground");
             acorn = Texture("acorn");
+            cone = Texture("cone");
             hammer = Texture("hammer");
             blastcloud = Texture("blastcloud");
 

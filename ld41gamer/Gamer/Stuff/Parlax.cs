@@ -42,7 +42,7 @@ namespace ld41gamer.Gamer
                 for(int i = 0; i < 4; i++)
                 {
                     var p = list[i];
-                    float speed = (map.player.Speed / (4 - i)) * 0.75f;
+                    float speed = (map.player.Speed / (4 - i)) * 0.35f;
                     p.OffSetX += speed * (-map.player.Direction.X / 2) * dt;
                 }
         }

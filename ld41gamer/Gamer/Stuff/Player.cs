@@ -29,7 +29,7 @@ namespace ld41gamer.Gamer
 
         public int LatestDirection;
 
-        public int Money;
+        public int Money = 200;
 
         public Player()
         {
@@ -146,7 +146,7 @@ namespace ld41gamer.Gamer
         {
             var des = map.MouseWorldPos();
 
-            var b = new Bullet(BulletType.Acorn, Center, des, true);
+            var b = new Bullet(BulletType.Acorn, Center, des, 1, true);
 
             map.AddBullet(b);
         }

@@ -30,11 +30,14 @@ namespace ld41gamer.Gamer
 
         Vector2 oldPos;
 
-        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, bool isPlayer = false)
+        public int Damage = 1;
+
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, bool isPlayer = false)
         {
             Type = t;
             Position = spawnPos;
             Direction = Vector2.Normalize(destination - spawnPos);
+            Damage = damage;
 
             if(isPlayer)
                 SetSize(16);

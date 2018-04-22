@@ -173,7 +173,7 @@ namespace ld41gamer.Gamer
                         }
 
 
-                        e.HealthPoints--;
+                        e.HealthPoints -= b.Damage;
                         Bullets.Remove(b);
                     }
                 }
@@ -227,8 +227,8 @@ namespace ld41gamer.Gamer
         {
             var e = new Enemy(EnemyType.Wasp);
 
-            var r = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
             //  e type
+            var r = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
             e = new Enemy((EnemyType)r);
 
             //  side
@@ -243,7 +243,14 @@ namespace ld41gamer.Gamer
             else
                 e.Position.Y = GroundPosition.Y - e.Size.Y / 2;
 
+            Enemies.Add(e);
+            comp.Add(e);
+        }
 
+        public void SpawnWorm(int posx)
+        {
+            var e = new Enemy(EnemyType.WormYellow);
+            e.Position = new Vector2(posx, GroundPosition.Y - e.Size.Y / 2);
             Enemies.Add(e);
             comp.Add(e);
         }

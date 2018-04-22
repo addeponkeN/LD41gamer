@@ -54,8 +54,6 @@ namespace ld41gamer.Gamer
             PlatformCollision.Add(new Rectangle(5024, 1686, 92, 10));
             PlatformCollision.Add(new Rectangle(4924, 1542, 92, 10));
 
-            //walls
-
             BenchRec = new Rectangle(4952, 2470, 100, 100);
 
             hammer = new AnimatedSprite();
@@ -157,7 +155,14 @@ namespace ld41gamer.Gamer
 
                     if(Input.LeftClick)
                     {
-                        //  buy ~~
+                        if(map.player.Money < Branches[ii].Cost)
+                        {
+                            Console.WriteLine("NO AFFORD");
+                            return;
+                        }
+                        else
+                            map.player.Money -= Branches[ii].Cost;
+
                         var type = TYPE(Branches[ii].Type);
                         Branches[ii].IsActive = true;
                         AddCollisionBranch(type, map);

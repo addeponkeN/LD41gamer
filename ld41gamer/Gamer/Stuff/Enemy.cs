@@ -13,10 +13,13 @@ namespace ld41gamer.Gamer
     public enum EnemyType
     {
         Ant,
-        Beetle,
-        Worm,
+        //Beetle,
+        WormBlue,
+        WormYellow,
+        WormRed,
+        Wasp,
+
         WormHole,
-        Wasp
     }
 
     public class Enemy : LivingObject
@@ -44,11 +47,6 @@ namespace ld41gamer.Gamer
                     SetSize(165 / 2, 100 / 2);
                     SetCollisionBot(114 / 2, 50 / 2);
                     break;
-                case EnemyType.Beetle:
-                    SetHp(7);
-                    Damage = 2;
-                    Reward = 2;
-                    break;
                 case EnemyType.Wasp:
                     Texture = GameContent.waspSheet;
                     SetSize(152 / 2, 106 / 2);
@@ -67,14 +65,32 @@ namespace ld41gamer.Gamer
                     Damage = 0;
                     Reward = 10;
                     break;
-                case EnemyType.Worm:
+                case EnemyType.WormBlue:
+                    Texture = GameContent.wormSheet;
+                    SetHp(5);
+                    Damage = 1;
+                    Reward = 3;
+                    SetSize(170 / 2, 100 / 2);
+                    SetCollisionBot(105 / 2, 23 / 2);
+                    PlayAnimation(AnimationType.WormBlue);
+                    break;
+                case EnemyType.WormYellow:
                     Texture = GameContent.wormSheet;
                     SetHp(3);
                     Damage = 1;
                     Reward = 1;
                     SetSize(170 / 2, 100 / 2);
-                    SetCollisionBot(114 / 2, 50 / 2);
-                    PlayAnimation(AnimationType.WormWalk);
+                    SetCollisionBot(105 / 2, 23 / 2);
+                    PlayAnimation(AnimationType.WormYellow);
+                    break;
+                case EnemyType.WormRed:
+                    Texture = GameContent.wormSheet;
+                    SetHp(7);
+                    Damage = 2;
+                    Reward = 5;
+                    SetSize(170 / 2, 100 / 2);
+                    SetCollisionBot(105 / 2, 23 / 2);
+                    PlayAnimation(AnimationType.WormRed);
                     break;
             }
             CreateBar();

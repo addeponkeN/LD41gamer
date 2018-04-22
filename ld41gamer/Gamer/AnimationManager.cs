@@ -19,7 +19,9 @@ namespace ld41gamer.Gamer
 
         EnemyWalk,
         WaspWalk,
-        WormWalk,
+        WormBlue,
+        WormYellow,
+        WormRed,
 
         Hammer,
         BlastCloud,
@@ -39,8 +41,10 @@ namespace ld41gamer.Gamer
             AddAnimation(new int[] { 1, 2, 3 }, 0, 165, 100, AnimationType.PlayerWalking);
 
             AddAnimation(new int[] { 1, 2, 3 }, 0, 165, 100, AnimationType.EnemyWalk);
-            AddAnimation(new int[] { 0, 1, 2 }, 0, 152, 106, AnimationType.WaspWalk);
-            AddAnimation(new int[] { 0, 0, 1, 2 }, 0, 170, 100, AnimationType.WormWalk);
+            AddAnimation(new int[] { 0, 1, 2, 1 }, 0, 152, 106, AnimationType.WaspWalk);
+            AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 0, 170, 100, AnimationType.WormRed);
+            AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 1, 170, 100, AnimationType.WormYellow);
+            AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 2, 170, 100, AnimationType.WormBlue);
 
             AddAnimation(new int[] { 0, 1 }, 0, 100, 100, AnimationType.Hammer);
             AddAnimation(new int[] { 1, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7 }, 0, 221, 123, AnimationType.BlastCloud);

@@ -25,9 +25,9 @@ namespace ld41gamer.Gamer
         public Parlax(Map map)
         {
             Add(new Vector2(0, 0), map.BoxRectangle.Width, map.BoxRectangle.Height);
-            Add(new Vector2(0, map.GroundCollisionBox.Top - 512), 1280, 512);
-            Add(new Vector2(0, map.GroundCollisionBox.Top - 700), 900, 700);
-            Add(new Vector2(0, map.GroundCollisionBox.Top - 202 * 4), 858 * 4, 202 * 4);
+            Add(new Vector2(0, Map.GroundCollisionBox.Top - 512), 1280, 512);
+            Add(new Vector2(0, Map.GroundCollisionBox.Top - 700), 900, 700);
+            Add(new Vector2(0, Map.GroundCollisionBox.Top - 202 * 4), 858 * 4, 202 * 4);
         }
 
         void Add(Vector2 pos, float w, float h)
@@ -61,7 +61,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - p.OffSetX; x += p.Rectangle.Width)
                         {
                             p.Position.X = x;
-                            sb.Draw(GameContent.layer0, p.Rectangle, Color.White);
+                            sb.Draw(GameContent.layer0, p.Rectangle, Color.White, Layer.BACK + 0.10f);
                         }
 
                         break;
@@ -70,7 +70,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
                             p.Position.X = x;
-                            sb.Draw(GameContent.layer1, p.Rectangle, Color.White);
+                            sb.Draw(GameContent.layer1, p.Rectangle, Color.White, Layer.BACK + 0.11f);
                         }
 
                         break;
@@ -79,7 +79,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
                             p.Position.X = x;
-                            sb.Draw(GameContent.layer2, p.Rectangle, Color.White);
+                            sb.Draw(GameContent.layer2, p.Rectangle, Color.White, Layer.BACK + 0.12f);
                         }
 
                         break;
@@ -87,7 +87,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
                             p.Position.X = x;
-                            sb.Draw(GameContent.layer3, p.Rectangle, Color.White);
+                            sb.Draw(GameContent.layer3, p.Rectangle, Color.White, Layer.BACK + 0.13f);
                         }
 
                         break;

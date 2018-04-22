@@ -34,7 +34,7 @@ namespace ld41gamer.Gamer
         public Tree()
         {
             Texture = GameContent.tree;
-
+            DrawLayer = Layer.Tree;
             SetSize(Texture.Width, Texture.Height);
             SetSourceSize(Texture.Width, Texture.Height);
             SetFrame(0, 0);
@@ -177,7 +177,7 @@ namespace ld41gamer.Gamer
 
             hammerTimer -= dt;
             if(hammerTimer > 0)
-            hammer.UpdateAnimation(gt);
+                hammer.UpdateAnimation(gt);
 
             if(BenchRec.Intersects(p.CollisionBox))
             {
@@ -196,11 +196,21 @@ namespace ld41gamer.Gamer
             base.Draw(sb);
             if(hammerTimer > 0)
                 hammer.Draw(sb);
-                foreach(var b in Branches)
+            foreach(var b in Branches)
             {
                 if(b.IsActive || map.player.IsBuying)
                     b.Draw(sb);
             }
+
+            var size = new Vector2(Size.X * 2.5f, 70);
+
+            float x = GHelper.Center(Rectangle, size).X;
+            float y = Map.GroundCollisionBox.Top - 28;
+
+            var rec = new Rectangle((int)x, (int)y, (int)size.X, (int)size.Y);
+            int alpha = 155;
+
+            sb.Draw(GameContent.shadow, rec, new Color(alpha, alpha, alpha, alpha), Layer.Shadow);
         }
     }
 }

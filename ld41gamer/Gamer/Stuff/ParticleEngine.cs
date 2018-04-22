@@ -41,7 +41,6 @@ namespace ld41gamer.Gamer
 
         public Vector2 Origin;
         public SpriteEffects SpriteEffects;
-        public float Layer = 1f;
 
         public float LifeTime;
         public float LifeTimeBase;
@@ -212,14 +211,14 @@ namespace ld41gamer.Gamer
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(GameContent.particlesheet, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer);
+            sb.Draw(GameContent.particlesheet, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer.Particle);
 
             switch(Type)
             {
                 case ParticleType.Smoke:
                     break;
                 case ParticleType.Blood:
-                    sb.Draw(GameContent.particlesheet, new Rectangle((int)Position.X - 3, (int)Position.Y - (int)(growY * .29f), 6, (int)growY), FrameRectangle, new Color(Color, Alpha), 0f, Vector2.Zero, SpriteEffects, Layer);
+                    sb.Draw(GameContent.particlesheet, new Rectangle((int)Position.X - 3, (int)Position.Y - (int)(growY * .29f), 6, (int)growY), FrameRectangle, new Color(Color, Alpha), 0f, Vector2.Zero, SpriteEffects, Layer.Particle);
                     break;
                 default:
                     break;

@@ -112,21 +112,34 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         void LockCamToMap(Map map)
         {
-
+            int left = 760;
+            int right = 9900;
             if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom)
             {
                 int y = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
                 cam2d.Position = new Vector2(cam2d.Position.X, cam2d.Position.Y - y);
             }
 
+            if(cam2d.BoundingRectangle.Left < left)
+            {
+                //int x = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
+                cam2d.Position = new Vector2(left, cam2d.Position.Y);
+            }
+
+            if(cam2d.BoundingRectangle.Right > right)
+            {
+                //int x = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
+                //cam2d.Position = new Vector2(cam2d.Position.X, cam2d.Position.Y - y);
+            }
         }
+
 
         int i = 0;
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
 
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
+            sb.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.DrawWorld(sb);
 

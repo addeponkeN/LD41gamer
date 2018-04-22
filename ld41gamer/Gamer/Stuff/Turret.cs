@@ -71,6 +71,8 @@ namespace ld41gamer.Gamer
             blastCloud.PlayAnimation(AnimationType.BlastCloud);
             blastCloud.FrameLength = .1f;
 
+            DrawLayer = Layer.Turret;
+
             switch(t)
             {
                 case TowerType.PeaShooter:
@@ -244,6 +246,8 @@ namespace ld41gamer.Gamer
             base.Draw(sb);
             if(blastTimer >= 0)
                 blastCloud.Draw(sb);
+
+
         }
 
         public void DrawRange(SpriteBatch sb)

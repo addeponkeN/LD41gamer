@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Obo.GameUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,12 +41,14 @@ namespace ld41gamer.Gamer
             layer0,
             layer1,
             layer2,
-            layer3
+            layer3,
+
+            shadow
             ;
 
         public static SpriteFont font14, font24;
 
-        public static void Load(ContentManager c)
+        public static void Load(ContentManager c, GraphicsDevice gd)
         {
             content = c;
             AnimationManager.Load();
@@ -78,6 +81,8 @@ namespace ld41gamer.Gamer
 
             font14 = Font("font14");
             font24 = Font("font24");
+
+            shadow = Extras.DrawCircle(gd, 400, .25f, Color.Black);
         }
 
         public static void Unload()

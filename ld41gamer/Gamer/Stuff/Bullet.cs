@@ -50,6 +50,7 @@ namespace ld41gamer.Gamer
 
             LifeTime = 20f;
 
+            DrawLayer = Layer.Bullet;
 
             switch(Type)
             {

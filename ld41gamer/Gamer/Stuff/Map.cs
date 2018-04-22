@@ -34,7 +34,7 @@ namespace ld41gamer.Gamer
         public Point GroundPosition;
 
         public Rectangle GroundRectangle => new Rectangle(GroundPosition, GroundSize);
-        public Rectangle GroundCollisionBox;
+        public static Rectangle GroundCollisionBox;
         public Rectangle BoxRectangle;
 
         public List<Bullet> Bullets;
@@ -185,13 +185,6 @@ namespace ld41gamer.Gamer
                 }
             }
 
-            for(int i = 0; i < tree.PlatformCollision.Count; i++)
-            {
-                var r = tree.PlatformCollision[i];
-                player.PlatformCollision(r);
-            }
-
-
             comp.Update(gt, this, player);
 
             Bullets.RemoveAll(x => x.LifeTime < 0);
@@ -259,13 +252,13 @@ namespace ld41gamer.Gamer
         {
             parlax.Draw(sb, this);
 
-            //sb.Draw(GameContent.layer0, BoxRectangle, Color.White);
-            //sb.Draw(GameContent.layer1, BoxRectangle, Color.White);
-            //sb.Draw(GameContent.layer2, BoxRectangle, Color.White);
-            //sb.Draw(GameContent.layer3, BoxRectangle, Color.White);
+            //sb.Draw(GameContent.layer0, BoxRectangle, Color.White, Layer.BACK + 0.10f);
+            //sb.Draw(GameContent.layer1, BoxRectangle, Color.White, Layer.BACK + 0.11f);
+            //sb.Draw(GameContent.layer2, BoxRectangle, Color.White, Layer.BACK + 0.12f);
+            //sb.Draw(GameContent.layer3, BoxRectangle, Color.White, Layer.BACK + 0.13f);
 
             for(int i = 0; i < GroundRectangle.Width; i += GameContent.ground.Width)
-                sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White);
+                sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White, Layer.Ground);
 
             foreach(var p in Props)
             {
@@ -274,7 +267,7 @@ namespace ld41gamer.Gamer
 
             tree.Draw(sb, this);
             if(isInsideTree)
-                sb.Draw(GameContent.treeInside, tree.Position, Color.White);
+                sb.Draw(GameContent.treeInside, tree.Position, Color.White, Layer.TreeInside);
 
             foreach(var t in Turrets)
             {

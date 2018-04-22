@@ -36,6 +36,7 @@ namespace ld41gamer.Gamer
             Speed = 50f;
 
             PlayAnimation(AnimationType.EnemyWalk);
+            DrawLayer = Layer.Enemy;
 
             switch(t)
             {
@@ -146,8 +147,22 @@ namespace ld41gamer.Gamer
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            //sb.Draw(Texture, Rectangle, Color.White);
 
+            var size = new Vector2(CollisionBox.Width, 6 + (CollisionBox.Height / 3));
+
+            float x = GHelper.Center(CollisionBox, size).X;
+            float y;
+
+            if(CollisionBox.Bottom < Map.GroundCollisionBox.Top)
+            {
+                y = Map.GroundCollisionBox.Top - size.Y;
+            }
+            else y = CollisionBox.Bottom - size.Y;
+
+            var pos = new Vector2(x, y);
+
+            DrawShadow(sb);
         }
+
     }
 }

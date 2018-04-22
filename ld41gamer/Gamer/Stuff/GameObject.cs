@@ -71,5 +71,27 @@ namespace ld41gamer.Gamer
 
         }
 
+        public virtual void DrawShadow(SpriteBatch sb, float xoff = 0, float yoff = 0)
+        {
+            var size = new Vector2(CollisionBox.Width * 1.5f, 6 + (CollisionBox.Height / 3));
+
+            float x = GHelper.Center(CollisionBox, size).X;
+            float y;
+
+            if(CollisionBox.Bottom < Map.GroundCollisionBox.Top)
+            {
+                y = Map.GroundCollisionBox.Top - size.Y;
+            }
+            else
+                y = CollisionBox.Bottom - (size.Y / 3);
+
+            var pos = new Vector2(x, y);
+
+            int alpha = 150 * (Map.GroundCollisionBox.Top / 1300);
+            var color = new Color(alpha, alpha, alpha, alpha);
+
+            sb.Draw(GameContent.shadow, new Rectangle(pos.ToPoint(), size.ToPoint()), color, Layer.Shadow);
+        }
+
     }
 }

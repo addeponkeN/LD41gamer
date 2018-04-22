@@ -102,7 +102,7 @@ namespace ld41gamer.Gamer.Sprites
 
         new public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rectangle, CurrentAnimationFrame, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer);
+            sb.Draw(Texture, Rectangle, CurrentAnimationFrame, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, DrawLayer);
         }
     }
 }

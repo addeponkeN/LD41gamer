@@ -42,6 +42,8 @@ namespace ld41gamer.Gamer
 
             PlayAnimation(AnimationType.Idle);
 
+            DrawLayer = Layer.Player;
+
             //CreateBar();
         }
 
@@ -216,73 +218,10 @@ namespace ld41gamer.Gamer
             }
 
         }
-
-        public void PlatformCollision(Rectangle rec)
-        {
-
-            //if(!Input.KeyHold(Keys.S) && Rectangle.Bottom < rec.Top + 4)
-            //{
-            //    IsGrounded = false;
-            //    JumpVelo = 0;
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-            //}
-
-            //if(Rectangle.Bottom > rec.Top)
-            //{
-            //    IsJumping = false;
-            //    JumpVelo = 0;
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-
-            //}
-
-            //if(Rectangle.Bottom > rec.Top)
-            //{
-            //    IsJumping = false;
-            //    JumpVelo = 0;
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-
-            //}
-
-            //if(Rectangle.Bottom > rec.Top)
-            //{
-            //    IsJumping = false;
-            //    JumpVelo = 0;
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-
-            //}
-
-
-
-
-            //if(rec.TouchTopOf(rec))
-            //{
-            //    Position = new Vector2(Position.X, rec.Y - Size.Y);
-            //    JumpVelo = 0;
-            //}
-
-            //if(rec.TouchBottomOf(rec))
-            //{
-            //    Position = new Vector2(Position.X, rec.Y);
-            //    JumpVelo = 0;
-            //}
-
-            //if(rec.TouchLeftOf(rec))
-            //{
-            //    Position = new Vector2(rec.X - Size.X, Position.Y);
-            //    JumpVelo = 0;
-            //}
-
-            //if(rec.TouchRightOf(rec))
-            //{
-            //    Position = new Vector2(rec.X, Position.Y);
-            //    JumpVelo = 0;
-            //}
-        }
-
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            //sb.Draw(Texture, , Color.White);
+            DrawShadow(sb, 0, 20);
 
             if(Globals.IsDebugging)
                 sb.Draw(UtilityContent.box, CollisionBox, Color.Blue);

@@ -67,7 +67,7 @@ namespace ld41gamer.Gamer.Sprites
         public float Rotation;
         public Vector2 Origin;
         public SpriteEffects SpriteEffects;
-        public float Layer = 1f;
+        public float DrawLayer = 1f;
 
         public Sprite()
         {
@@ -109,7 +109,7 @@ namespace ld41gamer.Gamer.Sprites
 
         public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(Texture, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer);
+            sb.Draw(Texture, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, DrawLayer);
         }
 
     }

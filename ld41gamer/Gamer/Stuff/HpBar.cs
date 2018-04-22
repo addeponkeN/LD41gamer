@@ -19,7 +19,7 @@ namespace ld41gamer.Gamer
         public Sprite Foreground;
         public Sprite Background;
 
-        new public Rectangle Rectangle => new Rectangle((int)Position.X - gap, (int)Position.Y-gap, (int)(Size.X * Globals.Scale.X) + (gap*2), (int)(Size.Y * Globals.Scale.Y) + (gap * 2));
+        new public Rectangle Rectangle => new Rectangle((int)Position.X - gap, (int)Position.Y - gap, (int)(Size.X * Globals.Scale.X) + (gap * 2), (int)(Size.Y * Globals.Scale.Y) + (gap * 2));
 
         int gap = 2;
 
@@ -28,13 +28,17 @@ namespace ld41gamer.Gamer
             SetColor(Color.Black);
             SetSize(w, h);
 
+            DrawLayer = Layer.HpBar;
+
             Foreground = new Sprite();
             Foreground.SetSize(w, h);
             Foreground.Color = Color.ForestGreen;
+            Foreground.DrawLayer = DrawLayer + 0.02f;
 
             Background = new Sprite();
             Background.SetSize(w, h);
             Background.Color = Color.IndianRed;
+            Background.DrawLayer = DrawLayer + 0.01f;
         }
 
         public void Update(float value, float maxValue)
@@ -51,7 +55,7 @@ namespace ld41gamer.Gamer
             Background.Position = position;
             Foreground.Position = position;
 
-            sb.Draw(Texture, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer);
+            sb.Draw(Texture, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, DrawLayer);
 
             Background.Draw(sb);
             Foreground.Draw(sb);

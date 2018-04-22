@@ -14,7 +14,7 @@ namespace ld41gamer.Gamer
     {
         Ant,
         Beetle,
-        FlyingAnt
+        Wasp
     }
 
     public class Enemy : LivingObject
@@ -46,8 +46,11 @@ namespace ld41gamer.Gamer
                     Damage = 2;
                     Reward = 2;
                     break;
-                case EnemyType.FlyingAnt:
-                    SetHp(3);
+                case EnemyType.Wasp:
+                    Texture = GameContent.waspSheet;
+                    SetSize(152 / 2, 106 / 2);
+                    PlayAnimation(AnimationType.WaspWalk);
+                    SetHp(5);
                     Damage = 1;
                     IsFlying = true;
                     Reward = 3;

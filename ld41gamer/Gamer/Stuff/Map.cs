@@ -199,7 +199,10 @@ namespace ld41gamer.Gamer
 
         public void SpawnEnemy()
         {
-            var e = new Enemy(EnemyType.Ant);
+            var e = new Enemy(EnemyType.Wasp);
+
+            if(Rng.Noxt(0, 1) == 0)
+                e = new Enemy(EnemyType.Ant);
 
             var side = Rng.Noxt(0, 1);
             if(side == 0)

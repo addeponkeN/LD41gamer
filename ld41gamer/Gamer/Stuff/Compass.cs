@@ -26,9 +26,9 @@ namespace ld41gamer.Gamer
         {
             enemy = en;
             SetSize(42);
-            enemyBox = new Sprite(GameContent.antSheet);
+            enemyBox = new Sprite(en.Texture);
             enemyBox.SetSize(26);
-            enemyBox.SetSourceSize(165, 100);
+            enemyBox.SetSourceSize(en.CurrentAnimation[0].Size.X, en.CurrentAnimation[0].Size.Y);
             enemyBox.SetFrame(0, 0);
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }

@@ -102,8 +102,9 @@ namespace ld41gamer.Gamer
                         {
                             //  build compelte
                             var turr = new Turret(t.Type);
+
                             turr.Position = t.Position;
-                            turr.SpriteEffects = t.SpriteEffects;
+                            turr.SetEffect(t.SpriteEffects);
                             map.Turrets.Add(turr);
                             Con.RemoveAt(i);
                         }
@@ -133,6 +134,7 @@ namespace ld41gamer.Gamer
             IsPlacing = false;
             if(b != null)
             {
+                b.UpdateRec();
                 IsPlacing = true;
 
                 Vector2 pos;
@@ -158,7 +160,7 @@ namespace ld41gamer.Gamer
                         t.Column++;
                         t.SetFrame(t.Column, t.Row);
                         t.Color = Color.CornflowerBlue;
-                        t.SpriteEffects = b.SpriteEffects;
+                        t.SetEffect(b.SpriteEffects);
                         t.HpBar.Foreground.Color = Color.LightGoldenrodYellow;
                         t.HpBar.Background.Color = Color.DarkGoldenrod;
 
@@ -206,6 +208,7 @@ namespace ld41gamer.Gamer
             }
 
             b?.Draw(sb);
+            b?.DrawRange(sb);
 
         }
     }

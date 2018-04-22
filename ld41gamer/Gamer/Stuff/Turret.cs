@@ -37,6 +37,11 @@ namespace ld41gamer.Gamer
         AnimatedSprite blastCloud;
         float blastTimer;
 
+
+        Shape recf;
+        Shape colLeft;
+        Shape colRight;
+
         //  range in pixels
         int Range;
 
@@ -99,7 +104,50 @@ namespace ld41gamer.Gamer
 
             BuildTimeBase = 0.5f;
 
+            float Range2 = Range / 2;
+            float Range4 = Range / 4;
+
+            colRight = new Shape(
+            Vector2.Zero,
+            new Vector2(Range - Range4, -Range2),
+            new Vector2(Range, 0),
+            new Vector2(Range - Range4, Range2));
+
+            colLeft = new Shape(
+            Vector2.Zero,
+            new Vector2(-Range + Range4, -Range2),
+            new Vector2(-Range, 0),
+            new Vector2(-Range + Range4, Range2));
+
+
+            recf = colRight;
+
             CreateBar();
+        }
+
+        public void SetEffect(SpriteEffects ef)
+        {
+            SpriteEffects = ef;
+
+        }
+
+        void InvertRec()
+        {
+
+        }
+
+        public void UpdateRec()
+        {
+            if(SpriteEffects == SpriteEffects.None)
+            {
+                recf = colRight;
+            }
+            else
+            {
+                recf = colLeft;
+            }
+
+            recf.Position = CollisionBox.Center();
         }
 
         public override void Update(GameTime gt, Map map, GameScreen gs)
@@ -108,6 +156,8 @@ namespace ld41gamer.Gamer
             attackTimer += gt.Delta();
             blastTimer -= gt.Delta();
             blastCloud.UpdateAnimation(gt);
+
+            UpdateRec();
 
             for(int i = 0; i < map.Enemies.Count; i++)
             {
@@ -129,10 +179,9 @@ namespace ld41gamer.Gamer
                 if(!tryShoot)
                     continue;
 
-                var distance = Vector2.Distance(Position, e.Position);
-
-                if(distance <= Range)
-                    if(attackTimer >= attackSpeed)
+                if(attackTimer >= attackSpeed)
+                {
+                    if(recf.Intersects(e.CollisionBox))
                     {
                         if(SpriteEffects == SpriteEffects.None)
                             Shoot(map, Position + bulletStartPosRight, e.Center);
@@ -141,6 +190,20 @@ namespace ld41gamer.Gamer
 
                         attackTimer = 0;
                     }
+                }
+
+                //    var distance = Vector2.Distance(Position, e.Position);
+
+                //if(distance <= Range)
+                //    if(attackTimer >= attackSpeed)
+                //    {
+                //        if(SpriteEffects == SpriteEffects.None)
+                //            Shoot(map, Position + bulletStartPosRight, e.Center);
+                //        else
+                //            Shoot(map, Position + bulletStartPosLeft, e.Center);
+
+                //        attackTimer = 0;
+                //    }
             }
         }
 
@@ -181,6 +244,11 @@ namespace ld41gamer.Gamer
             base.Draw(sb);
             if(blastTimer >= 0)
                 blastCloud.Draw(sb);
+        }
+
+        public void DrawRange(SpriteBatch sb)
+        {
+            recf.Draw(sb, Color.LightBlue);
         }
     }
 }

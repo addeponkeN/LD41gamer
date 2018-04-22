@@ -275,6 +275,7 @@ namespace ld41gamer.Gamer
             foreach(var t in Turrets)
             {
                 t.Draw(sb);
+                t.DrawRange(sb);
             }
 
             builder.Draw(sb);

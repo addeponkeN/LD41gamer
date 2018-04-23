@@ -257,7 +257,7 @@ namespace ld41gamer.Gamer
             hammer.Draw(sb);
         }
 
-        public static void DrawUpgradeAndRepair(SpriteBatch sb, Vector2 pos, Vector2 size)
+        public static void DrawUpgradeAndRepair(SpriteBatch sb, Vector2 pos, Vector2 size, bool upgrade)
         {
             ug.Position = pos;
             ug.Size = size;
@@ -265,12 +265,14 @@ namespace ld41gamer.Gamer
             rep.Position = pos + new Vector2(ug.Size.X + 12, 0);
             rep.Size = size;
 
-            ug.Draw(sb);
+            if(upgrade)
+                ug.Draw(sb);
             rep.Draw(sb);
 
             var s = GameContent.font14.MeasureString("[R]");
 
-            Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
+            if(upgrade)
+                Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
             Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
 
             GameLabel gup = new GameLabel(GameContent.acorn, UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
@@ -279,9 +281,9 @@ namespace ld41gamer.Gamer
 
             GameLabel grep = new GameLabel(GameContent.acorn, RepairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             grep.Item.SetSize(14);
-            grep.SetPosition(rep.Position + new Vector2(5, ug.Size.Y+4));
-
-            gup.Draw(sb);
+            grep.SetPosition(rep.Position + new Vector2(5, ug.Size.Y + 4));
+            if(upgrade)
+                gup.Draw(sb);
             grep.Draw(sb);
 
             //Extras.DrawString(sb, GameContent.font14, "", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);

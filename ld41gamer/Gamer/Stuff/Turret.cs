@@ -82,7 +82,7 @@ namespace ld41gamer.Gamer
 
         private float pTimer;
 
-        public bool CanUpgrade => Rank <= 4 && UpgradeCooldownTimer < 0f;
+        public bool CanUpgrade => Rank < 4 && UpgradeCooldownTimer < 0f;
 
         float TimeToUpgrade => 3f + (Rank * 2f);
 

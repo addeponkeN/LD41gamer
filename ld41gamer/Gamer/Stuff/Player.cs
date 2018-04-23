@@ -112,19 +112,19 @@ namespace ld41gamer.Gamer
                 if(CanMove)
                 {
 
-                    if(Input.KeyHold(Keys.A))
+                    if(Input.KeyHold(Keys.A, Keys.Left))
                     {
                         Run(-1);
                         PlayAnimation(AnimationType.PlayerWalking);
                     }
 
-                    if(Input.KeyHold(Keys.D))
+                    if(Input.KeyHold(Keys.D, Keys.Right))
                     {
                         Run(1);
                         PlayAnimation(AnimationType.PlayerWalking);
                     }
 
-                    if(Input.KeyClick(Keys.Space))
+                    if(Input.KeyClick(Keys.Space, Keys.W, Keys.Up))
                     {
                         if(IsGrounded)
                             Jump();
@@ -160,6 +160,7 @@ namespace ld41gamer.Gamer
                     knockSpeed = 0f;
 
                 Position.X += Direction.X * knockSpeed * dt;
+                Position.Y += JumpVelo * dt;
 
 
                 //  dead complete, start respawn
@@ -293,7 +294,7 @@ namespace ld41gamer.Gamer
 
                 if(recc.IsPlatform)
                 {
-                    if(Input.KeyHold(Keys.S))
+                    if(Input.KeyHold(Keys.S, Keys.Down))
                         continue;
 
                     if(rec.Bottom < Rectangle.Bottom)

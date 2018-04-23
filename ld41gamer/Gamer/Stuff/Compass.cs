@@ -44,7 +44,7 @@ namespace ld41gamer.Gamer
                 col = 1;
 
             if(enemy.Type == EnemyType.WormRed)
-                row = 1;
+                row = 0;
             else if(enemy.Type == EnemyType.WormBlue)
                 row = 2;
 

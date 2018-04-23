@@ -22,7 +22,7 @@ namespace ld41gamer.Gamer.Screener
 
         Camera2D cam;
 
-        Button btPlay, btSettings, btCredits, btQuit;
+        Button btPlay, btSettings, btCredits, btQuit, btHow, btFs;
 
         Button btPlus, btMinus;
 
@@ -64,7 +64,7 @@ namespace ld41gamer.Gamer.Screener
             bg = new Sprite(GameContent.bgmenu);
             //title.SetSize(Globals.ScreenWidth, Globals.ScreenHeight);
 
-            var size = new Vector2(192, 64);
+            var size = new Vector2(136, 48);
 
             btPlay = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Play");
             btPlay.SetColor(new Color(230, 230, 230));
@@ -76,6 +76,11 @@ namespace ld41gamer.Gamer.Screener
             btSettings.DrawOutline = false;
             btSettings.font = GameContent.font24;
 
+            btHow = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Controls");
+            btHow.SetColor(new Color(230, 230, 230));
+            btHow.DrawOutline = false;
+            btHow.font = GameContent.font24;
+
             btCredits = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Credits");
             btCredits.SetColor(new Color(230, 230, 230));
             btCredits.DrawOutline = false;
@@ -85,6 +90,11 @@ namespace ld41gamer.Gamer.Screener
             btQuit.SetColor(new Color(230, 230, 230));
             btQuit.DrawOutline = false;
             btQuit.font = GameContent.font24;
+
+            btFs = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Fullscreen");
+            btFs.SetColor(new Color(230, 230, 230));
+            btFs.DrawOutline = false;
+            btFs.font = GameContent.font24;
 
             //vbVol = new ValueButton(gd, Vector2.Zero, "Volume", new string[] { "-", "+" });
 
@@ -98,19 +108,22 @@ namespace ld41gamer.Gamer.Screener
             btPlus.DrawOutline = false;
             btPlus.font = GameContent.font14;
 
+
+
+
             lbVol = new Label(GameContent.font14, "Volume");
 
             AddComponent(btPlay);
-            //AddComponent(btSettings);
+            AddComponent(btHow);
+            AddComponent(btFs);
             AddComponent(btCredits);
-            //AddComponent(vbVol);
             AddComponent(btQuit);
 
             Vector2 start = new Vector2(GHelper.Center(title.Rectangle, btPlay.Size).X, title.Rectangle.Bottom - btPlay.Size.Y);
             for(int i = 0; i < Components.Count; i++)
             {
                 var c = Components[i];
-                c.Position = start + new Vector2(0, (i * size.Y) + (i * 32));
+                c.Position = start + new Vector2(0, (i * size.Y) + (i * 16));
             }
         }
 
@@ -167,6 +180,22 @@ namespace ld41gamer.Gamer.Screener
         {
             base.ActiveUpdate(gt);
 
+            if(btHow.IsClicked)
+            {
+                AddPopupScreen(new PopupScreen(
+                    "     HOW TO PLAY\n" +
+                    "  Protect the tree\n" +
+                    " Mouse Left - Shoot\n" +
+                    " Move - AD / Arrows\n" +
+                    "Jump - W / Up / Space",
+                    //"Interact - F, G, R, Q",
+                    GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 360, 205, GameContent.font24, PopupType.Ok), true);
+            }
+
+            if(btFs.IsClicked)
+            {
+                Game1.Fullscreen();
+            }
 
             if(btPlus.IsClicked)
             {
@@ -181,14 +210,14 @@ namespace ld41gamer.Gamer.Screener
             }
 
 
-            if(btPlay.IsTriggered)
+            if(btPlay.IsClicked)
             {
                 exiting = true;
                 //SoundManager.StopLoop(GameSoundType.Song2);
                 ExitScreen(new GameScreen());
             }
 
-            if(btCredits.IsTriggered)
+            if(btCredits.IsClicked)
             {
                 AddPopupScreen(new PopupScreen(
                     "          CREDITS\n" +
@@ -196,7 +225,7 @@ namespace ld41gamer.Gamer.Screener
                     "  Made for LudumDare41", GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 350, 150, GameContent.font24, PopupType.Ok), true);
             }
 
-            if(btQuit.IsTriggered)
+            if(btQuit.IsClicked)
             {
                 Game1.ExitGame();
             }
@@ -210,11 +239,12 @@ namespace ld41gamer.Gamer.Screener
 
             bg.Draw(sb);
 
-            btMinus.Position = btQuit.Position + new Vector2(0, btQuit.Size.Y + 24);
-            btPlus.Position = btQuit.Position + new Vector2(btQuit.Size.X - btPlus.Size.X, btQuit.Size.Y + 24);
+            btMinus.Position = btQuit.Position + new Vector2(-10, btQuit.Size.Y + 16);
+            btPlus.Position = btQuit.Position + new Vector2(btQuit.Size.X - btPlus.Size.X + 10, btQuit.Size.Y + 16);
             lbVol.Position = new Vector2(GHelper.Center(btQuit.Rectangle, lbVol.TextSize).X, GHelper.Center(btMinus.Rectangle, lbVol.Size).Y);
 
             title.Draw(sb);
+
             btPlus.Draw(sb);
             btMinus.Draw(sb);
 

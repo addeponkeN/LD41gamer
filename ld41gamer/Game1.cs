@@ -15,6 +15,8 @@ namespace ld41gamer
         GraphicsDeviceManager graphics;
         static bool exitGame;
 
+        static bool screen;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -30,9 +32,6 @@ namespace ld41gamer
             Window.Title = Globals.ProjectName;
             Window.AllowAltF4 = true;
             Window.AllowUserResizing = false;
-
-            
-
 
             Window.IsBorderless = false;
             graphics.IsFullScreen = false;
@@ -66,9 +65,19 @@ namespace ld41gamer
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if(screen)
+            {
+                graphics.ToggleFullScreen();
+                screen = false;
+            }
             if(exitGame)
                 Exit();
         }
 
+        public static void Fullscreen()
+        {
+            screen = true;
+        }
     }
 }

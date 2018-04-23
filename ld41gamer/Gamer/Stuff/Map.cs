@@ -236,19 +236,21 @@ namespace ld41gamer.Gamer
                     Builder.RepairCost = 10;
                     Builder.UpgradeCost = closestTurret.UpgradeCost;
 
-                    if(closestTurret.CanUpgrade)
-                        if(Input.KeyHold(Keys.G))
-                        {
-                            closestTurret.Upgrade(gt, player);
-                            player.IsUpgradingOrReparing = true;
-                        }
+                    if(player.Money >= Builder.UpgradeCost)
+                        if(closestTurret.CanUpgrade)
+                            if(Input.KeyHold(Keys.G))
+                            {
+                                closestTurret.Upgrade(gt, player);
+                                player.IsUpgradingOrReparing = true;
+                            }
 
-                    if(closestTurret.CanRepair(player))
-                        if(Input.KeyHold(Keys.R))
-                        {
-                            closestTurret.Repair(gt, player);
-                            player.IsUpgradingOrReparing = true;
-                        }
+                    if(player.Money >= Builder.RepairCost)
+                        if(closestTurret.CanRepair(player))
+                            if(Input.KeyHold(Keys.R))
+                            {
+                                closestTurret.Repair(gt, player);
+                                player.IsUpgradingOrReparing = true;
+                            }
 
                     if(Input.KeyClick(Keys.Q))
                     {
@@ -636,7 +638,7 @@ namespace ld41gamer.Gamer
                 {
                     var size = new Vector2(48);
                     var pos = new Vector2(GHelper.Center(closestTurret.Rectangle, size).X - size.X + 14, closestTurret.Position.Y - 15);
-                    Builder.DrawUpgradeAndRepair(sb, pos, size);
+                    Builder.DrawUpgradeAndRepair(sb, pos, size, closestTurret.Rank < 4);
                 }
 
             if(tree.CanBench)

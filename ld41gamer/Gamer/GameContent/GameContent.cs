@@ -51,7 +51,8 @@ namespace ld41gamer.Gamer
 
             bgmenu,
             title,
-            btplank
+            btplank,
+            bigplank
             ;
 
         public static SpriteFont font12, font14, font24, font48;
@@ -91,11 +92,13 @@ namespace ld41gamer.Gamer
             layer2 = Texture("layer2");
             layer3 = Texture("layer3");
 
+            font12 = Font("font14");
             font14 = Font("font14");
             font24 = Font("font24");
             font48 = Font("font48");
 
             btplank = Texture("plank");
+            bigplank = Texture("bigplank");
 
             shadow = Extras.DrawCircle(gd, 400, .25f, Color.Black);
         }
@@ -106,9 +109,11 @@ namespace ld41gamer.Gamer
 
             title = Texture("title");
             bgmenu = Texture("bgmenu");
-            btplank = Texture("plank");
 
-            font14 = Font("font12");
+            btplank = Texture("plank");
+            bigplank = Texture("bigplank");
+
+            font12 = Font("font12");
             font14 = Font("font14");
             font24 = Font("font24");
             font48 = Font("font48");

@@ -64,6 +64,9 @@ namespace ld41gamer.Gamer
             CustomDraw = false;
             Action = a;
 
+            Texture = GameContent.bigplank;
+            font = GameContent.font24;
+
             this.Type = type;
             //buttons = new List<UpgradeButton>();
 
@@ -101,34 +104,7 @@ namespace ld41gamer.Gamer
         {
             costs = cost;
         }
-
-
-        //void AddButton(UBBaseType type, Map map)
-        //{
-        //    UpgradeButton b = null;
-        //    switch(type)
-        //    {
-        //        case UBBaseType.Branch:
-        //            break;
-
-
-
-        //        case UBBaseType.Catapult:
-
-        //            //  catapult damage
-
-        //            break;
-
-
-
-        //        default:
-        //            break;
-        //    }
-
-        //    buttons.Add(b);
-        //}
-
-
+        
     }
 
     public class MenuUpgrade
@@ -147,7 +123,7 @@ namespace ld41gamer.Gamer
             var b = new UpgradeButtonBase(type, action);
 
             b.SetSize(256, 128);
-            b.Position = new Vector2(100, 100 + (i * b.Size.Y) + (i * 16));
+            b.Position = new Vector2(100, 200 + (i * b.Size.Y) + (i * 16));
 
             buttons.Add(b);
         }

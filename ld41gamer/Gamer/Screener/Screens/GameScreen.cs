@@ -63,7 +63,7 @@ namespace ld41gamer.Gamer.Screener
             if(Input.KeyClick(Keys.Escape))
             {
                 SoundManager.StopLoop(GameSoundType.TowerBuilding);
-                AddPopupScreen(new PopupScreen("Exit to Menu?", GameContent.btplank, GameContent.btplank, new Color(200,200,200), 100, 75, PopupType.YesNo), true);
+                AddPopupScreen(new PopupScreen("Exit to Menu?", GameContent.bigplank, GameContent.btplank, new Color(200,200,200), 100, 75, PopupType.YesNo), true);
             }
 
         }
@@ -73,6 +73,8 @@ namespace ld41gamer.Gamer.Screener
             base.ActiveUpdate(gt);
 
             StateManager.Update(gt, this);
+
+
 
             if(Input.KeyClick(Keys.NumPad1))
                 SoundManager.PlayTowerHit();

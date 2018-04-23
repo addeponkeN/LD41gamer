@@ -84,6 +84,8 @@ namespace ld41gamer.Gamer.Screener
             this.uiTexture = uiTexture;
             this.btTexture = btTexture;
             this.btColor = btColor;
+            W = w;
+            H = h;
         }
 
         void CreateBox()

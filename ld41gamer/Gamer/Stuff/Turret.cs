@@ -210,7 +210,28 @@ namespace ld41gamer.Gamer
 
         }
 
-        public void Upgrade(GameTime gt)
+        public void Destroy(Map map)
+        {
+            SoundManager.PlaySound(GameSoundType.TowerDestroy);
+
+            for(int k = 0; k < 20; k++)
+            {
+                var pos = CollisionBox.Center() /*+ new Vector2(Rng.Noxt(-16, 16), Rng.Noxt(-16, 16))*/;
+                var dir = new Vector2(Rng.NoxtFloat(-1, 1), -1);
+                var p = new Particle(ParticleType.Scrap, pos, dir);
+                p.endPos = new Vector2(0, Map.GroundCollisionBox.Top + p.Size.Y + Rng.Noxt(-20, 8));
+                Map.pengine.Add(p);
+            }
+
+            for(int h = 0; h < 70; h++)
+            {
+                var pos = CollisionBox.Center() + new Vector2(36, 28) + new Vector2(Rng.Noxt(-48, 48), Rng.Noxt(-48, 48));
+                Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+            }
+            IsAlive = false;
+        }
+
+        public void Upgrade(GameTime gt, Player player)
         {
             Damage = (int)(DamageBase + (Rank * 0.5f));
             var dt = gt.Delta();
@@ -227,6 +248,7 @@ namespace ld41gamer.Gamer
 
             if(UpgradeTimer > TimeToUpgrade)
             {
+                player.Money -= UpgradeCost;
                 UpgradeComplete();
             }
 
@@ -450,10 +472,11 @@ namespace ld41gamer.Gamer
             if(SpriteEffects == SpriteEffects.None)
             {
                 blastCloud.SpriteEffects = SpriteEffects.FlipHorizontally;
-                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) - new Vector2(4, 9);
+                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) + new Vector2(13, 6);
             }
             else
-                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) - new Vector2(-4, 9);
+                blastCloud.Position = GHelper.Center(spawn, blastCloud.Size) + new Vector2(13, 6);
+
             blastTimer = (float)blastCloud.AnimationDuration - .1f;
         }
 

@@ -50,6 +50,7 @@ namespace ld41gamer.Gamer.Screener
             {
                 case PopupAnswer.Yes:
                     ExitScreen(new MainMenuScreen());
+                    MBMan.list.Clear();
                     break;
                 case PopupAnswer.No:
                     break;

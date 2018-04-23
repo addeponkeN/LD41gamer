@@ -1,6 +1,7 @@
 ﻿using ld41gamer.Gamer.StateMachine.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Obo.GameUtility;
 using Obo.Gui;
 using System;
 using System.Collections.Generic;
@@ -49,10 +50,12 @@ namespace ld41gamer.Gamer
         public UBBaseType Type;
         public Action Action;
 
+        public GameLabel Cost;
+
         public string Description;
 
         int[] costs;
-        public int Cost => costs[Level];
+        //public int Cost => costs[Level];
         public int Level;
 
         public float Value;
@@ -70,20 +73,23 @@ namespace ld41gamer.Gamer
             this.Type = type;
             //buttons = new List<UpgradeButton>();
 
+            Cost = new GameLabel(GameContent.acorn, "0", Vector2.Zero, GameContent.font24);
+            Cost.Item.SetSize(32);
+
             switch(type)
             {
 
                 case UBBaseType.Branch:
 
                     Text = "Buy Branch";
-                    Set(50, 100, 175, 300);
+                    //Set(50, 100, 175, 300);
 
                     break;
 
                 case UBBaseType.BuildSpeed:
 
                     Text = "Upgrade Buildspeed";
-                    Set(75, 125, 200, 400);
+                    //Set(75, 125, 200, 400);
 
                     Action += () =>
                     {
@@ -100,11 +106,17 @@ namespace ld41gamer.Gamer
 
         }
 
-        void Set(params int[] cost)
+        public void Set(int cost)
         {
-            costs = cost;
+            Cost.Text = cost.ToString();
         }
-        
+
+        public override void Draw(SpriteBatch sb)
+        {
+            base.Draw(sb);
+            Cost.Draw(sb);
+        }
+
     }
 
     public class MenuUpgrade
@@ -149,6 +161,7 @@ namespace ld41gamer.Gamer
             {
                 float x = MathHelper.Lerp(-600, 100, lerp);
                 b.Position = new Vector2(x, b.Position.Y);
+                b.Cost.SetPosition(GHelper.Center(b.Rectangle, b.Cost.Size) + new Vector2(-20, 35));
                 b.Draw(sb);
             }
 

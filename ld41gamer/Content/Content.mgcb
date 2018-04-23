@@ -505,3 +505,27 @@
 /processorParam:TextureFormat=Color
 /build:Textures/bigplank.png
 
+#begin Sounds/cataFling1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/cataFling1.wav
+
+#begin Sounds/cataFling2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/cataFling2.wav
+
+#begin Sounds/cataFling3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/cataFling3.wav
+
+#begin Sounds/towerPlaced.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/towerPlaced.wav
+

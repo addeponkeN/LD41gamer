@@ -142,11 +142,17 @@ namespace ld41gamer.Gamer
                         break;
                     }
                 }
+
+                if(Input.KeyClick(Keys.Q))
+                {
+                    t.Destroy(map);
+                    Con.RemoveAt(i);
+                }
             }
 
 
             if(map.player.IsBuilding || map.player.IsUpgradingOrReparing)
-                SoundManager.LoopSound(GameSoundType.TowerBuilding,SoundManager.Sfx);
+                SoundManager.LoopSound(GameSoundType.TowerBuilding, SoundManager.Sfx);
             else
                 SoundManager.StopLoop(GameSoundType.TowerBuilding);
 
@@ -268,11 +274,11 @@ namespace ld41gamer.Gamer
 
             GameLabel gup = new GameLabel(GameContent.acorn, UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             gup.Item.SetSize(14);
-            gup.SetPosition(ug.Position + new Vector2(22, ug.Size.Y));
+            gup.SetPosition(ug.Position + new Vector2(5, ug.Size.Y));
 
             GameLabel grep = new GameLabel(GameContent.acorn, RepairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             grep.Item.SetSize(14);
-            grep.SetPosition(rep.Position + new Vector2(22, ug.Size.Y));
+            grep.SetPosition(rep.Position + new Vector2(5, ug.Size.Y+4));
 
             gup.Draw(sb);
             grep.Draw(sb);

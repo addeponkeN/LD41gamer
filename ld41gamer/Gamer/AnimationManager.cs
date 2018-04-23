@@ -23,6 +23,7 @@ namespace ld41gamer.Gamer
         WormBlue,
         WormYellow,
         WormRed,
+        WormHole,
         BeaverWalk,
 
         Hammer,
@@ -51,6 +52,7 @@ namespace ld41gamer.Gamer
             AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 0, 170, 100, AnimationType.WormRed);
             AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 1, 170, 100, AnimationType.WormYellow);
             AddAnimation(new int[] { 0, 0, 1, 2, 2, 1 }, 2, 170, 100, AnimationType.WormBlue);
+            AddAnimation(new int[] { 0 }, 0, 148, 21, AnimationType.WormHole);
             AddAnimation(new int[] { 0, 1, 2, 1 }, 0, 95, 77, AnimationType.BeaverWalk);
 
             AddAnimation(new int[] { 0, 1 }, 0, 100, 100, AnimationType.Hammer);

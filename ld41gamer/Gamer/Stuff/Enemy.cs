@@ -13,15 +13,14 @@ namespace ld41gamer.Gamer
 {
     public enum EnemyType
     {
-        Ant,
-        //Beetle,
-        WormBlue,
         WormYellow,
-        WormRed,
+        WormBlue,
         Wasp,
-        Beaver,
-
+        Ant,
+        WormRed,
         WormHole,
+        Beaver,
+        //Beetle,
     }
 
     public class Enemy : LivingObject
@@ -52,47 +51,6 @@ namespace ld41gamer.Gamer
 
             switch(t)
             {
-                case EnemyType.Ant:
-                    Texture = GameContent.antSheet;
-                    SetHp(5);
-                    Speed = 300f;
-                    Damage = 1;
-                    Reward = 1;
-                    SetSize(165 / 2, 100 / 2);
-                    SetCollisionBot(114 / 2, 50 / 2);
-                    animWalk = AnimationType.EnemyWalk;
-                    break;
-
-                case EnemyType.Wasp:
-                    Texture = GameContent.waspSheet;
-                    SetSize(152 / 2, 106 / 2);
-                    SetCollisionCenter(111 / 2, 84 / 2);
-                    animWalk = AnimationType.WaspWalk;
-                    SetHp(5);
-                    Damage = 1;
-                    IsFlying = true;
-                    Reward = 3;
-                    break;
-
-                case EnemyType.WormHole:
-                    Texture = GameContent.wormHole;
-                    SetHp(30);
-                    SetSize(Texture.Width / 2, Texture.Height / 2);
-                    Speed = 0;
-                    Damage = 0;
-                    Reward = 10;
-                    break;
-
-                case EnemyType.WormBlue:
-                    Texture = GameContent.wormSheet;
-                    SetHp(5);
-                    Damage = 1;
-                    Reward = 3;
-                    SetSize(170 / 2, 100 / 2);
-                    SetCollisionBot(105 / 2, 23 / 2);
-                    animWalk = AnimationType.WormBlue;
-                    break;
-
                 case EnemyType.WormYellow:
                     Texture = GameContent.wormSheet;
                     SetHp(3);
@@ -101,20 +59,56 @@ namespace ld41gamer.Gamer
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormYellow;
-
                     break;
-
+                case EnemyType.WormBlue:
+                    Texture = GameContent.wormSheet;
+                    SetHp(5);
+                    Damage = 1;
+                    Reward = 2;
+                    SetSize(170 / 2, 100 / 2);
+                    SetCollisionBot(105 / 2, 23 / 2);
+                    animWalk = AnimationType.WormBlue;
+                    break;
+                case EnemyType.Wasp:
+                    Texture = GameContent.waspSheet;
+                    SetSize(152 / 2, 106 / 2);
+                    SetCollisionCenter(111 / 2, 84 / 2);
+                    animWalk = AnimationType.WaspWalk;
+                    SetHp(5);
+                    Damage = 1;
+                    IsFlying = true;
+                    Reward = 2;
+                    break;
+                case EnemyType.Ant:
+                    Texture = GameContent.antSheet;
+                    SetHp(7);
+                    Speed = 100f;
+                    Damage = 1;
+                    Reward = 4;
+                    SetSize(165 / 2, 100 / 2);
+                    SetCollisionBot(114 / 2, 50 / 2);
+                    animWalk = AnimationType.EnemyWalk;
+                    break;
                 case EnemyType.WormRed:
                     Texture = GameContent.wormSheet;
-                    SetHp(7);
+                    SetHp(8);
                     Damage = 2;
                     Reward = 5;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormRed;
-
                     break;
-
+                case EnemyType.WormHole:
+                    Texture = GameContent.wormHole;
+                    SetHp(15);
+                    SetSize(Texture.Width, Texture.Height);
+                    SetCollisionBot(108, 21);
+                    Speed = 0;
+                    Damage = 0;
+                    Reward = 10;
+                    animWalk = AnimationType.WormHole;
+                    IsAnimating = false;
+                    break;
                 case EnemyType.Beaver:
                     Texture = GameContent.beaverSheet;
                     SetHp(30);
@@ -124,7 +118,6 @@ namespace ld41gamer.Gamer
                     SetCollisionBot(80, 75);
                     animWalk = AnimationType.BeaverWalk;
                     break;
-
             }
 
             PlayAnimation(animWalk);
@@ -153,6 +146,7 @@ namespace ld41gamer.Gamer
                     map.SpawnWorm((int)Position.X);
                     wormHoleSpawnTimer = 0;
                 }
+                return;
             }
 
             bool att=false;

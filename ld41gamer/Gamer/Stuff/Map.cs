@@ -60,7 +60,9 @@ namespace ld41gamer.Gamer
         public GameStater GameState = GameStater.Level1;
 
         float enemySpawnTimer = 0f;
-        float enemySpawnCd;
+        float enemySpawnCd = 10f;
+
+        public float GameTimer;
 
         public List<Recc> CollisionBoxes;
 
@@ -155,6 +157,15 @@ namespace ld41gamer.Gamer
         public void Update(GameTime gt, GameScreen gs)
         {
             var dt = gt.Delta();
+
+            GameTimer += dt;
+
+            if(GameTimer > 90)
+                GameState = GameStater.Level2;
+            else if(GameTimer > 240)
+                GameState = GameStater.Level3;
+            else if(GameTimer > 480)
+                GameState = GameStater.Level4;
 
             player.Update(gt, this, gs);
             parlax.Update(gt, this);
@@ -388,6 +399,8 @@ namespace ld41gamer.Gamer
 
             if(Input.KeyClick(Keys.P))
                 SpawnEnemy(Enemy.RandomTypeNotWormHole());
+            if(Input.KeyClick(Keys.K))
+                SpawnWormHole();
 
             CheckCollision();
 
@@ -456,9 +469,7 @@ namespace ld41gamer.Gamer
         {
             var dt = gt.Delta();
 
-            EnemyType type;
-            Side side;
-            int count;
+            int e;
 
             enemySpawnTimer += dt;
 
@@ -474,24 +485,50 @@ namespace ld41gamer.Gamer
                         break;
 
                     case GameStater.Level2:
-
-                        enemySpawnCd = Rng.Noxt(2, 7);
-
-
+                        enemySpawnCd = Rng.Noxt(6, 9);
+                        e = Rng.Noxt(0, 3);
+                        SpawnEnemy((EnemyType)e);
                         break;
 
                     case GameStater.Level3:
+                        enemySpawnCd = Rng.Noxt(4, 6);
+                        e = Rng.Noxt(0, 5);
 
+                        if(e == 5)
+                            SpawnWormHole();
+                        else
+                            SpawnEnemy((EnemyType)e);
                         break;
 
                     case GameStater.Level4:
-
+                        enemySpawnCd = Rng.Noxt(2, 5);
+                        e = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length);
+                        if(e == 5)
+                            SpawnWormHole();
+                        else
+                            SpawnEnemy((EnemyType)e);
                         break;
                 }
 
                 enemySpawnTimer = 0;
             }
 
+        }
+
+        private void SpawnWormHole()
+        {
+            var e = new Enemy(EnemyType.WormHole);
+
+            if(Rng.NextBool)
+                e.Position.X = Rng.Noxt(WallLeft + 2000, WallLeft + 4000);
+            else
+                e.Position.X = Rng.Noxt(WallRight - 4000, WallRight - 2000);
+
+            e.Position.Y = GroundCollisionBox.Top - e.Size.Y;
+
+            eSpawned++;
+            Enemies.Add(e);
+            comp.Add(e);
         }
 
         public void SpawnWorm(int posx)

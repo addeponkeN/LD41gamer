@@ -31,9 +31,9 @@ namespace ld41gamer.Gamer
 
         public const float Player = 0.6f;
 
-        public const float Turret = 0.55f;
+        public const float Turret = 0.5f;
 
-        public const float Enemy = 0.5f;
+        public const float Enemy = 0.55f;
 
         public const float Shadow = 0.4f;
     }

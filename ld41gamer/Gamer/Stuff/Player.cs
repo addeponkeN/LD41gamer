@@ -25,9 +25,16 @@ namespace ld41gamer.Gamer
 
         public bool IsMoving { get; set; }
         public bool IsBuilding { get; set; }
-        public bool IsBuying;
+        public bool IsShoppingBranch { get; internal set; }
+        public bool IsUpgradingOrReparing { get; internal set; }
+
+        public bool CanMove => !IsBuilding && !IsUpgradingOrReparing;
+
+        public bool IsShopping;
 
         public int LatestDirection;
+
+        public float BuildSpeed = 1f;
 
         public float deadTimer;
         public float respawnTimer;
@@ -39,7 +46,9 @@ namespace ld41gamer.Gamer
 
         public float knockSpeed;
 
-        public int Money = 200000;
+        public int Money = 50;
+
+        public float dmgLerp = 1f;
 
         public Player()
         {
@@ -63,6 +72,12 @@ namespace ld41gamer.Gamer
             var dt = gt.Delta();
             //UpdatePosition(gt);
 
+            if(dmgLerp < 1f)
+            {
+                dmgLerp += dt;
+                Color = Color.Lerp(Color.Red, BaseColor, dmgLerp);
+            }
+
             if(IsAlive)
             {
                 Position += new Vector2(Direction.X * Speed * dt, JumpVelo * dt);
@@ -78,7 +93,7 @@ namespace ld41gamer.Gamer
                 Direction.X = 0;
                 //Direction.Y = 0;
 
-                if(!IsBuilding)
+                if(CanMove)
                 {
 
                     if(Input.KeyHold(Keys.A))
@@ -203,7 +218,7 @@ namespace ld41gamer.Gamer
             var dt = gt.Delta();
             if(ShootCooldownTimer < 0)
             {
-                if(!IsBuying && !Builder.IsPlacing && !IsBuilding && IsAlive)
+                if(!IsShopping && !Builder.IsPlacing && !IsBuilding && IsAlive)
                     if(Input.LeftHold)
                     {
                         Shoot(map);

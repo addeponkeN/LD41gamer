@@ -39,6 +39,10 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         GameLabel lbMoney;
 
+        MenuUpgrade mu;
+        float muLerp;
+
+        public bool AnyUiHovered => mu.buttons.Any(x => x.IsHovered);
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -60,6 +64,20 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             lbMoney = new GameLabel(GameContent.acorn, "0", new Vector2(Globals.ScreenWidth * 0.85f, 8));
             lbMoney.Item.Size = new Vector2(64);
 
+            mu = new MenuUpgrade();
+
+            mu.AddButton(UBBaseType.Branch, () =>
+            {
+                if(!Upgrades.TreeBranchesMaxed)
+                    map.player.IsShoppingBranch = !map.player.IsShoppingBranch;
+            });
+
+            mu.AddButton(UBBaseType.BuildSpeed, () =>
+            {
+                if(!Upgrades.Player_BuildTimeMaxed)
+                    map.player.BuildSpeed += 0.5f;
+            });
+
         }
 
         //  update always
@@ -67,6 +85,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Update(gt, gs);
 
+            mu.Update(gt, this);
 
             map.Update(gt, game);
 
@@ -74,6 +93,13 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             var dt = gt.Delta();
 
+            if(map.player.IsShopping)
+            {
+                if(muLerp < 1f)
+                    muLerp += dt;
+            }
+            else if(muLerp >= 0f)
+                muLerp -= dt;
 
             float zout = 0.33f;
             float zin = 1f;
@@ -83,7 +109,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             float x;
             float y;
 
-            if(map.player.IsBuying)
+            if(map.player.IsShopping)
             {
                 lerpTimer -= dt * 1.25f;
                 if(lerpTimer <= 0f)
@@ -96,7 +122,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
                     lerpTimer = 1f;
             }
 
-            if(map.player.IsBuying || lerpTimer < 1f)
+            if(map.player.IsShopping || lerpTimer < 1f)
             {
                 cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
             }
@@ -162,6 +188,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.DrawTowerRecs(sb);
+            map.DrawDef(sb);
 
             sb.End();
 
@@ -178,7 +205,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
             DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
 
-            map.DrawScreen(sb);
+            if(muLerp > 0.01f)
+                mu.Draw(sb, muLerp);
 
             sb.End();
         }

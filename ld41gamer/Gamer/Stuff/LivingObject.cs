@@ -58,5 +58,6 @@ namespace ld41gamer.Gamer
             if(DrawHpBar)
                 HpBar?.Draw(sb, new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, CollisionBox.Top - 32));
         }
+
     }
 }

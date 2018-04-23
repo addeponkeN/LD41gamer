@@ -124,8 +124,6 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
             var dt = gt.Delta();
 
-
-
             LifeTime -= dt;
 
             switch(Type)

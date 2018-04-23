@@ -35,6 +35,8 @@ namespace ld41gamer.Gamer
 
             turretsheet,
 
+            icons,
+
             botleftBranch,
             botrightBranch,
             topleftBranch,
@@ -45,7 +47,10 @@ namespace ld41gamer.Gamer
             layer2,
             layer3,
 
-            shadow
+            shadow,
+
+            bgmenu,
+            title
             ;
 
         public static SpriteFont font14, font24, font48;
@@ -73,6 +78,8 @@ namespace ld41gamer.Gamer
             turretsheet = Texture("turretsheet");
             particlesheet = Texture("particlesheet");
 
+            icons = Texture("icons");
+
             botleftBranch = Texture("botleftBranch");
             botrightBranch = Texture("botrightBranch");
             topleftBranch = Texture("topleftBranch");
@@ -88,6 +95,17 @@ namespace ld41gamer.Gamer
             font48 = Font("font48");
 
             shadow = Extras.DrawCircle(gd, 400, .25f, Color.Black);
+        }
+
+        public static void LoadMenu(ContentManager c)
+        {
+            content = c;
+            title = Texture("title");
+            bgmenu = Texture("bgmenu");
+
+            font14 = Font("font14");
+            font24 = Font("font24");
+            font48 = Font("font48");
         }
 
         public static void Unload()

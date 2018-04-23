@@ -18,7 +18,9 @@ namespace ld41gamer.Gamer
 
         public static bool IsPlacing;
 
-        AnimatedSprite hammer;
+        static AnimatedSprite hammer;
+        static Sprite ug;
+        static Sprite rep;
 
         public Turret b;
 
@@ -33,6 +35,16 @@ namespace ld41gamer.Gamer
             hammer.SetSourceSize(100);
             hammer.Texture = GameContent.hammer;
             hammer.PlayAnimation(AnimationType.Hammer);
+
+            ug = new Sprite(GameContent.icons);
+            ug.SetSize(64);
+            ug.SetSourceSize(64);
+            ug.SetFrame(1, 0);
+
+            rep = new Sprite(GameContent.icons);
+            rep.SetSize(64);
+            rep.SetSourceSize(64);
+            rep.SetFrame(2, 0);
         }
 
         public void Update(GameTime gt, Map map)
@@ -95,7 +107,7 @@ namespace ld41gamer.Gamer
                             pTimer = 0;
                         }
                         //  is building
-                        t.BuildTime += dt;
+                        t.BuildTime += dt * p.BuildSpeed;
                         map.player.IsBuilding = true;
                         t.isBeingBuilt = true;
                         if(t.BuildTime >= t.BuildTimeBase)
@@ -105,6 +117,7 @@ namespace ld41gamer.Gamer
 
                             turr.Position = t.Position;
                             turr.SetEffect(t.SpriteEffects);
+                            turr.DrawShootBar = true;
                             map.Turrets.Add(turr);
                             Con.RemoveAt(i);
                         }
@@ -201,6 +214,40 @@ namespace ld41gamer.Gamer
             return t;
         }
 
+        public static void DrawHammer(SpriteBatch sb, Vector2 position, Vector2 size)
+        {
+            hammer.Position = position;
+            hammer.Draw(sb);
+        }
+
+        public static void DrawUpgradeAndRepair(SpriteBatch sb, Vector2 pos, Vector2 size)
+        {
+            ug.Position = pos;
+            ug.Size = size;
+
+            rep.Position = pos + new Vector2(ug.Size.X + 12, 0);
+            rep.Size = size;
+
+            ug.Draw(sb);
+            rep.Draw(sb);
+
+            var s = GameContent.font14.MeasureString("[R]");
+
+            Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
+            Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
+
+        }
+
+        public static void DrawBenchUpgrade(SpriteBatch sb, Vector2 pos, Vector2 size)
+        {
+            ug.Position = pos;
+            ug.Size = size;
+
+            ug.Draw(sb);
+            var s = GameContent.font14.MeasureString("[F]");
+            Extras.DrawString(sb, GameContent.font14, "[F]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
+        }
+
         public void Draw(SpriteBatch sb)
         {
 
@@ -210,8 +257,8 @@ namespace ld41gamer.Gamer
 
                 if(t.isBeingBuilt)
                 {
-                    hammer.Position = new Vector2(t.Center.X - hammer.Size.X / 2, t.CollisionBox.Top - hammer.Size.Y);
-                    hammer.Draw(sb);
+                    var hamSize = new Vector2(100);
+                    DrawHammer(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y), hamSize);
                 }
             }
 

@@ -72,9 +72,12 @@ namespace ld41gamer.Gamer
         public static int WallRight = 9900;
 
         public static Vector2 PlayerSpawnPos;
+        public static Upgrades Upgrades;
 
         public static float FadeLerp = 1f;
         public Sprite fadeBox;
+
+        public Turret closestTurret;
 
         public Vector2 MouseWorldPos()
         {
@@ -94,6 +97,7 @@ namespace ld41gamer.Gamer
             Enemies = new List<Enemy>();
             Turrets = new List<Turret>();
             CollisionBoxes = new List<Recc>();
+            Upgrades = new Upgrades();
 
             pengine = new ParticleEngine();
 
@@ -104,15 +108,6 @@ namespace ld41gamer.Gamer
             fadeBox = new Sprite(UtilityContent.box);
             fadeBox.Size = Globals.ScreenSize;
             fadeBox.Position = new Vector2(0);
-
-            //for(int i = 0; i < GroundRectangle.Right; i += 36)
-            //{
-            //    var p = new Sprite();
-            //    p.SetSize(32);
-            //    p.Color = Color.DarkSeaGreen;
-            //    p.Position = new Vector2(i, GroundRectangle.Top - Rng.Noxt(-8, 64));
-            //    Props.Add(p);
-            //}
 
             tree = new Tree();
             tree.Position = new Vector2(GHelper.Center(GroundRectangle, tree.Size).X, GroundPosition.Y - tree.Size.Y + 53);
@@ -159,25 +154,78 @@ namespace ld41gamer.Gamer
 
             UpdateSpawning(gt);
 
+
+
+
+
             for(int i = 0; i < Bullets.Count; i++)
             {
                 var b = Bullets[i];
                 b.Update(gt, this, gs);
             }
 
+
+
+
+            //  TURRET UPDATE
+            float d = 999999f;
             for(int i = 0; i < Turrets.Count; i++)
             {
                 var t = Turrets[i];
                 t.Update(gt, this, gs);
                 if(t.HealthPoints <= 0)
+                {
                     Turrets.Remove(t);
+                    continue;
+                }
+
+                t.isTargeted = false;
+                var dis = Vector2.Distance(t.CollisionBox.Center(), player.CollisionBox.Center());
+                if(d > dis)
+                {
+                    d = dis;
+                    closestTurret = t;
+                }
+
             }
 
+
+
+
+            //  CLOSEST TURRET
+            if(closestTurret != null)
+                if(player.CollisionBox.Intersects(closestTurret.CollisionBox))
+                {
+                    closestTurret.isTargeted = true;
+
+                    closestTurret.IsUpgrading = false;
+
+                    player.IsUpgradingOrReparing = false;
+
+                    if(closestTurret.CanUpgrade)
+                        if(Input.KeyHold(Keys.G))
+                        {
+                            closestTurret.Upgrade(gt);
+                            player.IsUpgradingOrReparing = true;
+                        }
+
+                    if(closestTurret.CanRepair(player))
+                        if(Input.KeyHold(Keys.R))
+                        {
+                            closestTurret.Repair(gt, player);
+                            player.IsUpgradingOrReparing = true;
+                        }
+
+                }
+
+
+
+
+            //  BIG ENEMY UPDATE
             for(int i = 0; i < Enemies.Count; i++)
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
-
                 if(player.IsAlive)
                     if(e.CollisionBox.Intersects(player.CollisionBox))
                     {
@@ -187,8 +235,21 @@ namespace ld41gamer.Gamer
                         else
                             dir = -1;
 
-                        //  player die
+
+                        //###################
+                        //######## PLAYER DIE HERE
+                        //############ comment.
+
+
+
                         //player.Die(dir);
+
+
+
+                        //########## easy find
+                        //#########################                        
+
+                        player.dmgLerp = 0.5f;
 
                     }
 
@@ -197,6 +258,7 @@ namespace ld41gamer.Gamer
                     var b = Bullets[v];
                     if(e.Rectangle.Intersects(b.Rectangle))
                     {
+
                         //  enemy is hit
                         int blood = Rng.Noxt(3, 5);
                         for(int o = 0; o < blood; o++)
@@ -206,13 +268,82 @@ namespace ld41gamer.Gamer
                             var p = new Particle(ParticleType.Blood, pos, dir);
                             p.endPos = new Vector2(0, GroundCollisionBox.Top + p.Size.Y + Rng.Noxt(-20, 8));
                             pengine.Add(p);
+                            e.dmgLerp = 0.5f;
                         }
-
 
                         e.HealthPoints -= b.Damage;
                         Bullets.Remove(b);
                     }
                 }
+                bool attack = false;
+                for(int j = 0; j < Turrets.Count; j++)
+                {
+                    var t = Turrets[j];
+
+                    if(Input.KeyClick(Keys.C))
+                        t.HealthPoints--;
+
+                    if(e.CollisionBox.Intersects(t.CollisionBox))
+                    {
+                        e.attackTimer += dt;
+                        if(e.attackTimer >= e.attackCooldown)
+                        {
+                            t.IsHit(e.Damage);
+                            e.attackTimer = 0;
+                        }
+                        attack = true;
+                    }
+
+
+                    bool tryShoot = false;
+                    //  looking right
+                    if(t.SpriteEffects == SpriteEffects.None)
+                    {
+                        if(t.Type == TowerType.ConeCatapult)
+                        {
+                            if(e.Rectangle.Left > t.Center.X + 300)
+                                tryShoot = true;
+                        }
+                        else if(e.Rectangle.Left > t.Center.X)
+                            tryShoot = true;
+                    }
+                    else
+                    {
+                        if(t.Type == TowerType.ConeCatapult)
+                        {
+                            if(e.Rectangle.Right < t.Center.X - 300)
+                                tryShoot = true;
+                        }
+                        else
+                        if(e.Rectangle.Right < t.Center.X)
+                            tryShoot = true;
+                    }
+
+                    if(!tryShoot)
+                        continue;
+
+                    if(t.attackTimer >= t.AttackSpeed)
+                    {
+                        if(t.recf.Intersects(e.CollisionBox))
+                        {
+                            t.target = e.Center;
+                            if(t.Type != TowerType.ConeCatapult)
+                            {
+                                if(t.SpriteEffects == SpriteEffects.None)
+                                    t.Shoot(this, t.Position + t.bulletStartPosRight, t.target);
+                                else
+                                    t.Shoot(this, t.Position + t.bulletStartPosLeft, t.target);
+
+                                t.attackTimer = 0;
+                            }
+                            else
+                                t.shoot = true;
+                        }
+                    }
+                }
+
+                e.isAttacking = attack;
+
 
                 if(e.HealthPoints <= 0)
                 {
@@ -377,7 +508,7 @@ namespace ld41gamer.Gamer
             foreach(var t in Turrets)
             {
                 t.Draw(sb);
-                if(player.IsBuying || Builder.IsPlacing)
+                if(player.IsShopping || Builder.IsPlacing)
                     t.DrawRange(sb);
             }
 
@@ -401,7 +532,7 @@ namespace ld41gamer.Gamer
 
             pengine.Draw(sb);
 
-            if(!player.IsBuying)
+            if(!player.IsShopping)
                 comp.Draw(sb);
 
             if(Globals.IsDebugging)
@@ -416,12 +547,30 @@ namespace ld41gamer.Gamer
         {
             foreach(var t in Turrets)
             {
-                if(player.IsBuying || Builder.IsPlacing)
+                if(player.IsShopping || Builder.IsPlacing)
                     t.DrawRange(sb);
             }
 
             if(player.IsBuilding || Builder.IsPlacing)
                 builder.DrawRecs(sb);
+        }
+
+        public void DrawDef(SpriteBatch sb)
+        {
+
+            if(closestTurret != null)
+                if(closestTurret.isTargeted && !closestTurret.IsRepairing && !closestTurret.IsUpgrading)
+                {
+                    var size = new Vector2(48);
+                    var pos = new Vector2(GHelper.Center(closestTurret.Rectangle, size).X - size.X + 14, closestTurret.Position.Y + 6);
+                    Builder.DrawUpgradeAndRepair(sb, pos, size);
+                }
+
+            if(tree.CanBench)
+            {
+                Builder.DrawBenchUpgrade(sb, tree.BenchRec.TopMiddle() - new Vector2(7, 100), new Vector2(48));
+            }
+
         }
 
         public void DrawScreen(SpriteBatch sb)

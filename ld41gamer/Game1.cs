@@ -44,6 +44,7 @@ namespace ld41gamer
             Components.Add(screenManager);
 
             screenManager.AddScreen(new GameScreen());
+
         }
 
 

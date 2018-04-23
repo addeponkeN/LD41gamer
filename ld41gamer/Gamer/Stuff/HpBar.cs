@@ -21,7 +21,7 @@ namespace ld41gamer.Gamer
 
         new public Rectangle Rectangle => new Rectangle((int)Position.X - gap, (int)Position.Y - gap, (int)(Size.X * Globals.Scale.X) + (gap * 2), (int)(Size.Y * Globals.Scale.Y) + (gap * 2));
 
-        int gap = 2;
+        public int gap = 2;
 
         public HpBar(int w, int h)
         {

@@ -77,7 +77,6 @@
     <Compile Include="Gamer\Stuff\GameLabel.cs" />
     <Compile Include="Gamer\Stuff\GameObject.cs" />
     <Compile Include="Gamer\Stuff\HpBar.cs" />
-    <Compile Include="Gamer\Stuff\Layer.cs" />
     <Compile Include="Gamer\Stuff\LivingObject.cs" />
     <Compile Include="Gamer\Stuff\Map.cs" />
     <Compile Include="Gamer\Stuff\MessageBox.cs" />
@@ -87,6 +86,9 @@
     <Compile Include="Gamer\Stuff\Turret.cs" />
     <Compile Include="Gamer\Stuff\Tree.cs" />
     <Compile Include="Gamer\Stuff\TreeBranch.cs" />
+    <Compile Include="Gamer\Stuff\Ui\MenuBuy.cs" />
+    <Compile Include="Gamer\Stuff\Ui\MenuUpgrade.cs" />
+    <Compile Include="Gamer\Stuff\Upgrades.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

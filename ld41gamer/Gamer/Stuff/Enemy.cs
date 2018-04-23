@@ -30,15 +30,23 @@ namespace ld41gamer.Gamer
         public bool IsFlying;
         public int Reward;
 
-        float attackTimer;
-        float wormHoleSpawnTimer;
+        public float attackCooldown = 2f;
+        public float attackTimer;
+        public float wormHoleSpawnTimer;
+
+        public bool isAttacking;
+
+        AnimationType animWalk;
+
+        Vector2 ori;
+
+        public float dmgLerp = 1f;
 
         public Enemy(EnemyType t)
         {
             Type = t;
             Speed = 50f;
-
-            PlayAnimation(AnimationType.EnemyWalk);
+            CustomDraw = true;
             DrawLayer = Layer.Enemy;
 
             switch(t)
@@ -51,17 +59,20 @@ namespace ld41gamer.Gamer
                     Reward = 1;
                     SetSize(165 / 2, 100 / 2);
                     SetCollisionBot(114 / 2, 50 / 2);
+                    animWalk = AnimationType.EnemyWalk;
                     break;
+
                 case EnemyType.Wasp:
                     Texture = GameContent.waspSheet;
                     SetSize(152 / 2, 106 / 2);
                     SetCollisionCenter(111 / 2, 84 / 2);
-                    PlayAnimation(AnimationType.WaspWalk);
+                    animWalk = AnimationType.WaspWalk;
                     SetHp(5);
                     Damage = 1;
                     IsFlying = true;
                     Reward = 3;
                     break;
+
                 case EnemyType.WormHole:
                     Texture = GameContent.wormHole;
                     SetHp(30);
@@ -70,6 +81,7 @@ namespace ld41gamer.Gamer
                     Damage = 0;
                     Reward = 10;
                     break;
+
                 case EnemyType.WormBlue:
                     Texture = GameContent.wormSheet;
                     SetHp(5);
@@ -77,8 +89,9 @@ namespace ld41gamer.Gamer
                     Reward = 3;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
-                    PlayAnimation(AnimationType.WormBlue);
+                    animWalk = AnimationType.WormBlue;
                     break;
+
                 case EnemyType.WormYellow:
                     Texture = GameContent.wormSheet;
                     SetHp(3);
@@ -86,8 +99,10 @@ namespace ld41gamer.Gamer
                     Reward = 1;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
-                    PlayAnimation(AnimationType.WormYellow);
+                    animWalk = AnimationType.WormYellow;
+
                     break;
+
                 case EnemyType.WormRed:
                     Texture = GameContent.wormSheet;
                     SetHp(7);
@@ -95,8 +110,10 @@ namespace ld41gamer.Gamer
                     Reward = 5;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
-                    PlayAnimation(AnimationType.WormRed);
+                    animWalk = AnimationType.WormRed;
+
                     break;
+
                 case EnemyType.Beaver:
                     Texture = GameContent.beaverSheet;
                     SetHp(30);
@@ -104,9 +121,13 @@ namespace ld41gamer.Gamer
                     Reward = 25;
                     SetSize(95, 77);
                     SetCollisionBot(80, 75);
-                    PlayAnimation(AnimationType.BeaverWalk);
+                    animWalk = AnimationType.BeaverWalk;
                     break;
+
             }
+
+            PlayAnimation(animWalk);
+
             CreateBar();
         }
 
@@ -115,6 +136,13 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
 
             var dt = gt.Delta();
+
+            if(dmgLerp < 1f)
+            {
+                dmgLerp += dt;
+                Color = Color.Lerp(Color.Red, BaseColor, dmgLerp);
+            }
+
 
             if(Type == EnemyType.WormHole)
             {
@@ -131,7 +159,7 @@ namespace ld41gamer.Gamer
                 if(Rectangle.Intersects(t))
                 {
                     attackTimer += dt;
-                    if(attackTimer >= 2)
+                    if(attackTimer >= attackCooldown)
                     {
                         map.tree.HealthPoints -= Damage;
                         attackTimer = 0;
@@ -139,31 +167,46 @@ namespace ld41gamer.Gamer
                     return;
                 }
             }
-            foreach(var t in map.Turrets)
+
+            //foreach(var t in map.Turrets)
+            //{
+            //    if(Rectangle.Intersects(t.CollisionBox))
+            //    {
+            //        attackTimer += dt;
+            //        if(attackTimer >= 2)
+            //        {
+            //            t.HealthPoints -= Damage;
+            //            attackTimer = 0;
+            //        }
+            //        return;
+            //    }
+            //}
+
+            if(!isAttacking)
             {
-                if(Rectangle.Intersects(t.CollisionBox))
+                ori = Vector2.Zero;
+                IsAnimating = true;
+                PlayAnimation(animWalk);
+                Position += new Vector2(Direction.X * Speed * dt, 0);
+
+                if(Position.X > map.GroundRectangle.Center.X)
                 {
-                    attackTimer += dt;
-                    if(attackTimer >= 2)
-                    {
-                        t.HealthPoints -= Damage;
-                        attackTimer = 0;
-                    }
-                    return;
+                    Direction.X = -1;
+                    SpriteEffects = SpriteEffects.FlipHorizontally;
                 }
-            }
-
-            Position += new Vector2(Direction.X * Speed * dt, 0);
-
-            if(Position.X > map.GroundRectangle.Center.X)
-            {
-                Direction.X = -1;
-                SpriteEffects = SpriteEffects.FlipHorizontally;
+                else
+                {
+                    Direction.X = 1;
+                }
             }
             else
             {
-                Direction.X = 1;
+                IsAnimating = false;
+                CurrentAnimationFrame = CurrentAnimation[0];
+
+                ori.X = MathHelper.Lerp(0, 16, attackTimer / attackCooldown);
             }
+
         }
 
         public static EnemyType RandomType()
@@ -178,7 +221,10 @@ namespace ld41gamer.Gamer
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(Texture, new Rectangle((int)(Position.X + ori.X), (int)(Position.Y + ori.Y), Rectangle.Width, Rectangle.Height), CurrentAnimationFrame, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, DrawLayer);
+
             base.Draw(sb);
+
 
             var size = new Vector2(CollisionBox.Width, 6 + (CollisionBox.Height / 3));
 

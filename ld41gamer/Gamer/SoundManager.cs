@@ -9,16 +9,21 @@ namespace ld41gamer.Gamer
     public enum GameSoundType
     {
         Shoot,
-        Building
+        Building,
+        Song1,
+        Song2
     }
 
     public class GameSound
     {
         SoundEffect effect;
         SoundEffectInstance[] instance;
+
         public SoundEffectInstance loop;
 
         int i = 0;
+
+        public float Volume { get => loop.Volume; set => loop.Volume = value; }
 
         public GameSound(SoundEffect e, int soundChannels)
         {
@@ -48,7 +53,7 @@ namespace ld41gamer.Gamer
 
         public void Loop(float vol)
         {
-            loop.Volume = vol * SoundManager.Master;
+            Volume = vol * SoundManager.Master;
             if(loop.IsLooped)
                 return;
             loop.IsLooped = true;
@@ -73,10 +78,11 @@ namespace ld41gamer.Gamer
         {
             c = cm;
             Sounds = new Dictionary<GameSoundType, GameSound>();
-            //  load sound here or in gamecontent heh
 
             AddSound(GameSoundType.Building, "buildsound");
 
+            AddSound(GameSoundType.Song1, "song1");
+            AddSound(GameSoundType.Song2, "song2");
         }
 
         static void AddSound(GameSoundType type, string path)
@@ -104,6 +110,11 @@ namespace ld41gamer.Gamer
         public static void StopLoop(GameSoundType type)
         {
             Sounds[type].loop.Stop();
+        }
+
+        public static void SetVol(GameSoundType type, float vol)
+        {
+            Sounds[type].Volume = MathHelper.Clamp(vol, 0f, 1f);
         }
 
     }

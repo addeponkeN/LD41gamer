@@ -29,6 +29,8 @@ namespace ld41gamer.Gamer
 
         public Rectangle BenchRec;
 
+        public bool CanBench;
+
         AnimatedSprite hammer;
         float hammerTimer;
         public Tree()
@@ -120,6 +122,7 @@ namespace ld41gamer.Gamer
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
+
             var dt = gt.Delta();
             var p = map.player;
             var mpos = map.MouseWorldPos();
@@ -147,52 +150,59 @@ namespace ld41gamer.Gamer
                     }
                 }
             }
+            if(Input.RightClick)
+                p.IsShoppingBranch = false;
 
-            if(p.IsBuying)
+            if(p.IsShoppingBranch)
                 if(ii != -1)
                 {
                     Branches[ii].Hovered = true;
-
                     if(Input.LeftClick)
                     {
-                        if(map.player.Money < Branches[ii].Cost)
+                        if(!map.Game.AnyUiHovered)
                         {
-                            Console.WriteLine("NO AFFORD");
-                            return;
-                        }
-                        else
-                            map.player.Money -= Branches[ii].Cost;
+                            if(map.player.Money < Branches[ii].Cost)
+                            {
+                                Console.WriteLine("NO AFFORD");
+                                return;
+                            }
+                            else
+                                map.player.Money -= Branches[ii].Cost;
 
-                        var type = TYPE(Branches[ii].Type);
-                        Branches[ii].IsActive = true;
-                        AddCollisionBranch(type, map);
-                        var rec = GetRec(type);
-                        for(int i = 0; i < 150; i++)
-                        {
-                            var pos = new Vector2(Rng.Noxt(rec.X, rec.Right), Rng.Noxt(rec.Y - 16, rec.Bottom + 32));
-                            Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
-                        }
+                            var type = TYPE(Branches[ii].Type);
+                            Branches[ii].IsActive = true;
+                            AddCollisionBranch(type, map);
+                            var rec = GetRec(type);
+                            for(int i = 0; i < 150; i++)
+                            {
+                                var pos = new Vector2(Rng.Noxt(rec.X, rec.Right), Rng.Noxt(rec.Y - 48, rec.Bottom + 92));
+                                Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                            }
 
-                        SoundManager.PlaySound(GameSoundType.Building);
-                        hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
-                        hammerTimer = 2f;
+                            SoundManager.PlaySound(GameSoundType.Building);
+                            hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
+                            hammerTimer = 2f;
+
+                            Upgrades.TreeBranches++;
+                        }
+                        p.IsShoppingBranch = false;
                     }
-
                 }
 
             hammerTimer -= dt;
             if(hammerTimer > 0)
                 hammer.UpdateAnimation(gt);
-
+            CanBench = false;
             if(BenchRec.Intersects(p.CollisionBox))
             {
+                CanBench = true;
                 if(Input.KeyClick(Keys.F) && p.IsGrounded)
                 {
-                    p.IsBuying = !p.IsBuying;
+                    p.IsShopping = !p.IsShopping;
                 }
             }
             else
-                p.IsBuying = false;
+                p.IsShopping = false;
 
         }
 
@@ -203,7 +213,7 @@ namespace ld41gamer.Gamer
                 hammer.Draw(sb);
             foreach(var b in Branches)
             {
-                if(b.IsActive || map.player.IsBuying)
+                if(b.IsActive || map.player.IsShopping)
                     b.Draw(sb);
             }
 

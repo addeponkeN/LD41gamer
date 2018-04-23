@@ -2,6 +2,7 @@
 using ld41gamer.Gamer.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Obo.GameUtility;
 using Obo.Utility;
 using System;
@@ -26,30 +27,59 @@ namespace ld41gamer.Gamer
 
         public int Cost { get; set; }
 
-        float attackTimer;
-        float AttackSpeed;
+        public float attackTimer;
+        public float AttackSpeed;
 
         public float BuildTime;
         public float BuildTimeBase;
 
+        public int Rank;
+
+        public List<Sprite> stars;
+
         public bool isBeingBuilt;
 
-        Vector2 bulletStartPosLeft, bulletStartPosRight;
+        public Vector2 bulletStartPosLeft, bulletStartPosRight;
 
         AnimatedSprite blastCloud;
-        float blastTimer;
+        public float blastTimer;
 
+        public bool DrawShootBar;
 
-        Shape recf;
+        public Shape recf;
         Shape colLeft;
         Shape colRight;
 
         //  range in pixels
-        int Range;
+        public int Range;
 
-        bool shoot;
-        bool shot;
-        Vector2 target;
+        public bool shoot;
+        public bool shot;
+        public Vector2 target;
+
+        float dmgLerp = 1f;
+
+        HpBar ShootBar;
+
+        public bool isTargeted;
+        public bool IsUpgrading;
+
+        public bool ShowMenu;
+
+        public bool DrawTowerInfo;
+
+        float UpgradeTimer;
+        public float UpgradeCooldownTimer;
+
+        private float pTimer;
+
+        public bool CanUpgrade => Rank <= 4 && UpgradeCooldownTimer < 0f;
+
+        float TimeToUpgrade => 3f + (Rank * 2f);
+
+        float repairTimer;
+        public bool CanRepair(Player player) => HealthPoints < MaxHealthPoints && player.Money >= 10;
+        public bool IsRepairing;
 
         public Turret(TowerType t)
         {
@@ -81,11 +111,14 @@ namespace ld41gamer.Gamer
 
             switch(t)
             {
+
+
                 case TowerType.PeaShooter:
                     Name = "Pea Shooter";
                     SetHp(5);
                     Damage = 1;
                     break;
+
 
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
@@ -95,6 +128,7 @@ namespace ld41gamer.Gamer
                     BuildTimeBase = 4f;
                     SetFrame(0, 0);
                     break;
+
 
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
@@ -106,6 +140,7 @@ namespace ld41gamer.Gamer
                     BuildTimeBase = 7f;
                     SetFrame(0, 1);
                     break;
+
 
                 case TowerType.ConeCatapult:
                     Name = "Cone Catapult";
@@ -148,17 +183,83 @@ namespace ld41gamer.Gamer
             recf = colRight;
 
             CreateBar();
+
+            ShootBar = new HpBar((int)Size.X / 2, 3);
+            ShootBar.gap = 1;
+            ShootBar.Foreground.Color = Color.DeepSkyBlue;
+            ShootBar.Background.Color = Color.MidnightBlue;
+
+            stars = new List<Sprite>();
+
         }
 
-        public void SetEffect(SpriteEffects ef)
+        public void Upgrade(GameTime gt)
         {
-            SpriteEffects = ef;
+            var dt = gt.Delta();
+            IsUpgrading = true;
+            UpgradeTimer += dt;
+
+            pTimer += dt;
+            if(pTimer > 0.25)
+            {
+                var pos = CollisionBox.Center() + new Vector2(36, 28) + new Vector2(Rng.Noxt(-48, 48), Rng.Noxt(-48, 48));
+                Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                pTimer = 0;
+            }
+
+            if(UpgradeTimer > TimeToUpgrade)
+            {
+                UpgradeComplete();
+            }
+
+            ShootBar.Foreground.Color = Color.LightGoldenrodYellow;
+            ShootBar.Background.Color = Color.DarkGoldenrod;
+        }
+
+
+
+        public void UpgradeComplete()
+        {
+            IsUpgrading = false;
+            UpgradeCooldownTimer = 1.5f;
+            Rank++;
+
+            var s = new Sprite(GameContent.icons);
+            s.SetSourceSize(64);
+            s.SetFrame(0, 0);
+            s.SetSize(20);
+
+            stars.Add(s);
+        }
+
+        public void Repair(GameTime gt, Player player)
+        {
+            var dt = gt.Delta();
+            IsRepairing = true;
+            repairTimer += dt;
+
+            pTimer += dt;
+            if(pTimer > 0.25)
+            {
+                var pos = CollisionBox.Center() + new Vector2(36, 28) + new Vector2(Rng.Noxt(-48, 48), Rng.Noxt(-48, 48));
+                Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                pTimer = 0;
+            }
+
+            if(repairTimer > 2)
+            {
+                player.Money -= 10;
+                RepairComplete();
+            }
 
         }
 
-        void InvertRec()
+        public void RepairComplete()
         {
+            repairTimer = 0;
+            IsRepairing = false;
 
+            HealthPoints += 1;
         }
 
         public void UpdateRec()
@@ -175,14 +276,54 @@ namespace ld41gamer.Gamer
             recf.Position = CollisionBox.Center();
         }
 
+        public void SetEffect(SpriteEffects ef)
+        {
+            SpriteEffects = ef;
+
+        }
+
+
         public override void Update(GameTime gt, Map map, GameScreen gs)
         {
             base.Update(gt, map, gs);
-            attackTimer += gt.Delta();
-            blastTimer -= gt.Delta();
+            var dt = gt.Delta();
 
+            DrawHpBar = HealthPoints < MaxHealthPoints ||  isTargeted;
+
+            if(attackTimer < AttackSpeed)
+                attackTimer += dt;
+            blastTimer -= dt;
+
+            UpgradeCooldownTimer -= dt;
+
+            if(dmgLerp < 1f)
+            {
+                dmgLerp += dt;
+                Color = Color.Lerp(Color.Red, BaseColor, dmgLerp);
+            }
             if(Type != TowerType.ConeCatapult)
                 blastCloud.UpdateAnimation(gt);
+
+
+            if(IsUpgrading)
+            {
+                ShootBar.Foreground.Color = Color.LightGoldenrodYellow;
+                ShootBar.Background.Color = Color.DarkGoldenrod;
+                ShootBar?.Update(UpgradeTimer, TimeToUpgrade);
+            }
+            else
+                UpgradeTimer = 0f;
+
+            if(!IsRepairing)
+                repairTimer = 0f;
+
+            if(DrawShootBar && !IsUpgrading)
+            {
+                ShootBar.Update(attackTimer, AttackSpeed);
+                ShootBar.Foreground.Color = Color.DeepSkyBlue;
+                ShootBar.Background.Color = Color.MidnightBlue;
+            }
+
 
             UpdateRec();
 
@@ -213,74 +354,9 @@ namespace ld41gamer.Gamer
 
                 }
             }
-
-
-            for(int i = 0; i < map.Enemies.Count; i++)
-            {
-                var e = map.Enemies[i];
-
-                bool tryShoot = false;
-                //  looking right
-                if(SpriteEffects == SpriteEffects.None)
-                {
-                    if(Type == TowerType.ConeCatapult)
-                    {
-                        if(e.Rectangle.Left > Center.X + 300)
-                            tryShoot = true;
-                    }
-                    else if(e.Rectangle.Left > Center.X)
-                        tryShoot = true;
-                }
-                else
-                {
-                    if(Type == TowerType.ConeCatapult)
-                    {
-                        if(e.Rectangle.Right < Center.X - 300)
-                            tryShoot = true;
-                    }
-                    else
-                    if(e.Rectangle.Right < Center.X)
-                        tryShoot = true;
-                }
-
-                if(!tryShoot)
-                    continue;
-
-                if(attackTimer >= AttackSpeed)
-                {
-                    if(recf.Intersects(e.CollisionBox))
-                    {
-                        target = e.Center;
-                        if(Type != TowerType.ConeCatapult)
-                        {
-                            if(SpriteEffects == SpriteEffects.None)
-                                Shoot(map, Position + bulletStartPosRight, target);
-                            else
-                                Shoot(map, Position + bulletStartPosLeft, target);
-
-                            attackTimer = 0;
-                        }
-                        else
-                            shoot = true;
-                    }
-                }
-
-                //    var distance = Vector2.Distance(Position, e.Position);
-
-                //if(distance <= Range)
-                //    if(attackTimer >= attackSpeed)
-                //    {
-                //        if(SpriteEffects == SpriteEffects.None)
-                //            Shoot(map, Position + bulletStartPosRight, e.Center);
-                //        else
-                //            Shoot(map, Position + bulletStartPosLeft, e.Center);
-
-                //        attackTimer = 0;
-                //    }
-            }
         }
 
-        private void Shoot(Map map, Vector2 spawn, Vector2 target)
+        public void Shoot(Map map, Vector2 spawn, Vector2 target)
         {
 
             spawn = spawn - new Vector2(28 / 2);
@@ -319,7 +395,7 @@ namespace ld41gamer.Gamer
                 else
                 {
                     xBet = Center.X - (dis / 2);
-                   // dest = new Vector2(tCenter.X - xBet, tCenter.Y);
+                    // dest = new Vector2(tCenter.X - xBet, tCenter.Y);
                 }
 
 
@@ -353,9 +429,36 @@ namespace ld41gamer.Gamer
             blastTimer = (float)blastCloud.AnimationDuration - .1f;
         }
 
+        public void IsHit(int damage)
+        {
+            HealthPoints -= damage;
+            dmgLerp = 0.5f;
+        }
+
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
+
+
+            if(IsUpgrading)
+            {
+                var hamSize = new Vector2(100);
+                Builder.DrawHammer(sb, new Vector2(Center.X - hamSize.X / 2, CollisionBox.Top - hamSize.Y), hamSize);
+            }
+
+            if(DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isTargeted)
+                for(int i = 0; i < stars.Count; i++)
+                {
+                    var s = stars[i];
+                    s.Position = HpBar.Position - new Vector2((i * -s.Size.X) + (i * -6), s.Size.Y + 10);
+                    s.Draw(sb);
+                }
+
+            if(DrawShootBar)
+            {
+                if(IsUpgrading || attackTimer < AttackSpeed || isTargeted)
+                ShootBar.Draw(sb, new Vector2(GHelper.Center(HpBar.Rectangle, ShootBar.Size).X, HpBar.Rectangle.Top - ShootBar.Size.Y - 4));
+            }
 
             if(Type != TowerType.ConeCatapult)
                 if(blastTimer >= 0)

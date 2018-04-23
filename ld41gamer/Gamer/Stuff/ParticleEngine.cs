@@ -58,6 +58,8 @@ namespace ld41gamer.Gamer
 
         float growY;
 
+        public float DrawLayer;
+
         void SetColor(int val)
         {
             Color = new Color(val, val, val);
@@ -67,7 +69,7 @@ namespace ld41gamer.Gamer
         public Particle(ParticleType type, Vector2 startPos, Vector2 dir)
         {
             Type = type;
-
+            DrawLayer = Layer.Particle;
             Size = new Vector2(32);
             Origin = Size / 2;
 
@@ -190,6 +192,7 @@ namespace ld41gamer.Gamer
                     }
                     else
                     {
+                        DrawLayer = Layer.Tree + 0.005f;
                         growY += dt * 4f;
                     }
 
@@ -211,14 +214,16 @@ namespace ld41gamer.Gamer
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(GameContent.particlesheet, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, Layer.Particle);
+            sb.Draw(GameContent.particlesheet, Rectangle, FrameRectangle, new Color(Color, Alpha), Rotation, Origin, SpriteEffects, DrawLayer);
 
             switch(Type)
             {
                 case ParticleType.Smoke:
                     break;
                 case ParticleType.Blood:
-                    sb.Draw(GameContent.particlesheet, new Rectangle((int)Position.X - 3, (int)Position.Y - (int)(growY * .29f), 6, (int)growY), FrameRectangle, new Color(Color, Alpha), 0f, Vector2.Zero, SpriteEffects, Layer.Particle);
+                    sb.Draw(GameContent.particlesheet, 
+                        new Rectangle((int)Position.X - 3, (int)Position.Y - (int)(growY * .29f), 6, (int)growY), 
+                        FrameRectangle, new Color(Color, Alpha), 0f, Vector2.Zero, SpriteEffects, Layer.Tree + 0.004f);
                     break;
                 default:
                     break;

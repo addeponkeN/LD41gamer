@@ -203,8 +203,8 @@ namespace ld41gamer.Gamer
                     continue;
                 }
 
-                if(Input.KeyClick(Keys.C))
-                    t.HealthPoints--;
+                //if(Input.KeyClick(Keys.C))
+                //    t.HealthPoints--;
 
                 t.isTargeted = false;
                 if(player.IsAlive)
@@ -397,10 +397,10 @@ namespace ld41gamer.Gamer
             Bullets.RemoveAll(x => x.LifeTime < 0);
             Enemies.RemoveAll(x => !x.IsAlive);
 
-            if(Input.KeyClick(Keys.P))
-                SpawnEnemy(Enemy.RandomTypeNotWormHole());
-            if(Input.KeyClick(Keys.K))
-                SpawnWormHole();
+            //if(Input.KeyClick(Keys.P))
+            //    SpawnEnemy(Enemy.RandomTypeNotWormHole());
+            //if(Input.KeyClick(Keys.K))
+            //    SpawnWormHole();
 
             CheckCollision();
 
@@ -427,6 +427,14 @@ namespace ld41gamer.Gamer
                 if(insideLerp > 0f)
                     insideLerp -= dt * 2f;
             }
+
+
+
+            if(tree.HealthPoints <= 0)
+            {
+                Game.game.AddPopupScreen(new PopupScreen("The tree is dead!", GameContent.font14, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 200, 125, GameContent.font24, PopupType.Ok), true);
+            }
+
 
         }
 

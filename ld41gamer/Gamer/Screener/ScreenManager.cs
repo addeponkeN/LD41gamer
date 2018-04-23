@@ -101,14 +101,14 @@ namespace ld41gamer.Screener
 
             frameCounter.Update(gt);
 
-            if(Input.LeftClick)
-            {
-                MessagePopupManager.AddMsg("CLICK", false);
-            }
-            if(Input.RightClick)
-            {
-                MessagePopupManager.AddMsg("CLOCK", true);
-            }
+            //if(Input.LeftClick)
+            //{
+            //    MessagePopupManager.AddMsg("CLICK", false);
+            //}
+            //if(Input.RightClick)
+            //{
+            //    MessagePopupManager.AddMsg("CLOCK", true);
+            //}
 
             if(Input.KeyClick(Keys.F1))
                 Globals.IsDrawStats = !Globals.IsDrawStats;

@@ -53,11 +53,13 @@ namespace ld41gamer.Gamer
             get => money; set
             {
                 int dif = money - value;
-                money = value;
+
                 if(value > money)
-                    MBMan.Add("+" + dif);
+                    MBMan.Add("+" + -dif);
                 else
                     MBMan.Add("-" + dif);
+
+                money = value;
             }
         }
 
@@ -99,10 +101,10 @@ namespace ld41gamer.Gamer
                 if(!IsGrounded)
                     JumpVelo += Map.Gravity * dt;
 
-                if(Input.KeyHold(Keys.LeftShift))
-                    Speed = 1200;
-                else
-                    Speed = 290;
+                //if(Input.KeyHold(Keys.LeftShift))
+                //    Speed = 1200;
+                //else
+                //    Speed = 290;
 
                 Direction.X = 0;
                 //Direction.Y = 0;

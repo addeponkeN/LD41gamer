@@ -41,7 +41,6 @@ namespace ld41gamer.Gamer
         public static void Add(string msg)
         {
             var m = new MessageBox(msg);
-
             list.Add(m);
         }
 
@@ -67,6 +66,5 @@ namespace ld41gamer.Gamer
             }
 
         }
-
     }
 }

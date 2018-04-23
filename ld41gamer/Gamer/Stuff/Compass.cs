@@ -37,11 +37,27 @@ namespace ld41gamer.Gamer
             //enemyBox.SetSize(26);
             enemyBox.SetSourceSize(en.CurrentAnimation[0].Size.X, en.CurrentAnimation[0].Size.Y);
             enemyBox.Size = enemy.Size / 3;
-            enemyBox.SetFrame(0, enemy.Row);
+
+            int row = 0;
+            int col = enemy.Column;
+            if(enemy.Type == EnemyType.WormRed || enemy.Type == EnemyType.WormYellow || enemy.Type == EnemyType.WormBlue)
+                col = 1;
+
+            if(enemy.Type == EnemyType.WormRed)
+                row = 1;
+            else if(enemy.Type == EnemyType.WormBlue)
+                row = 2;
+
+            enemyBox.SetFrame(col, row);
             enemyBox.DrawLayer = layer + 0.0001f;
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
             count += 1f;
+
+            if(enemy.isAttacking)
+                Color = Color.Red;
+            else
+                Color = Color.White;
         }
 
         public void Update(GameTime gt, Map map, Player player)

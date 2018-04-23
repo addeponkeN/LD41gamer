@@ -25,11 +25,19 @@ namespace ld41gamer.Gamer
 
         PlayerShoot1,
         PlayerShoot2,
+
         TowerBuilding,
         TowerDestroy,
+
         TowerFling1,
         TowerFling2,
-        TowerFling3
+        TowerFling3,
+
+        TowerPlaced,
+
+        TowerShoot1,
+        TowerShoot2,
+        TowerShoot3
     }
 
     public class GameSound
@@ -100,6 +108,7 @@ namespace ld41gamer.Gamer
             AddSound(GameSoundType.TreeBuilding, "buildsound");
             AddSound(GameSoundType.TowerBuilding, "towerBuilding");
             AddSound(GameSoundType.TowerDestroy, "towerDestroy");
+            AddSound(GameSoundType.TowerPlaced, "towerPlaced");
 
             AddSound(GameSoundType.PlayerShoot1, "playerShoot1");
             AddSound(GameSoundType.PlayerShoot2, "playerShoot2");
@@ -107,6 +116,10 @@ namespace ld41gamer.Gamer
             AddSound(GameSoundType.TowerHit1, "towerHit1");
             AddSound(GameSoundType.TowerHit2, "towerHit2");
             AddSound(GameSoundType.TowerHit3, "towerHit3");
+
+            AddSound(GameSoundType.TowerShoot1, "towerShoot1");
+            AddSound(GameSoundType.TowerShoot2, "towerShoot2");
+            AddSound(GameSoundType.TowerShoot3, "towerShoot3");
 
             AddSound(GameSoundType.TowerFling1, "cataFling1");
             AddSound(GameSoundType.TowerFling2, "cataFling2");
@@ -173,6 +186,18 @@ namespace ld41gamer.Gamer
         public static void PlayerPlayerShoot()
         {
             var type = (GameSoundType)Rng.Noxt(10, 11);
+            PlaySound(type);
+        }
+
+        public static void PlayFling()
+        {
+            var type = (GameSoundType)Rng.Noxt(14, 16);
+            PlaySound(type);
+        }
+
+        public static void PlayTowerShoot()
+        {
+            var type = (GameSoundType)Rng.Noxt(18, 20);
             PlaySound(type);
         }
     }

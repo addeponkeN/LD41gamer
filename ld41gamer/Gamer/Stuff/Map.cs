@@ -181,11 +181,35 @@ namespace ld41gamer.Gamer
             {
                 var t = Turrets[i];
                 t.Update(gt, this, gs);
-                if(t.HealthPoints <= 0)
+                if(t.HealthPoints <= 0 || !t.IsAlive)
                 {
-                    Turrets.Remove(t);
+                    SoundManager.PlaySound(GameSoundType.TowerDestroy);
+
+
+                    for(int k = 0; k < 20; k++)
+                    {
+                        var pos = t.CollisionBox.Center() /*+ new Vector2(Rng.Noxt(-16, 16), Rng.Noxt(-16, 16))*/;
+                        var dir = new Vector2(Rng.NoxtFloat(-1, 1), -1);
+                        var p = new Particle(ParticleType.Scrap, pos, dir);
+                        p.endPos = new Vector2(0, GroundCollisionBox.Top + p.Size.Y + Rng.Noxt(-20, 8));
+                        pengine.Add(p);
+                    }
+
+                    for(int h = 0; h < 70; h++)
+                    {
+                        var pos = t.CollisionBox.Center() + new Vector2(36, 28) + new Vector2(Rng.Noxt(-48, 48), Rng.Noxt(-48, 48));
+                        pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                    }
+                    t.IsAlive = false;
+                    //t = null;
+                    if(closestTurret == t)
+                        closestTurret = null;
+                    Turrets.RemoveAt(i);
                     continue;
                 }
+
+                if(Input.KeyClick(Keys.C))
+                    t.HealthPoints--;
 
                 t.isTargeted = false;
                 if(player.IsAlive)
@@ -228,7 +252,13 @@ namespace ld41gamer.Gamer
                             player.IsUpgradingOrReparing = true;
                         }
 
+                    if(Input.KeyClick(Keys.Q))
+                    {
+                        closestTurret.IsAlive = false;
+                    }
+
                 }
+
 
 
 
@@ -290,9 +320,6 @@ namespace ld41gamer.Gamer
                 for(int j = 0; j < Turrets.Count; j++)
                 {
                     var t = Turrets[j];
-
-                    if(Input.KeyClick(Keys.C))
-                        t.HealthPoints--;
 
                     //  enemy attack turret
                     if(e.CollisionBox.Intersects(t.CollisionBox))

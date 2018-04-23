@@ -25,7 +25,8 @@ namespace ld41gamer.Gamer
 
         PlayerShoot1,
         PlayerShoot2,
-        TowerBuilding
+        TowerBuilding,
+        TowerDestroy
     }
 
     public class GameSound
@@ -95,6 +96,7 @@ namespace ld41gamer.Gamer
 
             AddSound(GameSoundType.TreeBuilding, "buildsound");
             AddSound(GameSoundType.TowerBuilding, "towerBuilding");
+            AddSound(GameSoundType.TowerDestroy, "towerDestroy");
 
             AddSound(GameSoundType.PlayerShoot1, "playerShoot1");
             AddSound(GameSoundType.PlayerShoot2, "playerShoot2");

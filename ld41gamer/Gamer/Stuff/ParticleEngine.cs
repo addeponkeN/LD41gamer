@@ -14,6 +14,7 @@ namespace ld41gamer.Gamer
     {
         Smoke,
         Blood,
+        Scrap,
     }
 
     public class Particle
@@ -48,7 +49,7 @@ namespace ld41gamer.Gamer
         public float FadeInTimer = 0f;
         public float FadeInTimerBase;
 
-        float FadeInLerp = 0f;
+        float FadeInLerp = 1f;
 
         public Vector2 Speed;
 
@@ -105,6 +106,21 @@ namespace ld41gamer.Gamer
 
                     Size = new Vector2(Rng.Noxt(8, 24));
                     SetColor(255);
+                    break;
+
+
+                case ParticleType.Scrap:
+                    Row = 2;
+                    Column = Rng.Noxt(0, 3);
+                    SetColor(255);
+                    LifeTime = 8f;
+                    Speed = new Vector2(Rng.Noxt(80, 150), Rng.Noxt(50,300));
+                    FadeInTimer = 0f;
+
+                    RotationSpeed = Rng.NoxtFloat(-pi * 3, pi * 3);
+
+                    Size = new Vector2(Rng.Noxt(8, 24));
+
                     break;
 
                 default:
@@ -198,6 +214,22 @@ namespace ld41gamer.Gamer
 
                     break;
 
+                case ParticleType.Scrap:
+
+                    if(Rectangle.Bottom < endPos.Y)
+                    {
+                        UpdatePos(dt);
+                        Speed.Y -= dt * 200f;
+                        if(Speed.X > 1f)
+                        Speed.X -= dt * 5f;
+                        Rotate(dt);
+                    }
+                    else
+                    {
+                        DrawLayer = Layer.Tree + 0.005f;
+                    }
+
+                    break;
             }
 
 

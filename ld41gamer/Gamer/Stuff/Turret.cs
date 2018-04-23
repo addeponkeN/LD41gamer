@@ -172,7 +172,7 @@ namespace ld41gamer.Gamer
 
             }
 
-            //BuildTimeBase = 0.5f;
+            BuildTimeBase = 0.5f;
 
             float Range2 = Range / 2;
             float Range4 = Range / 4;
@@ -246,6 +246,11 @@ namespace ld41gamer.Gamer
             s.SetSize(20);
 
             stars.Add(s);
+        }
+
+        internal void Destroy()
+        {
+            throw new NotImplementedException();
         }
 
         public void Repair(GameTime gt, Player player)

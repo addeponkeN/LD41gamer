@@ -238,16 +238,16 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             pos = new Vector2(x, y + 1);
             cam2d.LookAt(pos);
 
-            if(Input.WheelDown)
-            {
-                cam2d.ZoomOut(0.01f);
-            }
-            else if(Input.WheelUp)
-            {
-                cam2d.ZoomIn(0.01f);
-            }
+            //if(Input.WheelDown)
+            //{
+            //    cam2d.ZoomOut(0.01f);
+            //}
+            //else if(Input.WheelUp)
+            //{
+            //    cam2d.ZoomIn(0.01f);
+            //}
 
-            Input.ScrollValueOld = Input.ScrollValue;
+            //Input.ScrollValueOld = Input.ScrollValue;
 
             //if(lerpTimer > zin-0.1f)
             LockCamToMap(map);

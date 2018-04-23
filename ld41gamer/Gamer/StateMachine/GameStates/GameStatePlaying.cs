@@ -61,6 +61,12 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
+            TreeBranch.Cost = 50;
+            Turret.TurretCost = 10;
+            Turret.SniperCost = 30;
+            Turret.CataCost = 100;
+            Upgrades.TreeBranches = 0;
+            Upgrades.Player_BuildTime = 1f;
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
             cam2d = new Camera2D(port);
@@ -77,10 +83,10 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             mb = new MenuBuy(game.ScreenManager.GraphicsDevice);
 
             mu.AddButton(UBBaseType.Branch, () =>
-            {
-                if(!Upgrades.TreeBranchesMaxed)
-                    map.player.IsShoppingBranch = !map.player.IsShoppingBranch;
-            });
+                {
+                    if(!Upgrades.TreeBranchesMaxed)
+                        map.player.IsShoppingBranch = !map.player.IsShoppingBranch;
+                });
 
             mu.AddButton(UBBaseType.BuildSpeed, () =>
             {
@@ -105,6 +111,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             treeBar = new TreeHp();
             treeBar.Posser(new Vector2(8, 8));
 
+            lbMoney.Text = map.player.Money.ToString();
         }
 
         public Vector2 camDest;
@@ -118,10 +125,29 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.Update(gt, game);
 
+
+            foreach(var bb in mu.buttons)
+            {
+                switch(bb.Type)
+                {
+
+                    case UBBaseType.Branch:
+                        bb.Set(TreeBranch.Cost);
+                        break;
+
+                    case UBBaseType.BuildSpeed:
+                        //bb.Set();
+                        break;
+
+                }
+            }
+
+
             lbMoney.Text = map.player.Money.ToString();
 
             treeBar.Update(map.tree.HealthPoints, map.tree.MaxHealthPoints);
 
+            MBMan.Update(gt);
 
             if(map.player.Money < Turret.TurretCost)
             {
@@ -190,7 +216,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             {
                 cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
             }
-            
+
             x = MathHelper.Lerp(camDest.X, map.player.Center.X, lerpTimer);
             y = MathHelper.Lerp(camDest.Y, map.player.Center.Y, lerpTimer);
 
@@ -281,6 +307,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             treeBar.Draw(sb);
 
             lbMoney.Draw(sb);
+
+            MBMan.Draw(sb);
 
             var pos = new Vector2(GHelper.Center(mb.btTurret.Rectangle, lbTurret.Size + lbTurret.TextSize).X, mb.btTurret.Position.Y - lbTurret.Size.Y * 2);
             lbTurret.SetPosition(pos);

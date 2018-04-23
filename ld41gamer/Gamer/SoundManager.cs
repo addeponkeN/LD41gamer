@@ -26,7 +26,10 @@ namespace ld41gamer.Gamer
         PlayerShoot1,
         PlayerShoot2,
         TowerBuilding,
-        TowerDestroy
+        TowerDestroy,
+        TowerFling1,
+        TowerFling2,
+        TowerFling3
     }
 
     public class GameSound
@@ -104,6 +107,10 @@ namespace ld41gamer.Gamer
             AddSound(GameSoundType.TowerHit1, "towerHit1");
             AddSound(GameSoundType.TowerHit2, "towerHit2");
             AddSound(GameSoundType.TowerHit3, "towerHit3");
+
+            AddSound(GameSoundType.TowerFling1, "cataFling1");
+            AddSound(GameSoundType.TowerFling2, "cataFling2");
+            AddSound(GameSoundType.TowerFling3, "cataFling3");
 
 
             AddSound(GameSoundType.EnemyHit1, "enemyHit1");

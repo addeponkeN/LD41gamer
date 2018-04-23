@@ -46,7 +46,20 @@ namespace ld41gamer.Gamer
 
         public float knockSpeed;
 
-        public int Money = 500;
+        int money = 500;
+        //public int Money = 500;
+        public int Money
+        {
+            get => money; set
+            {
+                int dif = money - value;
+                money = value;
+                if(value > money)
+                    MBMan.Add("+" + dif);
+                else
+                    MBMan.Add("-" + dif);
+            }
+        }
 
         public float dmgLerp = 1f;
 

@@ -67,10 +67,8 @@ namespace ld41gamer.Gamer
             hammer.Texture = GameContent.hammer;
             hammer.PlayAnimation(AnimationType.Hammer);
 
-
             HealthPoints = 20;
             MaxHealthPoints = 20;
-
         }
 
         public void IsHit(int dmg)
@@ -185,13 +183,14 @@ namespace ld41gamer.Gamer
                     {
                         if(!map.Game.AnyUiHovered)
                         {
-                            if(map.player.Money < Branches[ii].Cost)
+                            if(map.player.Money < TreeBranch.Cost)
                             {
                                 Console.WriteLine("NO AFFORD");
                                 return;
                             }
                             else
-                                map.player.Money -= Branches[ii].Cost;
+                                map.player.Money -= TreeBranch.Cost;
+                            TreeBranch.Cost += 30;
 
                             var type = TYPE(Branches[ii].Type);
                             Branches[ii].IsActive = true;

@@ -44,7 +44,7 @@ namespace ld41gamer
             var screenManager = new ScreenManager(this);
             Components.Add(screenManager);
 
-            screenManager.AddScreen(new MainMenuScreen());
+            screenManager.AddScreen(new GameScreen());
 
         }
 

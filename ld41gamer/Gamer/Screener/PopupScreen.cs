@@ -93,6 +93,7 @@ namespace ld41gamer.Gamer.Screener
             box = new Sprite();
             box.Texture = uiTexture ?? Extras.CreateFilledBox(ScreenManager.GraphicsDevice);
             box.SetSize(W, H);
+            box.SetSourceSize(box.Texture.Width, box.Texture.Height);
             box.Position = GHelper.Center(Globals.ScreenBox, box.Size) - new Vector2(0, box.Size.Y * .5f);
             box.SetColor(Color);
 

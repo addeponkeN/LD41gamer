@@ -147,6 +147,14 @@ namespace ld41gamer.Screener
             PauseScreen();
         }
 
+        public void AddPopupScreen(PopupScreen pup, bool pause)
+        {
+            pup.ParentScreen = this;
+            pup.ScreenManager = ScreenManager;
+            pup.Load();
+            Popups.Add(pup);
+            PauseScreen();
+        }
         public virtual void Load() { }
 
         public virtual void Unload()
@@ -186,12 +194,12 @@ namespace ld41gamer.Screener
             for(int i = 0; i < Popups.Count; i++)
             {
                 var pup = Popups[i];
+                pup.Update(gt, otherScreenHasFocus, coveredByOtherScreen);
                 if(pup.IsExiting)
                 {
                     Popups.RemoveAt(i);
                     continue;
                 }
-                pup.Update(gt, otherScreenHasFocus, coveredByOtherScreen);
             }
 
             if(IsExiting)

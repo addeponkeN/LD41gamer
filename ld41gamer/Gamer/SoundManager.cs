@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Obo.Utility;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -9,9 +11,21 @@ namespace ld41gamer.Gamer
     public enum GameSoundType
     {
         Shoot,
-        Building,
+        TreeBuilding,
         Song1,
-        Song2
+        Song2,
+
+        TowerHit1,
+        TowerHit2,
+        TowerHit3,
+
+        EnemyHit1,
+        EnemyHit2,
+        EnemyHit3,
+
+        PlayerShoot1,
+        PlayerShoot2,
+        TowerBuilding
     }
 
     public class GameSound
@@ -69,7 +83,7 @@ namespace ld41gamer.Gamer
         public static float Music = 0.5f;
         public static float Master = 0.5f;
 
-        public static int SoundChannels = 16;
+        public static int SoundChannels = 8;
 
         public static Dictionary<GameSoundType, GameSound> Sounds;
         static ContentManager c;
@@ -79,9 +93,21 @@ namespace ld41gamer.Gamer
             c = cm;
             Sounds = new Dictionary<GameSoundType, GameSound>();
 
-            AddSound(GameSoundType.Building, "buildsound");
+            AddSound(GameSoundType.TreeBuilding, "buildsound");
+            AddSound(GameSoundType.TowerBuilding, "towerBuilding");
 
-            AddSound(GameSoundType.Song1, "song1");
+            AddSound(GameSoundType.PlayerShoot1, "playerShoot1");
+            AddSound(GameSoundType.PlayerShoot2, "playerShoot2");
+
+            AddSound(GameSoundType.TowerHit1, "towerHit1");
+            AddSound(GameSoundType.TowerHit2, "towerHit2");
+            AddSound(GameSoundType.TowerHit3, "towerHit3");
+
+
+            AddSound(GameSoundType.EnemyHit1, "enemyHit1");
+            AddSound(GameSoundType.EnemyHit2, "enemyHit2");
+            AddSound(GameSoundType.EnemyHit3, "enemyHit3");
+
             AddSound(GameSoundType.Song2, "song2");
         }
 
@@ -93,6 +119,11 @@ namespace ld41gamer.Gamer
         }
 
         public static void PlaySound(GameSoundType type)
+        {
+            Sounds[type].Play();
+        }
+
+        public static void PlaySound(GameSoundType type, float vol)
         {
             Sounds[type].Play();
         }
@@ -109,13 +140,31 @@ namespace ld41gamer.Gamer
 
         public static void StopLoop(GameSoundType type)
         {
+            Sounds[type].loop.IsLooped = false;
             Sounds[type].loop.Stop();
         }
 
         public static void SetVol(GameSoundType type, float vol)
         {
-            Sounds[type].Volume = MathHelper.Clamp(vol, 0f, 1f);
+            Sounds[type].Volume = MathHelper.Clamp(vol, 0f, 1f) * SoundManager.Master;
         }
 
+        public static void PlayEnemyHit()
+        {
+            var type = (GameSoundType)Rng.Noxt(7, 9);
+            PlaySound(type);
+        }
+
+        public static void PlayTowerHit()
+        {
+            var type = (GameSoundType)Rng.Noxt(5, 7);
+            PlaySound(type);
+        }
+
+        public static void PlayerPlayerShoot()
+        {
+            var type = (GameSoundType)Rng.Noxt(10, 11);
+            PlaySound(type);
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace ld41gamer.Gamer
 
         bool isInsideTree;
 
-        float insideLerp;
+        float insideLerp = 1f;
 
         public static int WallLeft = 760;
         public static int WallRight = 9900;
@@ -142,6 +142,9 @@ namespace ld41gamer.Gamer
 
             treeBar = new TreeHp();
             treeBar.Posser(new Vector2(8, 8));
+
+            game.cam2d.LookAt(player.Center);
+            game.LockCamToMap(this);
         }
 
         public void AddBullet(Bullet bullet)
@@ -207,6 +210,8 @@ namespace ld41gamer.Gamer
 
                     closestTurret.IsUpgrading = false;
 
+                    closestTurret.IsRepairing = false;
+
                     player.IsUpgradingOrReparing = false;
 
                     if(closestTurret.CanUpgrade)
@@ -249,7 +254,7 @@ namespace ld41gamer.Gamer
 
 
 
-                        player.Die(dir);
+                        //player.Die(dir);
 
 
 
@@ -276,7 +281,7 @@ namespace ld41gamer.Gamer
                             pengine.Add(p);
                             e.dmgLerp = 0.5f;
                         }
-
+                        SoundManager.PlayEnemyHit();
                         e.HealthPoints -= b.Damage;
                         Bullets.Remove(b);
                     }
@@ -427,15 +432,15 @@ namespace ld41gamer.Gamer
             else
                 e.Position.Y = GroundCollisionBox.Top - e.Size.Y;
 
+            eSpawned++;
             Enemies.Add(e);
             comp.Add(e);
         }
 
-
+        int eSpawned = 0;
         public void UpdateSpawning(GameTime gt)
         {
             var dt = gt.Delta();
-
 
             EnemyType type;
             Side side;
@@ -454,25 +459,23 @@ namespace ld41gamer.Gamer
                         SpawnEnemy(EnemyType.WormYellow);
                         break;
 
-
                     case GameStater.Level2:
 
-                        break;
+                        enemySpawnCd = Rng.Noxt(2, 7);
 
+
+                        break;
 
                     case GameStater.Level3:
 
                         break;
-
 
                     case GameStater.Level4:
 
                         break;
                 }
 
-
                 enemySpawnTimer = 0;
-
             }
 
         }

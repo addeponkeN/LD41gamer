@@ -61,12 +61,14 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
-            map = new Map(this);
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
             cam2d = new Camera2D(port);
             cam2d.MinimumZoom = 0.1f;
             cam2d.MaximumZoom = 3.1f;
+
+            map = new Map(this);
+
 
             lbMoney = new GameLabel(GameContent.acorn, "0", new Vector2(Globals.ScreenWidth * 0.85f, 8), GameContent.font48);
             lbMoney.Item.Size = new Vector2(64);
@@ -211,7 +213,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         }
 
-        void LockCamToMap(Map map)
+        public void LockCamToMap(Map map)
         {
             int left = Map.WallLeft;
             int right = Map.WallRight;

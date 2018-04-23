@@ -41,9 +41,12 @@ namespace ld41gamer.Gamer.Screener
 
         string msg;
 
-        SpriteFont font = UtilityContent.debugFont;
+        SpriteFont font = GameContent.font14;
         Color Color;
+        Color btColor = new Color(50, 50, 50);
 
+        int W = 200;
+        int H = 100;
         public PopupScreen(string text, bool error = false, PopupType type = PopupType.Ok)
         {
             IsPopup = true;
@@ -72,7 +75,7 @@ namespace ld41gamer.Gamer.Screener
             this.uiTexture = uiTexture;
         }
 
-        public PopupScreen(string text, Texture2D uiTexture, Texture2D btTexture, PopupType type = PopupType.Ok)
+        public PopupScreen(string text, Texture2D uiTexture, Texture2D btTexture, Color btColor, int w, int h, PopupType type = PopupType.Ok)
         {
             IsPopup = true;
             pType = type;
@@ -80,13 +83,14 @@ namespace ld41gamer.Gamer.Screener
             msg = text;
             this.uiTexture = uiTexture;
             this.btTexture = btTexture;
+            this.btColor = btColor;
         }
 
         void CreateBox()
         {
             box = new Sprite();
             box.Texture = uiTexture ?? Extras.CreateFilledBox(ScreenManager.GraphicsDevice);
-            box.SetSize(224, 96);
+            box.SetSize(W, H);
             box.Position = GHelper.Center(Globals.ScreenBox, box.Size) - new Vector2(0, box.Size.Y * .5f);
             box.SetColor(Color);
 
@@ -106,21 +110,27 @@ namespace ld41gamer.Gamer.Screener
                 case PopupType.Ok:
                     btOk = new Button(ScreenManager.GraphicsDevice, btTexture, 64, 32, "Ok");
                     btOk.Position = new Vector2(GHelper.Center(box.Rectangle, btOk.Size).X, box.Rectangle.Bottom - btOk.Size.Y - 4);
+                    btOk.SetColor(btColor);
                     break;
                 case PopupType.YesNo:
                     btYes = new Button(ScreenManager.GraphicsDevice, btTexture, 64, 32, "Yes");
                     btYes.Position = new Vector2(box.Position.X + 4, box.Rectangle.Bottom - btYes.Size.Y - 4);
+                    btYes.SetColor(btColor);
 
                     btNo = new Button(ScreenManager.GraphicsDevice, btTexture, 64, 32, "No");
                     btNo.Position = new Vector2(box.Position.X + box.Size.X - btNo.Size.X - 4, box.Rectangle.Bottom - btNo.Size.Y - 4);
+                    btNo.SetColor(btColor);
                     break;
 
                 case PopupType.OkCancel:
                     btOk = new Button(ScreenManager.GraphicsDevice, btTexture, 64, 32, "Ok");
                     btOk.Position = new Vector2(box.Position.X + 4, box.Rectangle.Bottom - btOk.Size.Y - 4);
+                    btOk.SetColor(btColor);
 
                     btCancel = new Button(ScreenManager.GraphicsDevice, btTexture, 64, 32, "Cancel");
                     btCancel.Position = new Vector2(box.Position.X + box.Size.X - btCancel.Size.X - 4, box.Rectangle.Bottom - btCancel.Size.Y - 4);
+                    btCancel.SetColor(btColor);
+
                     break;
                 default:
                     break;

@@ -15,8 +15,6 @@ namespace ld41gamer.Gamer
     {
 
         public Sprite Item;
-
-        public float Scale;
         public float timer;
 
         public GameLabel(Texture2D tex, string msg, Vector2 position, SpriteFont font) : base(font, msg)

@@ -68,6 +68,7 @@ namespace ld41gamer.Gamer
         float dmgLerp = 1f;
 
         HpBar ShootBar;
+        HpBar ConBar;
 
         public bool isTargeted;
         public bool IsUpgrading;
@@ -86,6 +87,7 @@ namespace ld41gamer.Gamer
         float TimeToUpgrade => 3f + (Rank * 2f);
 
         float repairTimer;
+        float repairTime = 2f;
         public bool CanRepair(Player player) => HealthPoints < MaxHealthPoints && player.Money >= 10;
         public bool IsRepairing;
 
@@ -170,7 +172,7 @@ namespace ld41gamer.Gamer
 
             }
 
-            BuildTimeBase = 0.5f;
+            //BuildTimeBase = 0.5f;
 
             float Range2 = Range / 2;
             float Range4 = Range / 4;
@@ -197,6 +199,11 @@ namespace ld41gamer.Gamer
             ShootBar.Foreground.Color = Color.DeepSkyBlue;
             ShootBar.Background.Color = Color.MidnightBlue;
 
+            ConBar = new HpBar((int)Size.X / 2, 3);
+            ConBar.gap = 1;
+            ConBar.Foreground.Color = Color.MonoGameOrange;
+            ConBar.Background.Color = Color.DarkOrange;
+
             stars = new List<Sprite>();
 
         }
@@ -221,8 +228,8 @@ namespace ld41gamer.Gamer
                 UpgradeComplete();
             }
 
-            ShootBar.Foreground.Color = Color.LightGoldenrodYellow;
-            ShootBar.Background.Color = Color.DarkGoldenrod;
+            //ShootBar.Foreground.Color = Color.LightGoldenrodYellow;
+            //ShootBar.Background.Color = Color.DarkGoldenrod;
         }
 
 
@@ -255,7 +262,7 @@ namespace ld41gamer.Gamer
                 pTimer = 0;
             }
 
-            if(repairTimer > 2)
+            if(repairTimer > repairTime)
             {
                 player.Money -= 10;
                 RepairComplete();
@@ -297,6 +304,7 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
             var dt = gt.Delta();
 
+            Damage = (int)(DamageBase + (Rank * 0.5));
             DrawHpBar = HealthPoints < MaxHealthPoints || isTargeted || DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isBeingBuilt;
 
             if(attackTimer < AttackSpeed)
@@ -316,17 +324,24 @@ namespace ld41gamer.Gamer
 
             if(IsUpgrading)
             {
-                ShootBar.Foreground.Color = Color.LightGoldenrodYellow;
-                ShootBar.Background.Color = Color.DarkGoldenrod;
-                ShootBar?.Update(UpgradeTimer, TimeToUpgrade);
+                //ConBar.Foreground.Color = Color.LightGoldenrodYellow;
+                //ConBar.Background.Color = Color.DarkGoldenrod;
+                ConBar.Update(UpgradeTimer, TimeToUpgrade);
+                attackTimer = 0;
             }
             else
                 UpgradeTimer = 0f;
 
-            if(!IsRepairing)
-                repairTimer = 0f;
+            if(IsRepairing)
+            {
+                //ConBar.Foreground.Color = Color.MonoGameOrange;
+                //ConBar.Background.Color = Color.DarkOrange;
+                ConBar.Update(repairTimer, repairTime);
+            }
+            else
+                repairTimer = 0;
 
-            if(DrawShootBar && !IsUpgrading)
+            if(DrawShootBar)
             {
                 ShootBar.Update(attackTimer, AttackSpeed);
                 ShootBar.Foreground.Color = Color.DeepSkyBlue;
@@ -442,6 +457,8 @@ namespace ld41gamer.Gamer
         {
             HealthPoints -= damage;
             dmgLerp = 0.5f;
+
+            SoundManager.PlayTowerHit();
         }
 
         public override void Draw(SpriteBatch sb)
@@ -471,6 +488,11 @@ namespace ld41gamer.Gamer
             {
                 if(IsUpgrading || attackTimer < AttackSpeed || isTargeted)
                     ShootBar.Draw(sb, new Vector2(GHelper.Center(HpBar.Rectangle, ShootBar.Size).X, HpBar.Rectangle.Top - ShootBar.Size.Y - 4));
+            }
+
+            if(IsUpgrading || IsRepairing)
+            {
+                ConBar.Draw(sb, new Vector2(GHelper.Center(HpBar.Rectangle, ShootBar.Size).X, HpBar.Rectangle.Top - ShootBar.Size.Y - 10));
             }
 
             if(Type != TowerType.ConeCatapult)

@@ -258,6 +258,7 @@ namespace ld41gamer.Gamer
             var b = new Bullet(BulletType.Acorn, Center, des, 1, 0f, true);
 
             map.AddBullet(b);
+            SoundManager.PlayerPlayerShoot();
         }
 
         public void Collision(List<Recc> recs)

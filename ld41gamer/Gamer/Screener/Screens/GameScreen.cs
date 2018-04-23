@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using ld41gamer.Gamer.StateMachine;
 using ld41gamer.Gamer.StateMachine.GameStates;
+using Obo.GameUtility;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace ld41gamer.Gamer.Screener
 {
@@ -15,6 +18,9 @@ namespace ld41gamer.Gamer.Screener
         public GameScreen()
         {
             StateManager = new StateManager();
+
+            TransitionOnTime = TimeSpan.FromSeconds(1);
+            TransitionOffTime = TimeSpan.FromSeconds(1);
         }
 
         public override void Load()
@@ -24,6 +30,8 @@ namespace ld41gamer.Gamer.Screener
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             GameContent.Load(Content, ScreenManager.GraphicsDevice);
+            // SoundManager.Load(Content);
+
 
             AddState(new GameStatePlaying(this));
         }
@@ -31,20 +39,45 @@ namespace ld41gamer.Gamer.Screener
         public override void LoadAfterLoad()
         {
             base.LoadAfterLoad();
+            SoundManager.LoopSound(GameSoundType.Song2, SoundManager.Music);
 
+        }
+
+        public override void ReadAnswer(PopupAnswer ok)
+        {
+            base.ReadAnswer(ok);
+            switch(ok)
+            {
+                case PopupAnswer.Yes:
+                    ExitScreen(new MainMenuScreen());
+                    break;
+                case PopupAnswer.No:
+                    break;
+            }
         }
 
         public override void Update(GameTime gt, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gt, otherScreenHasFocus, coveredByOtherScreen);
 
-            StateManager.Update(gt, this);
+            if(Input.KeyClick(Keys.Escape))
+            {
+                SoundManager.StopLoop(GameSoundType.TowerBuilding);
+                AddPopupScreen(new PopupScreen("Exit to Menu?", GameContent.btplank, GameContent.btplank, new Color(200,200,200), 100, 75, PopupType.YesNo), true);
+            }
+
         }
 
         public override void ActiveUpdate(GameTime gt)
         {
             base.ActiveUpdate(gt);
 
+            StateManager.Update(gt, this);
+
+            if(Input.KeyClick(Keys.NumPad1))
+                SoundManager.PlayTowerHit();
+            if(Input.KeyClick(Keys.NumPad2))
+                SoundManager.PlayEnemyHit();
         }
 
         public override void Draw(SpriteBatch sb, GameTime gt)

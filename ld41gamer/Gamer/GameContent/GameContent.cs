@@ -50,7 +50,8 @@ namespace ld41gamer.Gamer
             shadow,
 
             bgmenu,
-            title
+            title,
+            btplank
             ;
 
         public static SpriteFont font14, font24, font48;
@@ -94,14 +95,18 @@ namespace ld41gamer.Gamer
             font24 = Font("font24");
             font48 = Font("font48");
 
+            btplank = Texture("plank");
+
             shadow = Extras.DrawCircle(gd, 400, .25f, Color.Black);
         }
 
         public static void LoadMenu(ContentManager c)
         {
             content = c;
+
             title = Texture("title");
             bgmenu = Texture("bgmenu");
+            btplank = Texture("plank");
 
             font14 = Font("font14");
             font24 = Font("font24");

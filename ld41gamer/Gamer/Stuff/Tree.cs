@@ -34,7 +34,7 @@ namespace ld41gamer.Gamer
 
         AnimatedSprite hammer;
         float hammerTimer;
-        private float dmgLerp;
+        private float dmgLerp =1f;
 
         public Tree()
         {
@@ -203,7 +203,7 @@ namespace ld41gamer.Gamer
                                 Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
                             }
 
-                            SoundManager.PlaySound(GameSoundType.Building);
+                            SoundManager.PlaySound(GameSoundType.TreeBuilding);
                             hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
                             hammerTimer = 2f;
 

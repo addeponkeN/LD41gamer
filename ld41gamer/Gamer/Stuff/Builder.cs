@@ -140,6 +140,13 @@ namespace ld41gamer.Gamer
                 }
             }
 
+
+            if(map.player.IsBuilding || map.player.IsUpgradingOrReparing)
+                SoundManager.LoopSound(GameSoundType.TowerBuilding,SoundManager.Sfx);
+            else
+                SoundManager.StopLoop(GameSoundType.TowerBuilding);
+
+
             if(map.player.IsAlive)
             {
                 if(Input.KeyClick(Keys.D1) || map.Game.mb.btTurret.IsClicked)

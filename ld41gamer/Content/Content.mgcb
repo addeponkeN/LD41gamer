@@ -390,12 +390,6 @@
 /processorParam:Quality=Best
 /build:Sounds/song2.wav
 
-#begin Sounds/song1.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/song1.wav
-
 #begin Textures/ground.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -419,4 +413,70 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/icons.png
+
+#begin Textures/plank.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/plank.png
+
+#begin Sounds/enemyHit1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/enemyHit1.wav
+
+#begin Sounds/enemyHit2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/enemyHit2.wav
+
+#begin Sounds/enemyHit3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/enemyHit3.wav
+
+#begin Sounds/playerShoot1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/playerShoot1.wav
+
+#begin Sounds/playerShoot2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/playerShoot2.wav
+
+#begin Sounds/towerHit1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/towerHit1.wav
+
+#begin Sounds/towerHit2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/towerHit2.wav
+
+#begin Sounds/towerHit3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/towerHit3.wav
+
+#begin Sounds/towerBuilding.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/towerBuilding.wav
 

@@ -24,6 +24,10 @@ namespace ld41gamer.Gamer.Screener
 
         Button btPlay, btSettings, btCredits, btQuit;
 
+        Button btPlus, btMinus;
+
+        Label lbVol;
+
         float vol = 0f;
 
         bool exiting;
@@ -43,7 +47,7 @@ namespace ld41gamer.Gamer.Screener
 
             GameContent.LoadMenu(Content);
 
-            SoundManager.LoopSound(GameSoundType.Song1, vol);
+            SoundManager.LoopSound(GameSoundType.Song2, vol);
 
 
             var port = new ScalingViewportAdapter(ScreenManager.GraphicsDevice, 1920, 1080);
@@ -62,23 +66,46 @@ namespace ld41gamer.Gamer.Screener
 
             var size = new Vector2(192, 64);
 
-            btPlay = new Button(gd, size, "Play");
-            btSettings = new Button(gd, size, "Options");
-            btCredits = new Button(gd, size, "Credits");
-            btQuit = new Button(gd, size, "Quit");
+            btPlay = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Play");
+            btPlay.SetColor(new Color(230, 230, 230));
+            btPlay.DrawOutline = false;
+
+            btSettings = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Options");
+            btSettings.SetColor(new Color(230, 230, 230));
+            btSettings.DrawOutline = false;
+
+            btCredits = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Credits");
+            btCredits.SetColor(new Color(230, 230, 230));
+            btCredits.DrawOutline = false;
+
+            btQuit = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Quit");
+            btQuit.SetColor(new Color(230, 230, 230));
+            btQuit.DrawOutline = false;
+
+            //vbVol = new ValueButton(gd, Vector2.Zero, "Volume", new string[] { "-", "+" });
+
+            btMinus = new Button(gd, GameContent.btplank, 32, 32, "-");
+            btMinus.SetColor(new Color(230, 230, 230));
+            btMinus.DrawOutline = false;
+
+            btPlus = new Button(gd, GameContent.btplank, 32, 32, "+");
+            btPlus.SetColor(new Color(230, 230, 230));
+            btPlus.DrawOutline = false;
+
+            lbVol = new Label(GameContent.font14, "Volume");
 
             AddComponent(btPlay);
-            AddComponent(btSettings);
+            //AddComponent(btSettings);
             AddComponent(btCredits);
+            //AddComponent(vbVol);
             AddComponent(btQuit);
 
             Vector2 start = new Vector2(GHelper.Center(title.Rectangle, btPlay.Size).X, title.Rectangle.Bottom - btPlay.Size.Y);
             for(int i = 0; i < Components.Count; i++)
             {
                 var c = Components[i];
-                c.Position = start + new Vector2(0, (i * size.Y) + (i * 16));
+                c.Position = start + new Vector2(0, (i * size.Y) + (i * 32));
             }
-
         }
 
         public override void LoadAfterLoad()
@@ -86,31 +113,44 @@ namespace ld41gamer.Gamer.Screener
             base.LoadAfterLoad();
         }
 
+        public override void ReadAnswer(PopupAnswer ok)
+        {
+            base.ReadAnswer(ok);
+            switch(ok)
+            {
+                case PopupAnswer.None:
+                    break;
+                case PopupAnswer.Ok:
+                    break;
+                case PopupAnswer.Cancel:
+                    break;
+                case PopupAnswer.Yes:
+                    break;
+                case PopupAnswer.No:
+                    break;
+            }
+        }
+
         public override void Update(GameTime gt, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gt, otherScreenHasFocus, coveredByOtherScreen);
 
             var dt = gt.Delta();
+            lbVol.Text = "Volume " + (int)(SoundManager.Master * 100);
 
             if(vol < .5f)
             {
                 vol += dt * 0.5f;
-                SoundManager.SetVol(GameSoundType.Song1, vol);
-            }
-
-            if(btPlay.IsTriggered)
-            {
-                exiting = true;
-                ExitScreen(new GameScreen());
+                SoundManager.SetVol(GameSoundType.Song2, vol);
             }
 
             if(exiting)
             {
                 vol -= dt * 2.0f;
-                SoundManager.SetVol(GameSoundType.Song1, vol);
+                SoundManager.SetVol(GameSoundType.Song2, vol);
 
-                if(vol <= 0.05f)
-                    SoundManager.StopLoop(GameSoundType.Song1);
+                if(vol <= 0.25f)
+                    SoundManager.StopLoop(GameSoundType.Song2);
 
             }
 
@@ -120,6 +160,42 @@ namespace ld41gamer.Gamer.Screener
         public override void ActiveUpdate(GameTime gt)
         {
             base.ActiveUpdate(gt);
+
+
+            if(btPlus.IsClicked)
+            {
+                SoundManager.Master = MathHelper.Clamp(SoundManager.Master += (float)0.1, 0, 1f);
+                SoundManager.SetVol(GameSoundType.Song2, vol);
+            }
+
+            if(btMinus.IsClicked)
+            {
+                SoundManager.Master = MathHelper.Clamp(SoundManager.Master -= (float)0.1, 0, 1f);
+                SoundManager.SetVol(GameSoundType.Song2, vol);
+            }
+
+
+            if(btPlay.IsTriggered)
+            {
+                exiting = true;
+                //SoundManager.StopLoop(GameSoundType.Song2);
+                ExitScreen(new GameScreen());
+            }
+
+            if(btCredits.IsTriggered)
+            {
+                AddPopupScreen(new PopupScreen(
+                    "         CREDITS\n" +
+                    "ponker, wwh, johnstapler\n" +
+                    "    Made for LudumDare41", GameContent.btplank, GameContent.btplank, new Color(200, 200, 200), 400, 175, PopupType.Ok), true);
+
+            }
+
+            if(btQuit.IsTriggered)
+            {
+                Game1.ExitGame();
+            }
+
         }
 
         public override void Draw(SpriteBatch sb, GameTime gt)
@@ -128,12 +204,23 @@ namespace ld41gamer.Gamer.Screener
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam.GetViewMatrix());
 
             bg.Draw(sb);
-            title.Draw(sb);
 
+            btMinus.Position = btQuit.Position + new Vector2(0, btQuit.Size.Y + 24);
+            btPlus.Position = btQuit.Position + new Vector2(btQuit.Size.X - btPlus.Size.X, btQuit.Size.Y + 24);
+            lbVol.Position = new Vector2(GHelper.Center(btQuit.Rectangle, lbVol.TextSize).X, GHelper.Center(btMinus.Rectangle, lbVol.Size).Y);
+
+            title.Draw(sb);
+            btPlus.Draw(sb);
+            btMinus.Draw(sb);
+
+            lbVol.Draw(sb);
 
             sb.End();
 
             base.Draw(sb, gt);
+
+
+
 
         }
 

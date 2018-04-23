@@ -78,7 +78,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
                             p.Position.X = x + (disX * 0.70f);
-                            p.Position.Y = p.BasePos.Y + (disY / 14);
+                            p.Position.Y = p.BasePos.Y - (disY / 4);
                             sb.Draw(GameContent.layer1, p.Rectangle, Color.White, Layer.BACK + 0.11f);
                         }
 
@@ -88,7 +88,7 @@ namespace ld41gamer.Gamer
                         for(float x = 0; x < map.BoxRectangle.Right - (p.OffSetX * 2); x += p.Rectangle.Width)
                         {
                             p.Position.X = x + (disX * 0.50f);
-                            p.Position.Y = p.BasePos.Y + (disY / 8);
+                            p.Position.Y = p.BasePos.Y - (disY / 6);
                             sb.Draw(GameContent.layer2, p.Rectangle, Color.White, Layer.BACK + 0.12f);
                         }
 
@@ -96,7 +96,7 @@ namespace ld41gamer.Gamer
                     case 3:
                         for(float x = 0; x < map.BoxRectangle.Right; x += p.Rectangle.Width)
                         {
-                            p.Position.X = x - (disX * 0.05f);
+                            p.Position.X = x - (disX * 0.03f);
                             p.Position.Y = p.BasePos.Y + (disY / 5);
                             sb.Draw(GameContent.layer3, p.Rectangle, Color.White, Layer.BACK + 0.13f);
                         }

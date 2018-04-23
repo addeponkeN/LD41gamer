@@ -140,25 +140,28 @@ namespace ld41gamer.Gamer
                 }
             }
 
-
-            if(Input.KeyClick(Keys.D1) || map.Game.mb.btTurret.IsClicked)
+            if(map.player.IsAlive)
             {
-                b = Create(TowerType.AcornTurret);
-            }
-            if(Input.KeyClick(Keys.D2) || map.Game.mb.btSniper.IsClicked)
-            {
-                b = Create(TowerType.AcornSniper);
-            }
-            if(Input.KeyClick(Keys.D3) || map.Game.mb.btCata.IsClicked)
-            {
-                b = Create(TowerType.ConeCatapult);
+                if(Input.KeyClick(Keys.D1) || map.Game.mb.btTurret.IsClicked)
+                {
+                    b = Create(TowerType.AcornTurret);
+                }
+                if(Input.KeyClick(Keys.D2) || map.Game.mb.btSniper.IsClicked)
+                {
+                    b = Create(TowerType.AcornSniper);
+                }
+                if(Input.KeyClick(Keys.D3) || map.Game.mb.btCata.IsClicked)
+                {
+                    b = Create(TowerType.ConeCatapult);
+                }
+                if(Input.KeyClick(Keys.D4))
+                {
+
+                }
             }
 
-            if(Input.KeyClick(Keys.D4))
-            {
-
-            }
-
+            if(!map.player.IsAlive)
+                b = null;
             IsPlacing = false;
             if(b != null)
             {
@@ -264,6 +267,17 @@ namespace ld41gamer.Gamer
             Extras.DrawString(sb, GameContent.font14, "[F]", new Vector2(GHelper.Center(ham.Rectangle, s).X, ham.Position.Y - 15), Color.White);
         }
 
+        public static void DrawHamBuild(SpriteBatch sb, Vector2 pos, Vector2 size)
+        {
+            ham.Position = pos;
+            ham.Size = size;
+
+            ham.Draw(sb);
+
+            var s = GameContent.font14.MeasureString("[Mouse Left]");
+            Extras.DrawString(sb, GameContent.font14, "[Mouse Left]", new Vector2(GHelper.Center(ham.Rectangle, s).X, ham.Position.Y - 15), Color.White);
+        }
+
         public static void DrawBenchUpgrade(SpriteBatch sb, Vector2 pos, Vector2 size)
         {
             ug.Position = pos;
@@ -283,14 +297,17 @@ namespace ld41gamer.Gamer
 
                 if(t.isBeingBuilt)
                 {
-                    var hamSize = new Vector2(64);
+                    var hamSize = new Vector2(48);
                     DrawHammer(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y - 55), hamSize);
                 }
             }
 
-            b?.Draw(sb);
-
-
+            if(b != null)
+            {
+                b.Draw(sb);
+                var hamSize = new Vector2(48);
+                DrawHamBuild(sb, new Vector2(b.Center.X - hamSize.X / 2, b.CollisionBox.Top - hamSize.Y - 55), hamSize);
+            }
         }
 
         public void DrawRecs(SpriteBatch sb)

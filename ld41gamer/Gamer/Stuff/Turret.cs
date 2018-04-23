@@ -47,6 +47,10 @@ namespace ld41gamer.Gamer
         Shape colLeft;
         Shape colRight;
 
+        public static int TurretCost = 10;
+        public static int SniperCost = 30;
+        public static int CataCost = 100;
+
         public float DamageBase;
 
         public float Range => RangeBase + (Rank * 100);
@@ -199,7 +203,7 @@ namespace ld41gamer.Gamer
 
         public void Upgrade(GameTime gt)
         {
-            Damage = (int)(DamageBase + (Rank*0.5f));
+            Damage = (int)(DamageBase + (Rank * 0.5f));
             var dt = gt.Delta();
             IsUpgrading = true;
             UpgradeTimer += dt;
@@ -293,7 +297,7 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
             var dt = gt.Delta();
 
-            DrawHpBar = HealthPoints < MaxHealthPoints ||  isTargeted;
+            DrawHpBar = HealthPoints < MaxHealthPoints || isTargeted || DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isBeingBuilt;
 
             if(attackTimer < AttackSpeed)
                 attackTimer += dt;
@@ -306,9 +310,9 @@ namespace ld41gamer.Gamer
                 dmgLerp += dt;
                 Color = Color.Lerp(Color.Red, BaseColor, dmgLerp);
             }
+
             if(Type != TowerType.ConeCatapult)
                 blastCloud.UpdateAnimation(gt);
-
 
             if(IsUpgrading)
             {
@@ -452,6 +456,7 @@ namespace ld41gamer.Gamer
             }
 
             if(DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isTargeted)
+            {
                 for(int i = 0; i < stars.Count; i++)
                 {
                     var s = stars[i];
@@ -459,10 +464,13 @@ namespace ld41gamer.Gamer
                     s.Draw(sb);
                 }
 
+                //HpBar.Draw(sb, new Vector2(GHelper.Center(Rectangle, HpBar.Size).X, CollisionBox.Top - 32));
+            }
+
             if(DrawShootBar)
             {
                 if(IsUpgrading || attackTimer < AttackSpeed || isTargeted)
-                ShootBar.Draw(sb, new Vector2(GHelper.Center(HpBar.Rectangle, ShootBar.Size).X, HpBar.Rectangle.Top - ShootBar.Size.Y - 4));
+                    ShootBar.Draw(sb, new Vector2(GHelper.Center(HpBar.Rectangle, ShootBar.Size).X, HpBar.Rectangle.Top - ShootBar.Size.Y - 4));
             }
 
             if(Type != TowerType.ConeCatapult)

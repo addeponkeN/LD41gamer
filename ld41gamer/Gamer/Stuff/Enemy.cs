@@ -35,6 +35,7 @@ namespace ld41gamer.Gamer
         public float wormHoleSpawnTimer;
 
         public bool isAttacking;
+        public bool treeattack;
 
         AnimationType animWalk;
 
@@ -54,7 +55,7 @@ namespace ld41gamer.Gamer
                 case EnemyType.Ant:
                     Texture = GameContent.antSheet;
                     SetHp(5);
-                    Speed = 75f;
+                    Speed = 300f;
                     Damage = 1;
                     Reward = 1;
                     SetSize(165 / 2, 100 / 2);
@@ -154,6 +155,8 @@ namespace ld41gamer.Gamer
                 }
             }
 
+            bool att=false;
+
             foreach(var t in map.tree.HitBoxes)
             {
                 if(Rectangle.Intersects(t))
@@ -161,13 +164,15 @@ namespace ld41gamer.Gamer
                     attackTimer += dt;
                     if(attackTimer >= attackCooldown)
                     {
-                        map.tree.HealthPoints -= Damage;
+                        map.tree.IsHit(Damage);
                         attackTimer = 0;
                     }
-                    return;
+                    att = true;
+                    //return;
                 }
             }
 
+            treeattack = att;
             //foreach(var t in map.Turrets)
             //{
             //    if(Rectangle.Intersects(t.CollisionBox))
@@ -182,7 +187,7 @@ namespace ld41gamer.Gamer
             //    }
             //}
 
-            if(!isAttacking)
+            if(!isAttacking && !treeattack)
             {
                 ori = Vector2.Zero;
                 IsAnimating = true;

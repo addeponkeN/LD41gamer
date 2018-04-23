@@ -88,6 +88,7 @@
     <Compile Include="Gamer\Stuff\TreeBranch.cs" />
     <Compile Include="Gamer\Stuff\Ui\MenuBuy.cs" />
     <Compile Include="Gamer\Stuff\Ui\MenuUpgrade.cs" />
+    <Compile Include="Gamer\Stuff\Ui\TreeHp.cs" />
     <Compile Include="Gamer\Stuff\Upgrades.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

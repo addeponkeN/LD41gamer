@@ -38,9 +38,15 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         float lerpTimer = 1f;
 
         GameLabel lbMoney;
+        GameLabel lbTurret;
+        GameLabel lbSniper;
+        GameLabel lbCata;
 
         public MenuUpgrade mu;
         public MenuBuy mb;
+
+        public TreeHp treeBar;
+
         float muLerp;
 
         public bool AnyUiHovered => mu.buttons.Any(x => x.IsHovered);
@@ -62,7 +68,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             cam2d.MinimumZoom = 0.1f;
             cam2d.MaximumZoom = 3.1f;
 
-            lbMoney = new GameLabel(GameContent.acorn, "0", new Vector2(Globals.ScreenWidth * 0.85f, 8));
+            lbMoney = new GameLabel(GameContent.acorn, "0", new Vector2(Globals.ScreenWidth * 0.85f, 8), GameContent.font48);
             lbMoney.Item.Size = new Vector2(64);
 
             mu = new MenuUpgrade();
@@ -81,7 +87,25 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             });
 
 
+            var pos = mb.btTurret.Position - new Vector2(0, 14);
+            lbTurret = new GameLabel(GameContent.acorn, "10", pos, GameContent.font14);
+            lbTurret.Item.SetSize(32);
+
+            pos = mb.btTurret.Position - new Vector2(0, 14);
+            lbSniper = new GameLabel(GameContent.acorn, "30", pos, GameContent.font14);
+            lbSniper.Item.SetSize(32);
+
+            pos = mb.btTurret.Position - new Vector2(0, 14);
+            lbCata = new GameLabel(GameContent.acorn, "100", pos, GameContent.font14);
+            lbCata.Item.SetSize(32);
+
+
+            treeBar = new TreeHp();
+            treeBar.Posser(new Vector2(8, 8));
+
         }
+
+        public Vector2 camDest;
 
         //  update always
         public override void Update(GameTime gt, GameScreen gs)
@@ -93,6 +117,31 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             map.Update(gt, game);
 
             lbMoney.Text = map.player.Money.ToString();
+
+            treeBar.Update(map.tree.HealthPoints, map.tree.MaxHealthPoints);
+
+
+            if(map.player.Money < Turret.TurretCost)
+            {
+                lbTurret.Color = Color.IndianRed;
+            }
+            else
+                lbTurret.Color = Color.ForestGreen;
+
+            if(map.player.Money < Turret.SniperCost)
+            {
+                lbSniper.Color = Color.IndianRed;
+            }
+            else
+                lbSniper.Color = Color.ForestGreen;
+
+            if(map.player.Money < Turret.CataCost)
+            {
+                lbCata.Color = Color.IndianRed;
+            }
+            else
+                lbCata.Color = Color.ForestGreen;
+
 
             var dt = gt.Delta();
 
@@ -112,8 +161,18 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             float x;
             float y;
 
-            if(map.player.IsShopping)
+
+
+            //if(Builder.IsPlacing && map.builder.b != null)
+            //{
+            //    camDest = map.player.Center;
+            //    lerpTimer -= dt * 1.25f;
+            //    if(lerpTimer <= 0f)
+            //        lerpTimer = 0f;
+            //}
+            if(map.player.IsShopping/* || Builder.IsPlacing*/)
             {
+                camDest = map.tree.Center;
                 lerpTimer -= dt * 1.25f;
                 if(lerpTimer <= 0f)
                     lerpTimer = 0f;
@@ -129,9 +188,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             {
                 cam2d.Zoom = MathHelper.Lerp(zout, zin, lerpTimer);
             }
-
-            x = MathHelper.Lerp(map.tree.Center.X, map.player.Center.X, lerpTimer);
-            y = MathHelper.Lerp(map.tree.Center.Y, map.player.Center.Y, lerpTimer);
+            
+            x = MathHelper.Lerp(camDest.X, map.player.Center.X, lerpTimer);
+            y = MathHelper.Lerp(camDest.Y, map.player.Center.Y, lerpTimer);
 
             pos = new Vector2(x, y + 1);
             cam2d.LookAt(pos);
@@ -157,15 +216,22 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             int left = Map.WallLeft;
             int right = Map.WallRight;
 
-            if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom)
+            if(cam2d.BoundingRectangle.Bottom > map.GroundRectangle.Bottom - 2)
             {
-                int y = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
+                int y = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom - 2);
                 cam2d.Position = new Vector2(cam2d.Position.X, cam2d.Position.Y - y);
             }
 
             if(cam2d.BoundingRectangle.Left < left)
             {
-                //int x = (int)(cam2d.BoundingRectangle.Bottom - map.GroundRectangle.Bottom);
+                //float off = 0f;
+                //if((int)cam2d.Position.X != (int)cam2d.BoundingRectangle.Left)
+                //    off = cam2d.Position.X - cam2d.BoundingRectangle.Left;
+
+                //if(off < 0)
+                //    off = 0;
+
+                //int x = (int)(left - cam2d.BoundingRectangle.Left + off);
                 cam2d.Position = new Vector2(left, cam2d.Position.Y);
             }
 
@@ -181,7 +247,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
-            
+
             //  WORLD LAYER
             sb.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
@@ -195,13 +261,37 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             map.DrawTowerRecs(sb);
             map.DrawDef(sb);
 
+            if(map.builder.b != null)
+            {
+                var hamSize = new Vector2(48);
+                Builder.DrawHamBuild(sb, new Vector2(map.builder.b.Center.X - hamSize.X / 2, map.builder.b.CollisionBox.Top - hamSize.Y - 55), hamSize);
+            }
+
+            //sb.Draw(UtilityContent.box, cam2d.BoundingRectangle.ToRectangle(), new Color(Color.Red, 0.0005f));
+            //sb.Draw(UtilityContent.box, new Rectangle(cam2d.Position.ToPoint(), new Point(32, 32)), Color.Blue);
+
             sb.End();
 
 
             //  SCREEN
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
 
+            treeBar.Draw(sb);
+
             lbMoney.Draw(sb);
+
+            var pos = new Vector2(GHelper.Center(mb.btTurret.Rectangle, lbTurret.Size + lbTurret.TextSize).X, mb.btTurret.Position.Y - lbTurret.Size.Y * 2);
+            lbTurret.SetPosition(pos);
+            lbTurret.Draw(sb);
+
+            pos = new Vector2(GHelper.Center(mb.btSniper.Rectangle, lbSniper.Size + lbSniper.TextSize).X, mb.btSniper.Position.Y - lbSniper.Size.Y * 2);
+            lbSniper.SetPosition(pos);
+            lbSniper.Draw(sb);
+
+            pos = new Vector2(GHelper.Center(mb.btCata.Rectangle, lbCata.Size + lbCata.TextSize).X, mb.btCata.Position.Y - lbCata.Size.Y * 2);
+            lbCata.SetPosition(pos);
+            lbCata.Draw(sb);
+
 
             map.DrawScreen(sb);
 
@@ -215,7 +305,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             if(muLerp > 0.01f)
                 mu.Draw(sb, muLerp);
 
-            mb.Draw(sb, 1f);
+            mb.Draw(sb, lerpTimer);
 
             sb.End();
         }

@@ -79,6 +79,8 @@ namespace ld41gamer.Gamer
 
         public Turret closestTurret;
 
+        public TreeHp treeBar;
+
         public Vector2 MouseWorldPos()
         {
             return Vector2.Transform(Input.MousePos, Matrix.Invert(Game.cam2d.GetViewMatrix()));
@@ -137,6 +139,9 @@ namespace ld41gamer.Gamer
             player.Position = PlayerSpawnPos;
 
             parlax = new Parlax(this);
+
+            treeBar = new TreeHp();
+            treeBar.Posser(new Vector2(8, 8));
         }
 
         public void AddBullet(Bullet bullet)
@@ -154,7 +159,7 @@ namespace ld41gamer.Gamer
 
             UpdateSpawning(gt);
 
-
+            treeBar.Update(tree.HealthPoints, tree.MaxHealthPoints);
 
 
 
@@ -180,20 +185,22 @@ namespace ld41gamer.Gamer
                 }
 
                 t.isTargeted = false;
-                var dis = Vector2.Distance(t.CollisionBox.Center(), player.CollisionBox.Center());
-                if(d > dis)
+                if(player.IsAlive)
                 {
-                    d = dis;
-                    closestTurret = t;
+                    var dis = Vector2.Distance(t.CollisionBox.Center(), player.CollisionBox.Center());
+                    if(d > dis)
+                    {
+                        d = dis;
+                        closestTurret = t;
+                    }
                 }
-
             }
 
 
 
 
             //  CLOSEST TURRET
-            if(closestTurret != null)
+            if(closestTurret != null && player.IsAlive)
                 if(player.CollisionBox.Intersects(closestTurret.CollisionBox))
                 {
                     closestTurret.isTargeted = true;
@@ -242,7 +249,7 @@ namespace ld41gamer.Gamer
 
 
 
-                        //player.Die(dir);
+                        player.Die(dir);
 
 
 
@@ -250,7 +257,6 @@ namespace ld41gamer.Gamer
                         //#########################                        
 
                         player.dmgLerp = 0.5f;
-
                     }
 
                 for(int v = 0; v < Bullets.Count; v++)
@@ -559,6 +565,7 @@ namespace ld41gamer.Gamer
                 builder.DrawRecs(sb);
         }
 
+
         public void DrawDef(SpriteBatch sb)
         {
 
@@ -581,6 +588,10 @@ namespace ld41gamer.Gamer
                 {
                     Builder.DrawHam(sb, Builder.CanBuildPos, new Vector2(48));
                 }
+
+
+            treeBar.Draw(sb, treeBar.Position);
+
         }
 
         public void DrawScreen(SpriteBatch sb)

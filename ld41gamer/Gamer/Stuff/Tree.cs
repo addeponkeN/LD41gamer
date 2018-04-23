@@ -18,6 +18,7 @@ namespace ld41gamer.Gamer
     {
         public int Level { get; set; }
         public int HealthPoints { get; set; }
+        public int MaxHealthPoints { get; set; }
 
         public List<Rectangle> HitBoxes;
 
@@ -33,6 +34,8 @@ namespace ld41gamer.Gamer
 
         AnimatedSprite hammer;
         float hammerTimer;
+        private float dmgLerp;
+
         public Tree()
         {
             Texture = GameContent.tree;
@@ -64,6 +67,20 @@ namespace ld41gamer.Gamer
             hammer.Texture = GameContent.hammer;
             hammer.PlayAnimation(AnimationType.Hammer);
 
+
+            HealthPoints = 20;
+            MaxHealthPoints = 20;
+
+        }
+
+        public void IsHit(int dmg)
+        {
+            HealthPoints -= dmg;
+
+            if(HealthPoints < 0)
+                HealthPoints = 0;
+
+            dmgLerp = 0.5f;
         }
 
         public void Add(TreeBranchType type, Map map)
@@ -150,6 +167,13 @@ namespace ld41gamer.Gamer
                     }
                 }
             }
+
+            if(dmgLerp < 1f)
+            {
+                dmgLerp += dt;
+                Color = Color.Lerp(Color.Red, BaseColor, dmgLerp);
+            }
+
             if(Input.RightClick)
                 p.IsShoppingBranch = false;
 

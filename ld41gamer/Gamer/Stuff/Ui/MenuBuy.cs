@@ -38,6 +38,7 @@ namespace ld41gamer.Gamer
 
         public List<BuyUi> uis;
 
+        public BuyUi btShoot;
         public BuyUi btDelete;
         public BuyUi btCancel;
         public BuyUi btTurret;
@@ -54,7 +55,13 @@ namespace ld41gamer.Gamer
 
             int size = 100;
 
-            btCancel = new BuyUi(gd, "Right Click");
+            btShoot = new BuyUi(gd, "Mouse Left");
+            btShoot.Item = new Sprite(GameContent.acorn);
+            btShoot.Item.SetSize(80);
+            btShoot.Item.SetSourceSize(100);
+            btShoot.Item.SetFrame(0, 0);
+
+            btCancel = new BuyUi(gd, "Mouse Right");
             btCancel.Item = new Sprite(GameContent.icons);
             btCancel.Item.SetSize(80);
             btCancel.Item.SetSourceSize(64);
@@ -84,7 +91,7 @@ namespace ld41gamer.Gamer
             btCata.Item.SetSourceSize(192);
             btCata.Item.SetFrame(0, 2);
 
-
+            uis.Add(btShoot);
             uis.Add(btTurret);
             uis.Add(btSniper);
             uis.Add(btCata);
@@ -106,7 +113,10 @@ namespace ld41gamer.Gamer
             for(int i = 0; i < uis.Count; i++)
             {
                 var b = uis[i];
-                b.Position = new Vector2((Globals.ScreenWidth / 3) + (i * b.Size.X) + (i * 4), Globals.ScreenHeight - b.Size.Y - 4);
+
+                float y = MathHelper.Lerp(Globals.ScreenHeight + 50, Globals.ScreenHeight - b.Size.Y - 4, lerp);
+
+                b.Position = new Vector2((Globals.ScreenWidth / 3) + (i * b.Size.X) + (i * 4), y);
                 b.Item.Position = GHelper.Center(b.Rectangle, b.Item.Size);
                 b.lb.Position = b.Position + new Vector2(4);
                 b.Draw(sb);

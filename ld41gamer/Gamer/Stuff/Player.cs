@@ -53,11 +53,13 @@ namespace ld41gamer.Gamer
             get => money; set
             {
                 int dif = money - value;
-                money = value;
+
                 if(value > money)
-                    MBMan.Add("+" + dif);
+                    MBMan.Add("+" + -dif);
                 else
                     MBMan.Add("-" + dif);
+
+                money = value;
             }
         }
 

@@ -223,6 +223,7 @@ namespace ld41gamer.Gamer
                         Con.Add(t);
                         b = null;
                         p.ShootCooldownTimer = p.ShootCooldown;
+                        SoundManager.PlaySound(GameSoundType.TowerPlaced);
                     }
 
                 }

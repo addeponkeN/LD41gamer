@@ -434,8 +434,10 @@ namespace ld41gamer.Gamer
             else
                 bulletType = BulletType.Acorn;
 
+
             if(Type == TowerType.ConeCatapult)
             {
+                SoundManager.PlayFling();
 
                 if(SpriteEffects == SpriteEffects.None)
                 {
@@ -448,7 +450,6 @@ namespace ld41gamer.Gamer
                     // dest = new Vector2(tCenter.X - xBet, tCenter.Y);
                 }
 
-
                 int shots = Rng.Noxt(2, 4);
                 map.AddBullet(new Bullet(bulletType, spawn, dest, Damage, xBet));
                 for(int j = 0; j < shots; j++)
@@ -457,9 +458,11 @@ namespace ld41gamer.Gamer
                 }
             }
             else
+            {
+                SoundManager.PlayTowerShoot();
+
                 map.AddBullet(new Bullet(bulletType, spawn, dest, Damage));
-
-
+            }
 
             int i = map.Bullets.Count - 1;
 
@@ -526,7 +529,7 @@ namespace ld41gamer.Gamer
                 if(blastTimer >= 0)
                     blastCloud.Draw(sb);
 
-            DrawShadow(sb);
+            DrawShadow(sb, -8f);
 
         }
 

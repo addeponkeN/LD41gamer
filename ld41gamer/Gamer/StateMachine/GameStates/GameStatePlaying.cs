@@ -84,15 +84,21 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             mu.AddButton(UBBaseType.Branch, () =>
                 {
+                    if(map.player.Money < TreeBranch.Cost)
+                    {
+                        MBMan.Add("Not enough acorns");
+                        return;
+                    }
+
                     if(!Upgrades.TreeBranchesMaxed)
                         map.player.IsShoppingBranch = !map.player.IsShoppingBranch;
                 });
 
-            mu.AddButton(UBBaseType.BuildSpeed, () =>
-            {
-                if(!Upgrades.Player_BuildTimeMaxed)
-                    map.player.BuildSpeed += 0.5f;
-            });
+            //mu.AddButton(UBBaseType.BuildSpeed, () =>
+            //{
+            //    if(!Upgrades.Player_BuildTimeMaxed)
+            //        map.player.BuildSpeed += 0.5f;
+            //});
 
 
             var pos = mb.btTurret.Position - new Vector2(0, 14);

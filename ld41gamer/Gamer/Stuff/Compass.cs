@@ -42,6 +42,11 @@ namespace ld41gamer.Gamer
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 
             count += 1f;
+
+            if(enemy.isAttacking)
+                Color = Color.Red;
+            else
+                Color = Color.White;
         }
 
         public void Update(GameTime gt, Map map, Player player)

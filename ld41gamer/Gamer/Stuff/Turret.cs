@@ -146,7 +146,7 @@ namespace ld41gamer.Gamer
                     Name = "Acorn Sniper";
                     SetHp(4);
                     Cost = 30;
-                    DamageBase = 3;
+                    DamageBase = 2;
                     AttackSpeedBase = 5;
                     RangeBase = 1200;
                     BuildTimeBase = 7f;
@@ -174,7 +174,7 @@ namespace ld41gamer.Gamer
 
             }
 
-            BuildTimeBase = 0.5f;
+            //BuildTimeBase = 0.5f;
 
             float Range2 = Range / 2;
             float Range4 = Range / 4;

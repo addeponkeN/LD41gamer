@@ -27,7 +27,11 @@ namespace ld41gamer.Gamer
 
         float pTimer;
 
+        public static int UpgradeCost;
+        public static int RepairCost;
+
         public static Vector2 CanBuildPos;
+
 
         public Builder()
         {
@@ -261,6 +265,20 @@ namespace ld41gamer.Gamer
 
             Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
             Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
+
+            GameLabel gup = new GameLabel(GameContent.acorn, UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
+            gup.Item.SetSize(14);
+            gup.SetPosition(ug.Position + new Vector2(22, ug.Size.Y));
+
+            GameLabel grep = new GameLabel(GameContent.acorn, RepairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
+            grep.Item.SetSize(14);
+            grep.SetPosition(rep.Position + new Vector2(22, ug.Size.Y));
+
+            gup.Draw(sb);
+            grep.Draw(sb);
+
+            //Extras.DrawString(sb, GameContent.font14, "", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
+            //Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
         }
 
         public static void DrawHam(SpriteBatch sb, Vector2 pos, Vector2 size)

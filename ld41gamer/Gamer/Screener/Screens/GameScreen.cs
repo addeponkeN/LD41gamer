@@ -20,7 +20,7 @@ namespace ld41gamer.Gamer.Screener
             StateManager = new StateManager();
 
             TransitionOnTime = TimeSpan.FromSeconds(1);
-            TransitionOffTime = TimeSpan.FromSeconds(1);
+            TransitionOffTime = TimeSpan.FromSeconds(0);
         }
 
         public override void Load()

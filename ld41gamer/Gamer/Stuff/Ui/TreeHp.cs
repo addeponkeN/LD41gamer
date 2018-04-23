@@ -18,7 +18,7 @@ namespace ld41gamer.Gamer
         public TreeHp() : base(300, 40)
         {
             Tree = new Sprite(GameContent.tree);
-            Tree.SetSize(128, 128);
+            Tree.SetSize(96, 128);
         }
 
         public void Posser(Vector2 pos)

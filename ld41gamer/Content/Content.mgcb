@@ -486,3 +486,10 @@
 /processorParam:TextureFormat=Color
 /build:Textures/particlesheet.png
 
+#begin Fonts/font12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font12.spritefont
+

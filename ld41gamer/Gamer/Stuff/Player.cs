@@ -60,6 +60,7 @@ namespace ld41gamer.Gamer
             SetHp(1);
 
             PlayAnimation(AnimationType.Idle);
+            SetFrame(0, 0);
 
             DrawLayer = Layer.Player;
 
@@ -230,7 +231,7 @@ namespace ld41gamer.Gamer
                 ShootCooldownTimer -= dt;
             }
         }
-        
+
         void Jump()
         {
             IsGrounded = false;
@@ -265,10 +266,10 @@ namespace ld41gamer.Gamer
         {
 
             //  map collision
-            if(Rectangle.Left < Map.WallLeft-35)
-                Position = new Vector2(Map.WallLeft-35, Position.Y);
-            else if(Rectangle.Right+50 > Map.WallRight)
-                Position = new Vector2(Map.WallRight - Rectangle.Width-50, Position.Y);
+            if(Rectangle.Left < Map.WallLeft - 35)
+                Position = new Vector2(Map.WallLeft - 35, Position.Y);
+            else if(Rectangle.Right + 50 > Map.WallRight)
+                Position = new Vector2(Map.WallRight - Rectangle.Width - 50, Position.Y);
 
             IsGrounded = false;
             foreach(var recc in recs)

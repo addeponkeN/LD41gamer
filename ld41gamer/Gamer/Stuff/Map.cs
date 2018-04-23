@@ -238,6 +238,9 @@ namespace ld41gamer.Gamer
 
                     player.IsUpgradingOrReparing = false;
 
+                    Builder.RepairCost = 10;
+                    Builder.UpgradeCost = closestTurret.UpgradeCost;
+
                     if(closestTurret.CanUpgrade)
                         if(Input.KeyHold(Keys.G))
                         {
@@ -284,7 +287,7 @@ namespace ld41gamer.Gamer
 
 
 
-                        //player.Die(dir);
+                        player.Die(dir);
 
 
 

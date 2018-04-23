@@ -55,37 +55,45 @@ namespace ld41gamer.Gamer
 
             int size = 100;
 
+            Texture2D tex = GameContent.btplank;
+
             btShoot = new BuyUi(gd, "Mouse Left");
+            btShoot.Texture = tex;
             btShoot.Item = new Sprite(GameContent.acorn);
             btShoot.Item.SetSize(80);
             btShoot.Item.SetSourceSize(100);
             btShoot.Item.SetFrame(0, 0);
 
             btCancel = new BuyUi(gd, "Mouse Right");
+            btCancel.Texture = tex;
             btCancel.Item = new Sprite(GameContent.icons);
             btCancel.Item.SetSize(80);
             btCancel.Item.SetSourceSize(64);
             btCancel.Item.SetFrame(3, 0);
 
             btDelete = new BuyUi(gd, "Q");
+            btDelete.Texture = tex;
             btDelete.Item = new Sprite(GameContent.icons);
             btDelete.Item.SetSize(80);
             btDelete.Item.SetSourceSize(64);
             btDelete.Item.SetFrame(4, 0);
 
             btTurret = new BuyUi(gd, "1");
+            btTurret.Texture = tex;
             btTurret.Item = new Sprite(GameContent.turretsheet);
             btTurret.Item.SetSize(size);
             btTurret.Item.SetSourceSize(192);
             btTurret.Item.SetFrame(0, 0);
 
             btSniper = new BuyUi(gd,"2");
+            btSniper.Texture = tex;
             btSniper.Item = new Sprite(GameContent.turretsheet);
             btSniper.Item.SetSize(size);
             btSniper.Item.SetSourceSize(192);
             btSniper.Item.SetFrame(0, 1);
 
             btCata = new BuyUi(gd,"3");
+            btCata.Texture = tex;
             btCata.Item = new Sprite(GameContent.turretsheet);
             btCata.Item.SetSize(size);
             btCata.Item.SetSourceSize(192);

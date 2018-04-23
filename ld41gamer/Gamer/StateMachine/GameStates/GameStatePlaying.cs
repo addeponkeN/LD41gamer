@@ -297,12 +297,12 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.DrawScreen(sb);
 
-            i = 0;
-            var mpos = map.MouseWorldPos();
-            DrawString(sb, $"Mouse: X:{(int)mpos.X}  Y:{(int)mpos.Y}");
-            DrawString(sb, $"PlayerCenter: X:{(int)map.player.Center.X}  Y:{(int)map.player.Center.Y}");
-            DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
-            DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
+            //i = 0;
+            //var mpos = map.MouseWorldPos();
+            //DrawString(sb, $"Mouse: X:{(int)mpos.X}  Y:{(int)mpos.Y}");
+            //DrawString(sb, $"PlayerCenter: X:{(int)map.player.Center.X}  Y:{(int)map.player.Center.Y}");
+            //DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
+            //DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
 
             if(muLerp > 0.01f)
                 mu.Draw(sb, muLerp);

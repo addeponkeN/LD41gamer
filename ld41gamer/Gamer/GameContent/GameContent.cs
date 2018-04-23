@@ -54,7 +54,7 @@ namespace ld41gamer.Gamer
             btplank
             ;
 
-        public static SpriteFont font14, font24, font48;
+        public static SpriteFont font12, font14, font24, font48;
 
         public static void Load(ContentManager c, GraphicsDevice gd)
         {
@@ -108,6 +108,7 @@ namespace ld41gamer.Gamer
             bgmenu = Texture("bgmenu");
             btplank = Texture("plank");
 
+            font14 = Font("font12");
             font14 = Font("font14");
             font24 = Font("font24");
             font48 = Font("font48");

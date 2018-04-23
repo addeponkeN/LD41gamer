@@ -56,7 +56,7 @@ namespace ld41gamer.Gamer
         public float Range => RangeBase + (Rank * 100);
         public float RangeBase;
 
-        public float AttackSpeed => AttackSpeedBase - (Rank * 0.25f);
+        public float AttackSpeed => AttackSpeedBase / (((Rank + 1) * 0.1f) + 1);
         public float AttackSpeedBase;
 
         public float attackTimer;
@@ -85,6 +85,8 @@ namespace ld41gamer.Gamer
         public bool CanUpgrade => Rank <= 4 && UpgradeCooldownTimer < 0f;
 
         float TimeToUpgrade => 3f + (Rank * 2f);
+
+        public int UpgradeCost => (int)(Cost * (((Rank + 1) * 0.2f) + 1));
 
         float repairTimer;
         float repairTime = 2f;
@@ -240,17 +242,14 @@ namespace ld41gamer.Gamer
             UpgradeCooldownTimer = 1.5f;
             Rank++;
 
+            HealthPoints = MaxHealthPoints;
+
             var s = new Sprite(GameContent.icons);
             s.SetSourceSize(64);
             s.SetFrame(0, 0);
             s.SetSize(20);
 
             stars.Add(s);
-        }
-
-        internal void Destroy()
-        {
-            throw new NotImplementedException();
         }
 
         public void Repair(GameTime gt, Player player)

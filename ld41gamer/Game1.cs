@@ -31,6 +31,7 @@ namespace ld41gamer
             Window.AllowAltF4 = true;
             Window.AllowUserResizing = false;
 
+
             Window.IsBorderless = false;
             graphics.IsFullScreen = false;
             graphics.SynchronizeWithVerticalRetrace = false;

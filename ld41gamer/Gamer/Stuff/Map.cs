@@ -283,6 +283,7 @@ namespace ld41gamer.Gamer
                     if(Input.KeyClick(Keys.C))
                         t.HealthPoints--;
 
+                    //  enemy attack turret
                     if(e.CollisionBox.Intersects(t.CollisionBox))
                     {
                         e.attackTimer += dt;
@@ -295,49 +296,52 @@ namespace ld41gamer.Gamer
                     }
 
 
-                    bool tryShoot = false;
-                    //  looking right
-                    if(t.SpriteEffects == SpriteEffects.None)
+                    if(!t.IsUpgrading)
                     {
-                        if(t.Type == TowerType.ConeCatapult)
+                        bool tryShoot = false;
+                        //  looking right
+                        if(t.SpriteEffects == SpriteEffects.None)
                         {
-                            if(e.Rectangle.Left > t.Center.X + 300)
-                                tryShoot = true;
-                        }
-                        else if(e.Rectangle.Left > t.Center.X)
-                            tryShoot = true;
-                    }
-                    else
-                    {
-                        if(t.Type == TowerType.ConeCatapult)
-                        {
-                            if(e.Rectangle.Right < t.Center.X - 300)
+                            if(t.Type == TowerType.ConeCatapult)
+                            {
+                                if(e.Rectangle.Left > t.Center.X + 300)
+                                    tryShoot = true;
+                            }
+                            else if(e.Rectangle.Left > t.Center.X)
                                 tryShoot = true;
                         }
                         else
-                        if(e.Rectangle.Right < t.Center.X)
-                            tryShoot = true;
-                    }
-
-                    if(!tryShoot)
-                        continue;
-
-                    if(t.attackTimer >= t.AttackSpeed)
-                    {
-                        if(t.recf.Intersects(e.CollisionBox))
                         {
-                            t.target = e.Center;
-                            if(t.Type != TowerType.ConeCatapult)
+                            if(t.Type == TowerType.ConeCatapult)
                             {
-                                if(t.SpriteEffects == SpriteEffects.None)
-                                    t.Shoot(this, t.Position + t.bulletStartPosRight, t.target);
-                                else
-                                    t.Shoot(this, t.Position + t.bulletStartPosLeft, t.target);
-
-                                t.attackTimer = 0;
+                                if(e.Rectangle.Right < t.Center.X - 300)
+                                    tryShoot = true;
                             }
                             else
-                                t.shoot = true;
+                            if(e.Rectangle.Right < t.Center.X)
+                                tryShoot = true;
+                        }
+
+                        if(!tryShoot)
+                            continue;
+
+                        if(t.attackTimer >= t.AttackSpeed)
+                        {
+                            if(t.recf.Intersects(e.CollisionBox))
+                            {
+                                t.target = e.Center;
+                                if(t.Type != TowerType.ConeCatapult)
+                                {
+                                    if(t.SpriteEffects == SpriteEffects.None)
+                                        t.Shoot(this, t.Position + t.bulletStartPosRight, t.target);
+                                    else
+                                        t.Shoot(this, t.Position + t.bulletStartPosLeft, t.target);
+
+                                    t.attackTimer = 0;
+                                }
+                                else
+                                    t.shoot = true;
+                            }
                         }
                     }
                 }

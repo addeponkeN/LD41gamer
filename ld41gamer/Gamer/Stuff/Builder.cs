@@ -212,7 +212,7 @@ namespace ld41gamer.Gamer
                 }
 
 
-                if(Input.RightClick)
+                if(Input.RightClick || map.Game.mb.btCancel.IsClicked)
                     b = null;
             }
 

@@ -218,7 +218,7 @@ namespace ld41gamer.Gamer
             var dt = gt.Delta();
             if(ShootCooldownTimer < 0)
             {
-                if(!IsShopping && !Builder.IsPlacing && !IsBuilding && IsAlive)
+                if(!IsShopping && !Builder.IsPlacing && !IsBuilding && IsAlive && !map.Game.mb.AnyUiHovered && !IsUpgradingOrReparing)
                     if(Input.LeftHold)
                     {
                         Shoot(map);

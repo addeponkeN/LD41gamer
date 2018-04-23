@@ -27,9 +27,6 @@ namespace ld41gamer.Gamer
 
         public int Cost { get; set; }
 
-        public float attackTimer;
-        public float AttackSpeed;
-
         public float BuildTime;
         public float BuildTimeBase;
 
@@ -50,8 +47,15 @@ namespace ld41gamer.Gamer
         Shape colLeft;
         Shape colRight;
 
-        //  range in pixels
-        public int Range;
+        public float DamageBase;
+
+        public float Range => RangeBase + (Rank * 100);
+        public float RangeBase;
+
+        public float AttackSpeed => AttackSpeedBase - (Rank * 0.25f);
+        public float AttackSpeedBase;
+
+        public float attackTimer;
 
         public bool shoot;
         public bool shot;
@@ -86,8 +90,8 @@ namespace ld41gamer.Gamer
             Type = t;
             Texture = UtilityContent.box;
 
-            Range = 700;
-            AttackSpeed = 2;
+            RangeBase = 700;
+            AttackSpeedBase = 2;
             IsAnimating = false;
 
             SetSize(192);
@@ -116,7 +120,7 @@ namespace ld41gamer.Gamer
                 case TowerType.PeaShooter:
                     Name = "Pea Shooter";
                     SetHp(5);
-                    Damage = 1;
+                    DamageBase = 1;
                     break;
 
 
@@ -124,7 +128,7 @@ namespace ld41gamer.Gamer
                     Name = "Acorn Turret";
                     SetHp(4);
                     Cost = 10;
-                    Damage = 1;
+                    DamageBase = 1;
                     BuildTimeBase = 4f;
                     SetFrame(0, 0);
                     break;
@@ -134,9 +138,9 @@ namespace ld41gamer.Gamer
                     Name = "Acorn Sniper";
                     SetHp(4);
                     Cost = 30;
-                    Damage = 3;
-                    AttackSpeed = 5;
-                    Range = 1200;
+                    DamageBase = 3;
+                    AttackSpeedBase = 5;
+                    RangeBase = 1200;
                     BuildTimeBase = 7f;
                     SetFrame(0, 1);
                     break;
@@ -146,11 +150,11 @@ namespace ld41gamer.Gamer
                     Name = "Cone Catapult";
                     SetHp(15);
                     Cost = 100;
-                    Damage = 3;
-                    Range = 1800;
+                    DamageBase = 3;
+                    RangeBase = 1800;
                     BuildTimeBase = 15f;
                     SetFrame(0, 2);
-                    AttackSpeed = 8f;
+                    AttackSpeedBase = 8f;
                     //SplashDamage = true;
                     IsAnimating = true;
                     PlayAnimation(AnimationType.CatapultIdle);
@@ -195,6 +199,7 @@ namespace ld41gamer.Gamer
 
         public void Upgrade(GameTime gt)
         {
+            Damage = (int)(DamageBase + (Rank*0.5f));
             var dt = gt.Delta();
             IsUpgrading = true;
             UpgradeTimer += dt;

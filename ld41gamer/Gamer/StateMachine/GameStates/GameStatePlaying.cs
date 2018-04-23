@@ -41,6 +41,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         GameLabel lbTurret;
         GameLabel lbSniper;
         GameLabel lbCata;
+        Label lbTime;
 
         public MenuUpgrade mu;
         public MenuBuy mb;
@@ -50,6 +51,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         float muLerp;
 
         public bool AnyUiHovered => mu.buttons.Any(x => x.IsHovered);
+
+        TimeSpan time;
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -113,6 +116,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             lbCata = new GameLabel(GameContent.acorn, "100", pos, GameContent.font14);
             lbCata.Item.SetSize(32);
 
+            lbTime = new Label(GameContent.font48, "00:00");
+            lbTime.Position = new Vector2(GHelper.Center(Globals.ScreenBox, lbTime.TextSize).X, 8);
+
 
             treeBar = new TreeHp();
             treeBar.Posser(new Vector2(8, 8));
@@ -131,6 +137,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             map.Update(gt, game);
 
+            time = TimeSpan.FromSeconds(map.GameTimer);
+            lbTime.Text = time.ToString("mm':'ss");
+            lbTime.Position = new Vector2(GHelper.Center(Globals.ScreenBox, lbTime.TextSize).X, 8);
 
             foreach(var bb in mu.buttons)
             {
@@ -327,6 +336,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             pos = new Vector2(GHelper.Center(mb.btCata.Rectangle, lbCata.Size + lbCata.TextSize).X, mb.btCata.Position.Y - lbCata.Size.Y * 2);
             lbCata.SetPosition(pos);
             lbCata.Draw(sb);
+
+            lbTime.Draw(sb);
 
 
             map.DrawScreen(sb);

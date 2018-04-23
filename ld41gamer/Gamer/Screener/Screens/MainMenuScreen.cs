@@ -69,28 +69,34 @@ namespace ld41gamer.Gamer.Screener
             btPlay = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Play");
             btPlay.SetColor(new Color(230, 230, 230));
             btPlay.DrawOutline = false;
+            btPlay.font = GameContent.font24;
 
             btSettings = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Options");
             btSettings.SetColor(new Color(230, 230, 230));
             btSettings.DrawOutline = false;
+            btSettings.font = GameContent.font24;
 
             btCredits = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Credits");
             btCredits.SetColor(new Color(230, 230, 230));
             btCredits.DrawOutline = false;
+            btCredits.font = GameContent.font24;
 
             btQuit = new Button(gd, GameContent.btplank, (int)size.X, (int)size.Y, "Quit");
             btQuit.SetColor(new Color(230, 230, 230));
             btQuit.DrawOutline = false;
+            btQuit.font = GameContent.font24;
 
             //vbVol = new ValueButton(gd, Vector2.Zero, "Volume", new string[] { "-", "+" });
 
             btMinus = new Button(gd, GameContent.btplank, 32, 32, "-");
             btMinus.SetColor(new Color(230, 230, 230));
             btMinus.DrawOutline = false;
+            btMinus.font = GameContent.font14;
 
             btPlus = new Button(gd, GameContent.btplank, 32, 32, "+");
             btPlus.SetColor(new Color(230, 230, 230));
             btPlus.DrawOutline = false;
+            btPlus.font = GameContent.font14;
 
             lbVol = new Label(GameContent.font14, "Volume");
 

@@ -39,7 +39,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         GameLabel lbMoney;
 
-        MenuUpgrade mu;
+        public MenuUpgrade mu;
+        public MenuBuy mb;
         float muLerp;
 
         public bool AnyUiHovered => mu.buttons.Any(x => x.IsHovered);
@@ -65,6 +66,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             lbMoney.Item.Size = new Vector2(64);
 
             mu = new MenuUpgrade();
+            mb = new MenuBuy(game.ScreenManager.GraphicsDevice);
 
             mu.AddButton(UBBaseType.Branch, () =>
             {
@@ -77,6 +79,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
                 if(!Upgrades.Player_BuildTimeMaxed)
                     map.player.BuildSpeed += 0.5f;
             });
+
 
         }
 
@@ -178,13 +181,15 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         public override void Draw(SpriteBatch sb, Camera cam)
         {
             base.Draw(sb, cam);
-
+            
+            //  WORLD LAYER
             sb.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.DrawWorld(sb);
 
             sb.End();
 
+            //  WORLD
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, cam2d.GetViewMatrix());
 
             map.DrawTowerRecs(sb);
@@ -192,6 +197,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             sb.End();
 
+
+            //  SCREEN
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, null);
 
             lbMoney.Draw(sb);
@@ -207,6 +214,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             if(muLerp > 0.01f)
                 mu.Draw(sb, muLerp);
+
+            mb.Draw(sb, 1f);
 
             sb.End();
         }

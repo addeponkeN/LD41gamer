@@ -204,7 +204,10 @@ namespace ld41gamer.Gamer
                 IsAnimating = false;
                 CurrentAnimationFrame = CurrentAnimation[0];
 
-                ori.X = MathHelper.Lerp(0, 16, attackTimer / attackCooldown);
+                if(SpriteEffects == SpriteEffects.None)
+                    ori.X = -MathHelper.Lerp(0, 16, attackTimer / attackCooldown);
+                else
+                    ori.X = MathHelper.Lerp(0, 16, attackTimer / attackCooldown);
             }
 
         }

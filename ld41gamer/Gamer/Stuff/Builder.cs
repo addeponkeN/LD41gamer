@@ -21,10 +21,13 @@ namespace ld41gamer.Gamer
         static AnimatedSprite hammer;
         static Sprite ug;
         static Sprite rep;
+        static Sprite ham;
 
         public Turret b;
 
         float pTimer;
+
+        public static Vector2 CanBuildPos;
 
         public Builder()
         {
@@ -45,6 +48,11 @@ namespace ld41gamer.Gamer
             rep.SetSize(64);
             rep.SetSourceSize(64);
             rep.SetFrame(2, 0);
+
+            ham = new Sprite(GameContent.icons);
+            ham.SetSize(64);
+            ham.SetSourceSize(64);
+            ham.SetFrame(5, 0);
         }
 
         public void Update(GameTime gt, Map map)
@@ -53,7 +61,7 @@ namespace ld41gamer.Gamer
             var p = map.player;
 
             bool canPlace = false;
-
+            CanBuildPos = Vector2.Zero;
             if(b != null)
             {
                 if(p.IsGrounded)
@@ -96,6 +104,12 @@ namespace ld41gamer.Gamer
 
                 if(map.player.CollisionBox.Intersects(t.CollisionBox))
                 {
+                    if(CanBuildPos == Vector2.Zero)
+                    {
+                        var size = new Vector2(48);
+                        CanBuildPos = new Vector2(GHelper.Center(t.Rectangle, size).X - size.X + 14, t.Position.Y + 6);
+                    }
+
                     if(Input.KeyHold(Keys.F))
                     {
                         pTimer += dt;
@@ -127,18 +141,19 @@ namespace ld41gamer.Gamer
             }
 
 
-            if(Input.KeyClick(Keys.D1))
+            if(Input.KeyClick(Keys.D1) || map.Game.mb.btTurret.IsClicked)
             {
                 b = Create(TowerType.AcornTurret);
             }
-            if(Input.KeyClick(Keys.D2))
+            if(Input.KeyClick(Keys.D2) || map.Game.mb.btSniper.IsClicked)
             {
                 b = Create(TowerType.AcornSniper);
             }
-            if(Input.KeyClick(Keys.D3))
+            if(Input.KeyClick(Keys.D3) || map.Game.mb.btCata.IsClicked)
             {
                 b = Create(TowerType.ConeCatapult);
             }
+
             if(Input.KeyClick(Keys.D4))
             {
 
@@ -167,7 +182,7 @@ namespace ld41gamer.Gamer
                 {
                     b.Color = Color.Lerp(Color.White, Color.ForestGreen, 0.5f);
 
-                    if(Input.LeftClick)
+                    if(Input.LeftClick && !map.Game.mb.AnyUiHovered)
                     {
                         if(map.player.Money < b.Cost)
                         {
@@ -216,6 +231,7 @@ namespace ld41gamer.Gamer
 
         public static void DrawHammer(SpriteBatch sb, Vector2 position, Vector2 size)
         {
+            hammer.Size = size;
             hammer.Position = position;
             hammer.Draw(sb);
         }
@@ -235,7 +251,17 @@ namespace ld41gamer.Gamer
 
             Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
             Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
+        }
 
+        public static void DrawHam(SpriteBatch sb, Vector2 pos, Vector2 size)
+        {
+            ham.Position = pos;
+            ham.Size = size;
+
+            ham.Draw(sb);
+
+            var s = GameContent.font14.MeasureString("[F]");
+            Extras.DrawString(sb, GameContent.font14, "[F]", new Vector2(GHelper.Center(ham.Rectangle, s).X, ham.Position.Y - 15), Color.White);
         }
 
         public static void DrawBenchUpgrade(SpriteBatch sb, Vector2 pos, Vector2 size)
@@ -257,8 +283,8 @@ namespace ld41gamer.Gamer
 
                 if(t.isBeingBuilt)
                 {
-                    var hamSize = new Vector2(100);
-                    DrawHammer(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y), hamSize);
+                    var hamSize = new Vector2(64);
+                    DrawHammer(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y - 55), hamSize);
                 }
             }
 

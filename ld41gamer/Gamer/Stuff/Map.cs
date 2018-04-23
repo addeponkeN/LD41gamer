@@ -87,7 +87,7 @@ namespace ld41gamer.Gamer
         public Map(GameStatePlaying game)
         {
             Game = game;
-            GroundSize = new Point(10000, 100);
+            GroundSize = new Point(10000, 180);
             //GroundPosition = new Point(0, Globals.ScreenHeight - GroundSize.Y);
             GroundPosition = new Point(0, 2500);
 
@@ -492,7 +492,7 @@ namespace ld41gamer.Gamer
             //sb.Draw(GameContent.layer3, BoxRectangle, Color.White, Layer.BACK + 0.13f);
 
             for(int i = 0; i < GroundRectangle.Width; i += GameContent.ground.Width)
-                sb.Draw(GameContent.ground, new Vector2(i, GroundPosition.Y), Color.White, Layer.Ground);
+                sb.Draw(GameContent.ground, new Rectangle(i, (int)GroundPosition.Y, GameContent.ground.Width, GameContent.ground.Height), Color.White, Layer.Ground);
 
             foreach(var p in Props)
             {
@@ -571,6 +571,12 @@ namespace ld41gamer.Gamer
                 Builder.DrawBenchUpgrade(sb, tree.BenchRec.TopMiddle() - new Vector2(7, 100), new Vector2(48));
             }
 
+
+            if(!player.IsBuilding)
+                if(Builder.CanBuildPos != Vector2.Zero)
+                {
+                    Builder.DrawHam(sb, Builder.CanBuildPos, new Vector2(48));
+                }
         }
 
         public void DrawScreen(SpriteBatch sb)

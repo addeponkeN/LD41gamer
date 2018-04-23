@@ -46,7 +46,7 @@ namespace ld41gamer.Gamer
 
         public float knockSpeed;
 
-        public int Money = 50;
+        public int Money = 500;
 
         public float dmgLerp = 1f;
 

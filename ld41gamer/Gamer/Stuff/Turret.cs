@@ -149,7 +149,7 @@ namespace ld41gamer.Gamer
                     Damage = 3;
                     Range = 1800;
                     BuildTimeBase = 15f;
-                    SetFrame(0, 0);
+                    SetFrame(0, 2);
                     AttackSpeed = 8f;
                     //SplashDamage = true;
                     IsAnimating = true;
@@ -442,8 +442,8 @@ namespace ld41gamer.Gamer
 
             if(IsUpgrading)
             {
-                var hamSize = new Vector2(100);
-                Builder.DrawHammer(sb, new Vector2(Center.X - hamSize.X / 2, CollisionBox.Top - hamSize.Y), hamSize);
+                var hamSize = new Vector2(64);
+                Builder.DrawHammer(sb, new Vector2(Center.X - hamSize.X / 2, CollisionBox.Top - hamSize.Y - 50), hamSize);
             }
 
             if(DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isTargeted)

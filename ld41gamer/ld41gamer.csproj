@@ -183,6 +183,7 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Content\Fonts\debugFont.spritefont" />
+    <None Include="Content\Fonts\font12.spritefont" />
     <None Include="Content\Fonts\font14.spritefont" />
     <None Include="Content\Fonts\font24.spritefont" />
     <None Include="Content\Fonts\font48.spritefont" />
@@ -205,6 +206,7 @@
     <Content Include="Content\Textures\antSheet.png" />
     <Content Include="Content\Textures\beaverSheet.png" />
     <Content Include="Content\Textures\bgmenu.jpg" />
+    <Content Include="Content\Textures\bigplank.png" />
     <Content Include="Content\Textures\blastcloud.png" />
     <Content Include="Content\Textures\botleftBranch.png" />
     <Content Include="Content\Textures\botrightBranch.png" />
@@ -232,6 +234,7 @@
     <Content Include="Content\Textures\waspSheet.png" />
     <Content Include="Content\Textures\wormHole.png" />
     <Content Include="Content\Textures\wormSheet.png" />
+    <EmbeddedResource Include="Icon.bmp" />
     <Content Include="Icon.ico" />
     <Content Include="Obo.GameUtility.dll" />
     <Content Include="Obo.Gui.dll" />

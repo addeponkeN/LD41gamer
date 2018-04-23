@@ -191,9 +191,9 @@ namespace ld41gamer.Gamer.Screener
             if(btCredits.IsTriggered)
             {
                 AddPopupScreen(new PopupScreen(
-                    "         CREDITS\n" +
+                    "          CREDITS\n" +
                     "ponker, wwh, johnstapler\n" +
-                    "    Made for LudumDare41", GameContent.font14, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 280, 200, GameContent.font24, PopupType.Ok), true);
+                    "  Made for LudumDare41", GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 350, 150, GameContent.font24, PopupType.Ok), true);
             }
 
             if(btQuit.IsTriggered)

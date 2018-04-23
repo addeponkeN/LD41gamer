@@ -59,6 +59,7 @@ namespace ld41gamer.Gamer
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormYellow;
+                    SetFrame(1, 0);
                     break;
                 case EnemyType.WormBlue:
                     Texture = GameContent.wormSheet;
@@ -68,6 +69,7 @@ namespace ld41gamer.Gamer
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormBlue;
+                    SetFrame(2, 0);
                     break;
                 case EnemyType.Wasp:
                     Texture = GameContent.waspSheet;
@@ -97,6 +99,7 @@ namespace ld41gamer.Gamer
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormRed;
+                    SetFrame(0, 0);
                     break;
                 case EnemyType.WormHole:
                     Texture = GameContent.wormHole;
@@ -119,6 +122,7 @@ namespace ld41gamer.Gamer
                     animWalk = AnimationType.BeaverWalk;
                     break;
             }
+
 
             PlayAnimation(animWalk);
 
@@ -149,7 +153,7 @@ namespace ld41gamer.Gamer
                 return;
             }
 
-            bool att=false;
+            bool att = false;
 
             foreach(var t in map.tree.HitBoxes)
             {

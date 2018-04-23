@@ -54,6 +54,14 @@ namespace ld41gamer.Gamer.Screener
                     break;
                 case PopupAnswer.No:
                     break;
+                case PopupAnswer.None:
+                    break;
+                case PopupAnswer.Ok:
+                    ExitScreen(new MainMenuScreen());
+                    MBMan.list.Clear();
+                    break;
+                case PopupAnswer.Cancel:
+                    break;
             }
         }
 
@@ -64,7 +72,7 @@ namespace ld41gamer.Gamer.Screener
             if(Input.KeyClick(Keys.Escape))
             {
                 SoundManager.StopLoop(GameSoundType.TowerBuilding);
-                AddPopupScreen(new PopupScreen("Exit to Menu?", GameContent.font14, GameContent.bigplank, GameContent.btplank, new Color(200,200,200), 100, 75, GameContent.font24, PopupType.YesNo), true);
+                AddPopupScreen(new PopupScreen("Exit to Menu?", GameContent.font14, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 220, 145, GameContent.font24, PopupType.YesNo), true);
             }
 
         }

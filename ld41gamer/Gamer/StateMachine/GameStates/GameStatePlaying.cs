@@ -26,6 +26,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         Level4,
 
+        Level5,
+
     }
 
     public class GameStatePlaying : GameState
@@ -52,7 +54,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
         public bool AnyUiHovered => mu.buttons.Any(x => x.IsHovered);
 
-        TimeSpan time;
+        public TimeSpan time;
 
         public GameStatePlaying(GameScreen gs) : base(gs)
         {
@@ -64,9 +66,9 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
         {
             base.Load(content);
 
-            TreeBranch.Cost = 50;
-            Turret.TurretCost = 10;
-            Turret.SniperCost = 30;
+            TreeBranch.Cost = 30;
+            Turret.TurretCost = 20;
+            Turret.SniperCost = 40;
             Turret.CataCost = 100;
             Upgrades.TreeBranches = 0;
             Upgrades.Player_BuildTime = 1f;
@@ -87,11 +89,8 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
             mu.AddButton(UBBaseType.Branch, () =>
                 {
-                    if(map.player.Money < TreeBranch.Cost)
-                    {
-                        MBMan.Add("Not enough acorns");
+                    if(!map.player.IsShopping)
                         return;
-                    }
 
                     if(!Upgrades.TreeBranchesMaxed)
                         map.player.IsShoppingBranch = !map.player.IsShoppingBranch;
@@ -105,11 +104,11 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
 
             var pos = mb.btTurret.Position - new Vector2(0, 14);
-            lbTurret = new GameLabel(GameContent.acorn, "10", pos, GameContent.font14);
+            lbTurret = new GameLabel(GameContent.acorn, "20", pos, GameContent.font14);
             lbTurret.Item.SetSize(32);
 
             pos = mb.btTurret.Position - new Vector2(0, 14);
-            lbSniper = new GameLabel(GameContent.acorn, "30", pos, GameContent.font14);
+            lbSniper = new GameLabel(GameContent.acorn, "40", pos, GameContent.font14);
             lbSniper.Item.SetSize(32);
 
             pos = mb.btTurret.Position - new Vector2(0, 14);

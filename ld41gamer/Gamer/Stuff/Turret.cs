@@ -135,7 +135,7 @@ namespace ld41gamer.Gamer
                 case TowerType.AcornTurret:
                     Name = "Acorn Turret";
                     SetHp(4);
-                    Cost = 10;
+                    Cost = 20;
                     DamageBase = 1;
                     BuildTimeBase = 4f;
                     SetFrame(0, 0);
@@ -144,8 +144,8 @@ namespace ld41gamer.Gamer
 
                 case TowerType.AcornSniper:
                     Name = "Acorn Sniper";
-                    SetHp(4);
-                    Cost = 30;
+                    SetHp(7);
+                    Cost = 40;
                     DamageBase = 2;
                     AttackSpeedBase = 5;
                     RangeBase = 1200;
@@ -330,7 +330,7 @@ namespace ld41gamer.Gamer
             base.Update(gt, map, gs);
             var dt = gt.Delta();
 
-            Damage = (int)(DamageBase + (Rank * 0.5));
+            Damage = (int)(DamageBase + (Rank * 0.40));
             DrawHpBar = HealthPoints < MaxHealthPoints || isTargeted || DrawTowerInfo || Input.KeyHold(Keys.LeftShift) || isBeingBuilt;
 
             if(attackTimer < AttackSpeed)

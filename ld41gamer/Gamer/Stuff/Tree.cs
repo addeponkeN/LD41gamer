@@ -34,7 +34,7 @@ namespace ld41gamer.Gamer
 
         AnimatedSprite hammer;
         float hammerTimer;
-        private float dmgLerp =1f;
+        private float dmgLerp = 1f;
 
         public Tree()
         {
@@ -175,42 +175,43 @@ namespace ld41gamer.Gamer
             if(Input.RightClick)
                 p.IsShoppingBranch = false;
 
-            if(p.IsShoppingBranch)
-                if(ii != -1)
-                {
-                    Branches[ii].Hovered = true;
-                    if(Input.LeftClick)
+            if(p.IsShopping)
+                if(p.IsShoppingBranch)
+                    if(ii != -1)
                     {
-                        if(!map.Game.AnyUiHovered)
+                        Branches[ii].Hovered = true;
+                        if(Input.LeftClick)
                         {
-                            if(map.player.Money < TreeBranch.Cost)
+                            if(!map.Game.AnyUiHovered)
                             {
-                                Console.WriteLine("NO AFFORD");
-                                return;
+                                if(map.player.Money < TreeBranch.Cost)
+                                {
+                                    MBMan.Add("Not enough acorns");
+                                    return;
+                                }
+                                else
+                                    map.player.Money -= TreeBranch.Cost;
+                                TreeBranch.Cost += 20;
+
+                                var type = TYPE(Branches[ii].Type);
+                                Branches[ii].IsActive = true;
+                                AddCollisionBranch(type, map);
+                                var rec = GetRec(type);
+                                for(int i = 0; i < 150; i++)
+                                {
+                                    var pos = new Vector2(Rng.Noxt(rec.X, rec.Right), Rng.Noxt(rec.Y - 48, rec.Bottom + 92));
+                                    Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
+                                }
+
+                                SoundManager.PlaySound(GameSoundType.TreeBuilding);
+                                hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
+                                hammerTimer = 2f;
+
+                                Upgrades.TreeBranches++;
                             }
-                            else
-                                map.player.Money -= TreeBranch.Cost;
-                            TreeBranch.Cost += 30;
-
-                            var type = TYPE(Branches[ii].Type);
-                            Branches[ii].IsActive = true;
-                            AddCollisionBranch(type, map);
-                            var rec = GetRec(type);
-                            for(int i = 0; i < 150; i++)
-                            {
-                                var pos = new Vector2(Rng.Noxt(rec.X, rec.Right), Rng.Noxt(rec.Y - 48, rec.Bottom + 92));
-                                Map.pengine.Add(ParticleType.Smoke, pos, Particle.RandomDir());
-                            }
-
-                            SoundManager.PlaySound(GameSoundType.TreeBuilding);
-                            hammer.Position = new Vector2(GHelper.Center(rec, hammer.Size).X, rec.Top - hammer.Size.Y - 24);
-                            hammerTimer = 2f;
-
-                            Upgrades.TreeBranches++;
+                            p.IsShoppingBranch = false;
                         }
-                        p.IsShoppingBranch = false;
                     }
-                }
 
             hammerTimer -= dt;
             if(hammerTimer > 0)

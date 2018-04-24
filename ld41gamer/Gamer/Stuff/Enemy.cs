@@ -94,7 +94,7 @@ namespace ld41gamer.Gamer
                 case EnemyType.WormRed:
                     Texture = GameContent.wormSheet;
                     SetHp(8);
-                    Damage = 2;
+                    Damage = 1;
                     Reward = 5;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
@@ -115,7 +115,7 @@ namespace ld41gamer.Gamer
                 case EnemyType.Beaver:
                     Texture = GameContent.beaverSheet;
                     SetHp(30);
-                    Damage = 2;
+                    Damage = 1;
                     Reward = 25;
                     SetSize(95, 77);
                     SetCollisionBot(80, 75);
@@ -123,6 +123,7 @@ namespace ld41gamer.Gamer
                     break;
             }
 
+            Reward++;
 
             PlayAnimation(animWalk);
 
@@ -164,6 +165,7 @@ namespace ld41gamer.Gamer
                     {
                         map.tree.IsHit(Damage);
                         attackTimer = 0;
+                        SoundManager.PlayTowerHit();
                     }
                     att = true;
                     //return;
@@ -217,12 +219,17 @@ namespace ld41gamer.Gamer
 
         public static EnemyType RandomType()
         {
-            return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
+            return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 1);
         }
 
         public static EnemyType RandomTypeNotWormHole()
         {
-            return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 2);
+            int e = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 1);
+
+            while((EnemyType)e == EnemyType.WormHole)
+                e = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 1);
+
+            return (EnemyType)e;
         }
 
         public override void Draw(SpriteBatch sb)

@@ -160,12 +160,16 @@ namespace ld41gamer.Gamer
 
             GameTimer += dt;
 
-            if(GameTimer > 90)
-                GameState = GameStater.Level2;
-            else if(GameTimer > 240)
-                GameState = GameStater.Level3;
+            if(GameTimer > 780)
+                GameState = GameStater.Level5;
             else if(GameTimer > 480)
                 GameState = GameStater.Level4;
+            else if(GameTimer > 240)
+                GameState = GameStater.Level3;
+            else if(GameTimer > 90)
+                GameState = GameStater.Level2;
+            else
+                GameState = GameStater.Level1;
 
             player.Update(gt, this, gs);
             parlax.Update(gt, this);
@@ -197,7 +201,11 @@ namespace ld41gamer.Gamer
 
                     t.Destroy(this);
                     if(closestTurret == t)
+                    {
+                        player.IsUpgradingOrReparing = false;
+                        SoundManager.StopLoop(GameSoundType.TowerBuilding);
                         closestTurret = null;
+                    }
 
                     Turrets.RemoveAt(i);
                     continue;
@@ -268,7 +276,7 @@ namespace ld41gamer.Gamer
             {
                 var e = Enemies[i];
                 e.Update(gt, this, gs);
-                if(player.IsAlive)
+                if(player.IsAlive && e.Type != EnemyType.WormHole)
                     if(e.CollisionBox.Intersects(player.CollisionBox))
                     {
                         int dir = 0;
@@ -322,7 +330,7 @@ namespace ld41gamer.Gamer
                     var t = Turrets[j];
 
                     //  enemy attack turret
-                    if(e.CollisionBox.Intersects(t.CollisionBox))
+                    if(e.CollisionBox.Intersects(t.CollisionBox) && e.Type != EnemyType.WormHole)
                     {
                         e.attackTimer += dt;
                         if(e.attackTimer >= e.attackCooldown)
@@ -434,7 +442,9 @@ namespace ld41gamer.Gamer
 
             if(tree.HealthPoints <= 0)
             {
-                Game.game.AddPopupScreen(new PopupScreen("The tree is dead!", GameContent.font14, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 200, 125, GameContent.font24, PopupType.Ok), true);
+                Game.game.AddPopupScreen(new PopupScreen($"" +
+                    $"\n      The tree is dead!" +
+                    $"\nYou survived for: {Game.time.ToString("mm':'ss")}", GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 300, 175, GameContent.font24, PopupType.Ok), true);
             }
 
 
@@ -502,7 +512,10 @@ namespace ld41gamer.Gamer
 
                     case GameStater.Level3:
                         enemySpawnCd = Rng.Noxt(4, 6);
-                        e = Rng.Noxt(0, 5);
+                        e = Rng.Noxt(0, 4);
+
+                        if(Rng.Noxt(0, 100) >= 94)
+                            e = 5;
 
                         if(e == 5)
                             SpawnWormHole();
@@ -512,11 +525,20 @@ namespace ld41gamer.Gamer
 
                     case GameStater.Level4:
                         enemySpawnCd = Rng.Noxt(2, 5);
-                        e = Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length);
-                        if(e == 5)
+
+                        if(Rng.Noxt(0, 100) >= 90)
                             SpawnWormHole();
                         else
-                            SpawnEnemy((EnemyType)e);
+                            SpawnEnemy(Enemy.RandomTypeNotWormHole());
+                        break;
+                    case GameStater.Level5:
+                        enemySpawnCd = Rng.Noxt(1, 3);
+                        if(Rng.Noxt(0, 100) >= 80)
+                            SpawnWormHole();
+                        else
+                            SpawnEnemy(Enemy.RandomTypeNotWormHole());
+                        if(Rng.Noxt(0, 100) >= 50)
+                            SpawnEnemy(Enemy.RandomTypeNotWormHole());
                         break;
                 }
 
@@ -530,9 +552,9 @@ namespace ld41gamer.Gamer
             var e = new Enemy(EnemyType.WormHole);
 
             if(Rng.NextBool)
-                e.Position.X = Rng.Noxt(WallLeft + 2000, WallLeft + 4000);
+                e.Position.X = Rng.Noxt(WallLeft + 2000, WallLeft + 3500);
             else
-                e.Position.X = Rng.Noxt(WallRight - 4000, WallRight - 2000);
+                e.Position.X = Rng.Noxt(WallRight - 3500, WallRight - 2000);
 
             e.Position.Y = GroundCollisionBox.Top - e.Size.Y;
 

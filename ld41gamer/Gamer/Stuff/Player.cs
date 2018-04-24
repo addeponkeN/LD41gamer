@@ -46,7 +46,7 @@ namespace ld41gamer.Gamer
 
         public float knockSpeed;
 
-        int money = 15;
+        int money = 25;
         //public int Money = 500;
         public int Money
         {
@@ -222,6 +222,9 @@ namespace ld41gamer.Gamer
         {
             PlayAnimation(AnimationType.PlayerDeath);
             IsAlive = false;
+            IsUpgradingOrReparing = false;
+            IsShopping = false;
+            IsShoppingBranch = false;
 
             Direction.X = dir;
             Direction.Y = -1;

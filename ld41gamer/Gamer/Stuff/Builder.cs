@@ -206,7 +206,7 @@ namespace ld41gamer.Gamer
                     {
                         if(map.player.Money < b.Cost)
                         {
-                            Console.WriteLine("NO AFFORD");
+                            MBMan.Add("Not enough acorns");
                             return;
                         }
                         else
@@ -277,7 +277,7 @@ namespace ld41gamer.Gamer
 
             GameLabel gup = new GameLabel(GameContent.acorn, UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             gup.Item.SetSize(14);
-            gup.SetPosition(ug.Position + new Vector2(5, ug.Size.Y));
+            gup.SetPosition(ug.Position + new Vector2(5, ug.Size.Y + 4));
 
             GameLabel grep = new GameLabel(GameContent.acorn, RepairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             grep.Item.SetSize(14);

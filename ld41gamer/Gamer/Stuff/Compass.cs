@@ -43,10 +43,12 @@ namespace ld41gamer.Gamer
             if(enemy.Type == EnemyType.WormRed || enemy.Type == EnemyType.WormYellow || enemy.Type == EnemyType.WormBlue)
                 col = 1;
 
-            if(enemy.Type == EnemyType.WormRed)
-                row = 0;
+            if(enemy.Type == EnemyType.WormYellow)
+                row = 1;
             else if(enemy.Type == EnemyType.WormBlue)
                 row = 2;
+            else if(enemy.Type == EnemyType.WormRed)
+                row = 0;
 
             enemyBox.SetFrame(col, row);
             enemyBox.DrawLayer = layer + 0.0001f;

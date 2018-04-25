@@ -843,7 +843,7 @@ namespace ld41gamer.Gamer
                         }
 
 
-                        enemySpawnCd = Rng.Noxt(2, 3);
+                        enemySpawnCd = Rng.Noxt(4, 5);
 
                         SpawnEnemy(Enemy.GetRandomType(EnemyType.WormYellow, EnemyType.WormBlue));
 
@@ -863,16 +863,16 @@ namespace ld41gamer.Gamer
                         if(rng(50))
                             SpawnEnemy(EnemyType.Wasp);
 
-                        if(rng(50))
+                        if(rng(25))
                             SpawnEnemy(EnemyType.WormBlue);
 
                         if(rng(30))
                             SpawnEnemy(EnemyType.Ant);
 
-                        if(rng(50))
+                        if(rng(25))
                             SpawnEnemy(EnemyType.WormYellow);
 
-                        if(rng(50))
+                        if(rng(25))
                             SpawnEnemy(EnemyType.WormYellow);
 
                         SpawnBeaver();

@@ -69,7 +69,10 @@ namespace ld41gamer.Gamer
 
                 case BulletType.Acorn:
                     if(Speed == 0)
-                        Speed = 600f;
+                        Speed = 600f + xbet;
+
+                    Direction = Vector2.Normalize((destination - new Vector2(0, xbet)) - spawnPos);
+
                     AirVelo = -45f;
                     Texture = GameContent.acorn;
                     BulletDrop = 200f;
@@ -86,7 +89,7 @@ namespace ld41gamer.Gamer
 
                     AirVelo = -300f;
                     BulletDrop = 300f;
-                    Speed = 200f + (dis/5);
+                    Speed = 200f + (dis / 5);
 
                     rotationSpeed = Rng.NoxtFloat(-(float)MathHelper.Pi, (float)MathHelper.Pi);
 

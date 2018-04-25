@@ -95,7 +95,7 @@ namespace ld41gamer.Gamer
         public static float Music = 0.6f;
         public static float Master = 0.5f;
 
-        public static int SoundChannels = 32;
+        public static int SoundChannels = 64;
 
         public static Dictionary<GameSoundType, GameSound> Sounds;
         static ContentManager c;

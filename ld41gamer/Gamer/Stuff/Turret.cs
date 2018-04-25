@@ -426,10 +426,13 @@ namespace ld41gamer.Gamer
             var dis = Vector2.Distance(spawn, target);
             var off = dis / 10;
 
+            float extra;
+            float extraRange;
 
-            if(dis > 1100)
+            if(dis > 900)
             {
                 off += off;
+                extra = 300f;
                 Console.WriteLine("LONGER RANGER");
             }
 

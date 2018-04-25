@@ -92,10 +92,10 @@ namespace ld41gamer.Gamer
     {
 
         public static float Sfx = 0.5f;
-        public static float Music = 0.5f;
+        public static float Music = 0.6f;
         public static float Master = 0.5f;
 
-        public static int SoundChannels = 8;
+        public static int SoundChannels = 32;
 
         public static Dictionary<GameSoundType, GameSound> Sounds;
         static ContentManager c;
@@ -179,7 +179,7 @@ namespace ld41gamer.Gamer
 
         public static void PlayTowerHit()
         {
-            var type = (GameSoundType)Rng.Noxt(5, 7);
+            var type = (GameSoundType)Rng.Noxt(4, 6);
             PlaySound(type);
         }
 

@@ -57,21 +57,39 @@ namespace ld41gamer.Gamer
 
             Texture2D tex = GameContent.btplank;
 
-            btShoot = new BuyUi(gd, "Mouse Left");
+            btShoot = new BuyUi(gd, 
+                "Mouse Left" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Shoot");
             btShoot.Texture = tex;
             btShoot.Item = new Sprite(GameContent.acorn);
             btShoot.Item.SetSize(80);
             btShoot.Item.SetSourceSize(100);
             btShoot.Item.SetFrame(0, 0);
 
-            btCancel = new BuyUi(gd, "Mouse Right");
+            btCancel = new BuyUi(gd, 
+                "Mouse Right" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Cancel");
             btCancel.Texture = tex;
             btCancel.Item = new Sprite(GameContent.icons);
             btCancel.Item.SetSize(80);
             btCancel.Item.SetSourceSize(64);
             btCancel.Item.SetFrame(3, 0);
 
-            btDelete = new BuyUi(gd, "Q");
+            btDelete = new BuyUi(gd, 
+                "Q" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Demolish");
             btDelete.Texture = tex;
             btDelete.Item = new Sprite(GameContent.icons);
             btDelete.Item.SetSize(80);

@@ -82,13 +82,6 @@ namespace ld41gamer.Gamer.Screener
             base.ActiveUpdate(gt);
 
             StateManager.Update(gt, this);
-
-
-
-            if(Input.KeyClick(Keys.NumPad1))
-                SoundManager.PlayTowerHit();
-            if(Input.KeyClick(Keys.NumPad2))
-                SoundManager.PlayEnemyHit();
         }
 
         public override void Draw(SpriteBatch sb, GameTime gt)

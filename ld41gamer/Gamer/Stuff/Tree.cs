@@ -22,6 +22,8 @@ namespace ld41gamer.Gamer
 
         public List<Rectangle> HitBoxes;
 
+        public Rectangle BottomHitBox => HitBoxes[0];
+
         public List<Rectangle> PlatformCollision;
 
         public List<TreeBranch> Branches = new List<TreeBranch>();
@@ -191,7 +193,7 @@ namespace ld41gamer.Gamer
                                 }
                                 else
                                     map.player.Money -= TreeBranch.Cost;
-                                TreeBranch.Cost += 20;
+                                //TreeBranch.Cost += 20;
 
                                 var type = TYPE(Branches[ii].Type);
                                 Branches[ii].IsActive = true;

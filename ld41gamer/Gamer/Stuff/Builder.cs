@@ -27,8 +27,8 @@ namespace ld41gamer.Gamer
 
         float pTimer;
 
-        public static int UpgradeCost;
-        public static int RepairCost;
+        //public static int UpgradeCost;
+        //public static int RepairCost;
 
         public static Vector2 CanBuildPos;
 
@@ -200,7 +200,7 @@ namespace ld41gamer.Gamer
 
                 if(canPlace)
                 {
-                    b.Color = Color.Lerp(Color.White, Color.ForestGreen, 0.5f);
+                    b.Color = Color.Lerp(Color.White, Color.ForestGreen, 0.9f);
 
                     if(Input.LeftClick && !map.Game.mb.AnyUiHovered)
                     {
@@ -229,7 +229,7 @@ namespace ld41gamer.Gamer
                 }
                 else
                 {
-                    b.Color = Color.Lerp(Color.White, Color.IndianRed, 0.5f);
+                    b.Color = Color.Lerp(Color.White, Color.IndianRed, 0.9f);
                 }
 
 
@@ -246,7 +246,7 @@ namespace ld41gamer.Gamer
             var t = new Turret(type);
             t.DrawHpBar = false;
             t.Color = new Color(127, 127, 127);
-            t.Alpha = 127;
+            t.Alpha = 230;
             return t;
         }
 
@@ -257,7 +257,7 @@ namespace ld41gamer.Gamer
             hammer.Draw(sb);
         }
 
-        public static void DrawUpgradeAndRepair(SpriteBatch sb, Vector2 pos, Vector2 size, bool upgrade)
+        public static void DrawUpgradeAndRepair(SpriteBatch sb, Map map, Vector2 pos, Vector2 size, bool upgrade)
         {
             ug.Position = pos;
             ug.Size = size;
@@ -269,17 +269,17 @@ namespace ld41gamer.Gamer
                 ug.Draw(sb);
             rep.Draw(sb);
 
-            var s = GameContent.font14.MeasureString("[R]");
+            var s = GameContent.font14.MeasureString("Hold G");
 
             if(upgrade)
-                Extras.DrawString(sb, GameContent.font14, "[G]", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
-            Extras.DrawString(sb, GameContent.font14, "[R]", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
+                Extras.DrawString(sb, GameContent.font14, "Hold G", new Vector2(GHelper.Center(ug.Rectangle, s).X, ug.Position.Y - 15), Color.White);
+            Extras.DrawString(sb, GameContent.font14, "Hold R", new Vector2(GHelper.Center(rep.Rectangle, s).X, rep.Position.Y - 15), Color.White);
 
-            GameLabel gup = new GameLabel(GameContent.acorn, UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
+            GameLabel gup = new GameLabel(GameContent.acorn, map.closestTurret.UpgradeCost.ToString(), ug.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             gup.Item.SetSize(14);
             gup.SetPosition(ug.Position + new Vector2(5, ug.Size.Y + 4));
 
-            GameLabel grep = new GameLabel(GameContent.acorn, RepairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
+            GameLabel grep = new GameLabel(GameContent.acorn, map.closestTurret.repairCost.ToString(), rep.Position + new Vector2(0, ug.Size.Y), GameContent.font12);
             grep.Item.SetSize(14);
             grep.SetPosition(rep.Position + new Vector2(5, ug.Size.Y + 4));
             if(upgrade)
@@ -297,8 +297,8 @@ namespace ld41gamer.Gamer
 
             ham.Draw(sb);
 
-            var s = GameContent.font14.MeasureString("[F]");
-            Extras.DrawString(sb, GameContent.font14, "[F]", new Vector2(GHelper.Center(ham.Rectangle, s).X, ham.Position.Y - 15), Color.White);
+            var s = GameContent.font14.MeasureString("Hold F");
+            Extras.DrawString(sb, GameContent.font14, "Hold F", new Vector2(GHelper.Center(ham.Rectangle, s).X, ham.Position.Y - 15), Color.White);
         }
 
         public static void DrawHamBuild(SpriteBatch sb, Vector2 pos, Vector2 size)
@@ -334,6 +334,11 @@ namespace ld41gamer.Gamer
                     var hamSize = new Vector2(48);
                     DrawHammer(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y - 55), hamSize);
                 }
+                //else
+                //{
+                //    var hamSize = new Vector2(48);
+                //    DrawHam(sb, new Vector2(t.Center.X - hamSize.X / 2, t.CollisionBox.Top - hamSize.Y - 55), hamSize);
+                //}
             }
 
             if(b != null)
@@ -343,6 +348,7 @@ namespace ld41gamer.Gamer
                 DrawHamBuild(sb, new Vector2(b.Center.X - hamSize.X / 2, b.CollisionBox.Top - hamSize.Y - 55), hamSize);
             }
         }
+
 
         public void DrawRecs(SpriteBatch sb)
         {

@@ -34,12 +34,14 @@ namespace ld41gamer.Gamer
         public int Damage = 1;
 
         float Angle;
+        public int Pierce;
 
         Vector2 Destination;
+        public List<int> hits = new List<int>();
 
         float rotationSpeed;
 
-        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, float xbet = 0f, bool isPlayer = false)
+        public Bullet(BulletType t, Vector2 spawnPos, Vector2 destination, int damage, int pierce, float xbet = 0f, bool isPlayer = false)
         {
             Type = t;
             Position = spawnPos;
@@ -54,6 +56,7 @@ namespace ld41gamer.Gamer
             SetSourceSize(100);
             SetFrame(0, 0);
             IsAnimating = false;
+            Pierce = pierce;
 
             Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
 

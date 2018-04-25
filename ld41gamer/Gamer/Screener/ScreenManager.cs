@@ -110,11 +110,11 @@ namespace ld41gamer.Screener
             //    MessagePopupManager.AddMsg("CLOCK", true);
             //}
 
-            if(Input.KeyClick(Keys.F1))
-                Globals.IsDrawStats = !Globals.IsDrawStats;
+            //if(Input.KeyClick(Keys.F1))
+            //    Globals.IsDrawStats = !Globals.IsDrawStats;
 
-            if(Input.KeyClick(Keys.F2))
-                Globals.IsDebugging = !Globals.IsDebugging;
+            //if(Input.KeyClick(Keys.F2))
+            //    Globals.IsDebugging = !Globals.IsDebugging;
 
             // Make a copy of the master screen list, to avoid confusion if
             // the process of updating one screen adds or removes others.

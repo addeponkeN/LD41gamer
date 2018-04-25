@@ -46,7 +46,8 @@ namespace ld41gamer.Gamer
 
         public float knockSpeed;
 
-        int money = 25;
+        int money = 25; // 50 ??
+
         //public int Money = 500;
         public int Money
         {
@@ -230,7 +231,7 @@ namespace ld41gamer.Gamer
             Direction.Y = -1;
             knockSpeed = 500f;
 
-            deadTimer = 6f;
+            deadTimer = 3f;
         }
 
         public void UpdateShooting(Map map, GameTime gt)
@@ -275,7 +276,7 @@ namespace ld41gamer.Gamer
         {
             var des = map.MouseWorldPos();
 
-            var b = new Bullet(BulletType.Acorn, Center, des, 1, 0f, true);
+            var b = new Bullet(BulletType.Acorn, Center, des, 1, 0, 0f, true);
 
             map.AddBullet(b);
             SoundManager.PlayerPlayerShoot();

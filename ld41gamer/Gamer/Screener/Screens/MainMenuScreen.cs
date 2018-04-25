@@ -183,13 +183,15 @@ namespace ld41gamer.Gamer.Screener
             if(btHow.IsClicked)
             {
                 AddPopupScreen(new PopupScreen(
-                    "     HOW TO PLAY\n" +
+                    "    HOW TO PLAY\n" +
+                    "    Build towers\n" +
                     "  Protect the tree\n" +
+                    "\n" +
                     " Mouse Left - Shoot\n" +
                     " Move - AD / Arrows\n" +
                     "Jump - W / Up / Space",
                     //"Interact - F, G, R, Q",
-                    GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 360, 205, GameContent.font24, PopupType.Ok), true);
+                    GameContent.font24, GameContent.bigplank, GameContent.btplank, new Color(200, 200, 200), 400, 280, GameContent.font24, PopupType.Ok), true);
             }
 
             if(btFs.IsClicked)

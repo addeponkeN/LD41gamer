@@ -18,16 +18,28 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
 
     public enum GameStater
     {
-        Level1,
+        Level1_0,
 
-        Level2,
+        Level2_20,
 
-        Level3,
+        Level3_50,
 
-        Level4,
+        Level4_90,
 
-        Level5,
+        Level5_150,
 
+        Level6_210,
+
+        Level7_300,
+
+        Level8_420,
+
+        Level9_550,
+
+        Level10_670,
+        Level11_740,
+        Level8_500_Break,
+        Level9_630_break,
     }
 
     public class GameStatePlaying : GameState
@@ -72,6 +84,7 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             Turret.CataCost = 100;
             Upgrades.TreeBranches = 0;
             Upgrades.Player_BuildTime = 1f;
+            Enemy.HpIncreaser = 0;
 
             var port = new ScalingViewportAdapter(game.ScreenManager.GraphicsDevice, 1280, 720);
             cam2d = new Camera2D(port);
@@ -347,6 +360,16 @@ namespace ld41gamer.Gamer.StateMachine.GameStates
             //DrawString(sb, $"PlayerCenter: X:{(int)map.player.Center.X}  Y:{(int)map.player.Center.Y}");
             //DrawString(sb, $"Camera: X:{(int)cam2d.Position.X}  Y:{(int)cam2d.Position.Y}");
             //DrawString(sb, $"Camera: W:{(int)cam2d.BoundingRectangle.Right}  H:{(int)cam2d.BoundingRectangle.Left}");
+            //DrawString(sb, $"");
+            //DrawString(sb, $"");
+            //DrawString(sb, $"");
+
+            //DrawString(sb, $"Time: {(int)map.GameTimer}");
+            //DrawString(sb, $"Level: {map.GameState.ToString()}");
+            //DrawString(sb, $"Wormhole: {(int)map.holeSpawnTimer} / {(int)map.holeSpawnCd}");
+            //DrawString(sb, $"Beaver: {(int)map.beavSpawnTimer} / {(int)map.beavSpawnCd}");
+            //DrawString(sb, $"Ticks: {(int)map.spawnTicks}");
+
 
             if(muLerp > 0.01f)
                 mu.Draw(sb, muLerp);

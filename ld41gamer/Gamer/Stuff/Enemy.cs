@@ -32,6 +32,7 @@ namespace ld41gamer.Gamer
         public float attackCooldown = 2f;
         public float attackTimer;
         public float wormHoleSpawnTimer;
+        public float wormHoleSpawnCd = 6.5f;
 
         public bool isAttacking;
         public bool treeattack;
@@ -41,6 +42,8 @@ namespace ld41gamer.Gamer
         Vector2 ori;
 
         public float dmgLerp = 1f;
+
+        public static float HpIncreaser = 0;
 
         public Enemy(EnemyType t)
         {
@@ -53,37 +56,40 @@ namespace ld41gamer.Gamer
             {
                 case EnemyType.WormYellow:
                     Texture = GameContent.wormSheet;
-                    SetHp(3);
+                    SetHp(2);
                     Damage = 1;
-                    Reward = 1;
+                    Reward = 2;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormYellow;
                     SetFrame(1, 0);
                     break;
+
                 case EnemyType.WormBlue:
                     Texture = GameContent.wormSheet;
                     SetHp(5);
                     Damage = 1;
-                    Reward = 2;
+                    Reward = 3;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormBlue;
                     SetFrame(2, 0);
                     break;
+
                 case EnemyType.Wasp:
                     Texture = GameContent.waspSheet;
                     SetSize(152 / 2, 106 / 2);
                     SetCollisionCenter(111 / 2, 84 / 2);
                     animWalk = AnimationType.WaspWalk;
-                    SetHp(5);
+                    SetHp(4);
                     Damage = 1;
                     IsFlying = true;
-                    Reward = 2;
+                    Reward = 4;
                     break;
+
                 case EnemyType.Ant:
                     Texture = GameContent.antSheet;
-                    SetHp(7);
+                    SetHp(6);
                     Speed = 100f;
                     Damage = 1;
                     Reward = 4;
@@ -91,39 +97,43 @@ namespace ld41gamer.Gamer
                     SetCollisionBot(114 / 2, 50 / 2);
                     animWalk = AnimationType.EnemyWalk;
                     break;
+
                 case EnemyType.WormRed:
                     Texture = GameContent.wormSheet;
                     SetHp(8);
                     Damage = 1;
-                    Reward = 5;
+                    Reward = 4;
                     SetSize(170 / 2, 100 / 2);
                     SetCollisionBot(105 / 2, 23 / 2);
                     animWalk = AnimationType.WormRed;
                     SetFrame(0, 0);
                     break;
+
                 case EnemyType.WormHole:
                     Texture = GameContent.wormHole;
-                    SetHp(15);
+                    SetHp(20);
                     SetSize(Texture.Width, Texture.Height);
                     SetCollisionBot(108, 21);
                     Speed = 0;
                     Damage = 0;
-                    Reward = 10;
+                    Reward = 6;
                     animWalk = AnimationType.WormHole;
                     IsAnimating = false;
                     break;
+
                 case EnemyType.Beaver:
                     Texture = GameContent.beaverSheet;
                     SetHp(30);
                     Damage = 1;
-                    Reward = 25;
+                    Reward = 8;
                     SetSize(95, 77);
                     SetCollisionBot(80, 75);
                     animWalk = AnimationType.BeaverWalk;
                     break;
             }
 
-            Reward++;
+            HealthPoints += (int)HpIncreaser;
+            MaxHealthPoints = HealthPoints;
 
             PlayAnimation(animWalk);
 
@@ -146,7 +156,7 @@ namespace ld41gamer.Gamer
             if(Type == EnemyType.WormHole)
             {
                 wormHoleSpawnTimer += dt;
-                if(wormHoleSpawnTimer >= 5)
+                if(wormHoleSpawnTimer >= wormHoleSpawnCd)
                 {
                     map.SpawnWorm((int)Position.X);
                     wormHoleSpawnTimer = 0;
@@ -217,9 +227,28 @@ namespace ld41gamer.Gamer
 
         }
 
-        public static EnemyType RandomType()
+        public static EnemyType GetRandomType()
         {
             return (EnemyType)Rng.Noxt(0, Enum.GetValues(typeof(EnemyType)).Length - 1);
+        }
+        public static EnemyType GetRandomType(params EnemyType[] types)
+        {
+            return types[Rng.Next(0, types.Length - 1)];
+        }
+
+        public static EnemyType GetRandomTypeExcept(params EnemyType[] exceptions)
+        {
+            var list = Enum.GetValues(typeof(EnemyType)).Cast<EnemyType>().ToList();
+            for(int i = 0; i < list.Count; i++)
+            {
+                if(exceptions.Any(x => x == list[i]))
+                {
+                    list.RemoveAt(i);
+                    if(i > 0)
+                        i--;
+                }
+            }
+            return list[Rng.Next(0, list.Count - 1)];
         }
 
         public static EnemyType RandomTypeNotWormHole()

@@ -564,8 +564,7 @@ namespace ld41gamer.Gamer
 
 
                     case GameStater.Level2_20:
-                        enemySpawnCd = 6.5f;
-                        SpawnEnemy(EnemyType.WormYellow);
+                        enemySpawnCd = 6f;
                         SpawnEnemy(EnemyType.WormYellow);
                         SpawnEnemy(EnemyType.WormYellow);
 
@@ -576,7 +575,7 @@ namespace ld41gamer.Gamer
 
 
                     case GameStater.Level3_50:
-                        enemySpawnCd = 5.5f;
+                        enemySpawnCd = 6f;
                         SpawnEnemy(EnemyType.WormYellow);
                         SpawnEnemy(EnemyType.WormYellow);
                         SpawnEnemy(EnemyType.WormYellow);
@@ -596,7 +595,7 @@ namespace ld41gamer.Gamer
                             EnemyType.WormYellow,
                             EnemyType.WormBlue));
 
-                        if(rng(15))
+                        if(rng(10))
                             SpawnEnemy(EnemyType.Wasp);
 
                         break;
@@ -607,12 +606,11 @@ namespace ld41gamer.Gamer
 
                         enemySpawnCd = 5;
                         SpawnEnemy(EnemyType.WormYellow);
-                        SpawnEnemy(EnemyType.WormYellow);
                         SpawnEnemy(Enemy.GetRandomType(
                             EnemyType.WormBlue,
                             EnemyType.Ant));
 
-                        if(rng(15))
+                        if(rng(10))
                             SpawnEnemy(EnemyType.Wasp);
 
                         break;
@@ -627,8 +625,7 @@ namespace ld41gamer.Gamer
 
                         SpawnEnemy(EnemyType.WormYellow);
                         SpawnEnemy(Enemy.GetRandomType(
-                            EnemyType.WormBlue,
-                            EnemyType.Ant));
+                            EnemyType.WormBlue));
 
                         if(rng(20)) // 25%                        
                             SpawnEnemy(EnemyType.Wasp);
